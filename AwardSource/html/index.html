@@ -25,7 +25,13 @@
 		<ul>
 			<li class="homepage"><a></a></li>
 			<li class="about"><a>About WBG</a></li>
-			<li><a>Lottery results history</a></li>
+			<li>
+				<label>Lottery results history</label>
+				<span class="l-m">
+					<a>WBG 300s Lottery</a>
+					<a>WBG 60s Lottery</a>
+				</span>
+			</li>
 			<li><a>How To Play</a></li>
 			<li><a>Contact Us</a></li>
 			<li id="date" class="date"></li>
@@ -54,7 +60,7 @@
 						</span>
 						<span>
 							<label class="nextdraw">Next Drawing...</label>
-							<span class="nexttime">00<label>:</label>05<label>:</label>00</span>
+							<span class="nexttime">00<label>:</label>00<label>:</label>10</span>
 						</span>
 					</div>
 				</div>
@@ -102,7 +108,7 @@
 						</span>
 						<span>
 							<label class="nextdraw">Next Drawing...</label>
-							<span class="nexttime">00<label>:</label>05<label>:</label>00</span>
+							<span class="nexttime">00<label>:</label>00<label>:</label>10</span>
 						</span>
 					</div>
 				</div>
@@ -160,8 +166,28 @@
 	<div class="right"><i></i>Copyright &copy; 2016 WBG International CO. ,  Ltd. All Rights Reserved</div>
 </div>
 <script src="../js/jquery-1.12.1.min.js"></script>
-<script src="../js/c.js"></script>
-<script src="../js/main.js"></script>
-
+<script src="../js/common.js"></script>
+<script>
+(function(){
+	var timeArray = ['.w-300','.w-60'];
+	
+	var endTime = function(i){
+		timeArray.splice(i,1);
+	}
+	
+	var t = setInterval(function(){
+		if($(timeArray).length > 0){
+			$(timeArray).each(function(i,e){
+				var t = $(e).find('.nexttime');
+				var bc = '<label>:</label>';
+				var a = countDown(t.html().split(bc),endTime,i).join(bc);
+				t.html(a);
+			});
+		}else{
+			clearInterval(t);
+		}
+	},1000);
+})();
+</script>
 </body>
 </html>

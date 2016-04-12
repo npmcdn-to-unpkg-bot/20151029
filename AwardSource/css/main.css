@@ -74,13 +74,22 @@ body{
 	background-position: 0 0;
 	left:0;
 }
+.follow .facebook:hover{
+	background-position: 0 -167px;;
+}
 .follow .youtube{
 	left:37px;
 	background-position: -37px 0;
 }
+.follow .youtube:hover{
+	background-position: -37px -167px;
+}
 .follow .ins{
 	left:73px;
 	background-position: -73px 0;
+}
+.follow .ins:hover{
+	background-position: -73px -167px;
 }
 .head-menu{
 	background-color:#c8161e;
@@ -94,12 +103,34 @@ body{
 	list-style:none;
 }
 .head-menu li{
-	height:22px;
+	height:100%;
 	float:left;
-	margin:9px 26px;
+	padding:9px 26px;
 	text-align:center;
 	font-size:18px;
 	color:#fff;
+	position:relative;
+}
+.head-menu li:hover .l-m{
+	display:block;
+}
+.head-menu li .l-m{
+	position:absolute;
+	display:none;
+	top:40px;
+	left:0;
+	width:172px;
+	background-color:#c8161e;
+}
+.head-menu li .l-m a{
+	display:inline-block;
+	width:100%;
+	height:32px;
+	line-height:32px;
+	text-align:center;
+}
+.head-menu li .l-m a:hover{
+	background-color:#b6141b;
 }
 .head-menu .homepage{
 	width:79px;
@@ -124,6 +155,9 @@ body{
 	border-left:1px solid #fff;
 	margin-left:0;
 	padding-left:26px;
+	padding-top:0;
+	height:22px;
+	margin-top:9px;
 }
 .head-menu .date{
 	float:right;
@@ -147,12 +181,6 @@ body{
 	overflow:hidden;
     box-shadow:0 20px 45px #e0e0e0;
     margin-bottom:45px;
-}
-.w-300{
-	
-}	
-.w-60{
-	
 }
 .lottery{
 	width:880px;
@@ -313,7 +341,7 @@ body{
 	position:relative;
 	top:-3px;
 }
-.lottery .history .list span{
+.lottery .history .list span,.results .list span{
 	background:url('../images/common.png') no-repeat -114px 0 ;
 	width:33px;
 	height:33px;
@@ -327,7 +355,7 @@ body{
 .main .v{
 	width:280px;
 	float:right;
-	margin-top:26px;
+	margin:26px 0;
 }
 .main .v .video{
 	height:256px;
@@ -393,6 +421,11 @@ body{
 	padding:7px 13px 6px 13px;
 	border-radius:4px;
 	color:#fff;
+	cursor:pointer;
+	box-shadow:none;
+}
+.main .note button:hover{
+	background-color:#ea2730;
 }
 .main .note .tip{
 	color:#c6c6c6;
@@ -400,6 +433,109 @@ body{
 	padding:10px 25px;
 	text-align:center;
 }
+.morelist{
+	padding-top:38px;
+	padding-left:31px;
+}
+.results{
+	width:838px;
+	border:1px solid #eee;
+	background-color:#fff;
+	float:left;
+	padding:0 16px;
+}
+.results .t{
+	height:60px;
+	line-height:60px;
+	border-bottom:1px solid #eee;
+}
+.results .t label{
+	font-size:42px;
+	color:#85754e;
+	font-weight:bold;
+}
+.results .t .t1{ 
+	font-size:24px;
+	color:#bcbcbc;
+	float:right;
+	margin-top:3px;
+}
+.results .t .t2{ 
+	font-size:18px;
+	color:#bcbcbc;
+}
+.results .drawDate{
+	height:68px;
+	margin-top:11px;
+	border-radius:4px;
+	background-color:#eee;
+	padding:17px 22px;
+}
+.results .drawDate label{
+	color:#bcbcbc;
+	font-size:30px;
+	line-height:35px;
+}
+.results .drawDate .datepick{
+	height:35px;
+	line-height:35px;
+	border:none;
+	color:#424242;
+	font-size:18px;
+	margin:0 36px;
+	vertical-align:top;
+	padding-left:10px;
+	background:url('../images/datepicker.png') no-repeat 210px 6px;
+	background-color:#fff;
+	width:242px;
+}
+.results .drawDate .timepick{
+	height:35px;
+	line-height:35px;
+	border:none;
+	color:#424242;
+	font-size:18px;
+	margin:0 36px;
+	vertical-align:top;
+	padding-left:8px;
+	width:76px;
+	background:url('../images/timepicker.png') no-repeat 60px 14px;
+	background-color:#fff;
+}
+.results .list{
+	margin-top:17px;
+	margin-bottom:20px;
+	border-radius:4px;
+	background-color:#eee;
+	padding:22px;
+}
+.results .list ul{
+	list-style:none;
+	background-color:#fff;
+}
+.results .list ul li{
+	height:50px;
+	border-top:1px solid #eee;
+	line-height:50px;
+}
+.results .list ul li:first-child{
+	border-top:none;
+}
+.results .list label{
+	color:#bcbcbc;
+	font-size:18px;
+	padding:0 22px;
+}
+.results .list .num{
+	padding:0 36px;
+	font-size:24px;
+}
+
+
+.morelist .v{
+	margin-top:0;
+}
+
 .footer{
 	width:100%;
 }
