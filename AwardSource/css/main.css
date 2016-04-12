@@ -1,10 +1,11 @@
 @font-face {
   font-family: 'MyriadPro-Cond';
-  src: url('../font/MyriadPro-Cond/MyriadPro-Cond.eot?#iefix') format('embedded-opentype'),  
-  	   url('../font/MyriadPro-Cond/MyriadPro-Cond.otf')  format('opentype'),
-	   url('../font/MyriadPro-Cond/MyriadPro-Cond.woff') format('woff'), 
-	   url('../font/MyriadPro-Cond/MyriadPro-Cond.ttf')  format('truetype'), 
-	   url('../font/MyriadPro-Cond/MyriadPro-Cond.svg#MyriadPro-Cond') format('svg');
+  src: url('font/MyriadPro-Cond/MyriadPro-Cond.eot');
+  src: url('font/MyriadPro-Cond/MyriadPro-Cond.eot?#iefix') format('embedded-opentype'),  
+       url('font/MyriadPro-Cond/MyriadPro-Cond.otf')  format('opentype'),
+	   url('font/MyriadPro-Cond/MyriadPro-Cond.woff') format('woff'), 
+	   url('font/MyriadPro-Cond/MyriadPro-Cond.ttf')  format('truetype'), 
+	   url('font/MyriadPro-Cond/MyriadPro-Cond.svg#MyriadPro-Cond') format('svg'); 
   font-weight: normal;
   font-style: normal;
 }
@@ -18,8 +19,6 @@
 html{
 	min-width:1200px;
 }
-
-
 body{
 	min-width:1200px;
 	font-family: "MyriadPro-Cond";
