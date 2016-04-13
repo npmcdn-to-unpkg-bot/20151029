@@ -544,6 +544,42 @@ body{
 	margin-top:0;
 }
 
+.main.explanation{
+	padding:32px 38px;	
+}
+.explanation .area{
+	background-color:#fff;
+	border:1px solid #eee;
+	padding:16px;
+}
+.explanation .nav{
+	color:#84888b;
+	font-size:18px;
+	line-height:44px;
+	border-bottom:1px solid #eee;
+}
+.explanation .nav a{
+	color:#84888b;
+	cursor:pointer;
+}
+.explanation .nav a:hover{
+	text-decoration:underline;
+}
+.explanation .w{
+	padding:15px;
+}
+.explanation h4{
+	color:#bcbcbc;
+	font-size:18px;
+	line-height:22px;
+	font-weight:normal;
+}
+.explanation h1{
+	color:#858585;
+	font-weight:bold;
+	font-size:18px;
+	margin:20px 0;
+}
 .footer{
 	width:100%;
 }
@@ -564,6 +600,7 @@ body{
 	margin:0 18px;
 	letter-spacing:1px;
 	cursor:pointer;
+	text-decoration:none;
 }
 .footer .information a:hover{
 	text-decoration:underline;

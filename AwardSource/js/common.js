@@ -78,7 +78,19 @@ var countDown = function(array,func,i){
 	return array;
 };
 
-(function (){
+(function(){
+	var header = '<div class="head"><div class="head-top"><div class="logo"></div><div class="follow"><span>Follow Us On</span>\
+				<i class="facebook"></i><i class="youtube"></i><i class="ins"></i></div></div><div class="head-menu"><ul>\
+				<li class="homepage"><a href="index.html"></a></li><li class="about"><a>About WBG</a></li><li>\
+				<label>Lottery results history</label><span class="l-m"><a href="w-300.html">WBG 300s Lottery</a>\
+				<a href="w-60.html">WBG 60s Lottery</a></span></li><li><a>How To Play</a></li><li><a>Contact Us</a></li>\
+				<li id="date" class="date"></li></ul></div></div>';
+	var footer = '<div class="footer"><div class="information"><span>More Lottery Information</span><a>Terms & Conditions</a>\
+				<a>Sietmap</a><a>Affiliation</a><a href="privacy.html">Privacy Policy</a><a>Security</a><a>Contact us</a>\
+				</div><div class="right"><i></i>Copyright &copy; 2016 WBG International CO. ,  Ltd. All Rights Reserved</div></div>';
+	
+	$('.m').before(header).after(footer);
+	
 	var initTime = function(){
 		$('#date').html(transDate());
 		setTimeout(initTime,1000);
