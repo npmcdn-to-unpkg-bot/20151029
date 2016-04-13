@@ -48,7 +48,7 @@ $(document).ready(function(){
 		(nNum+1)>tNum?n2=0:n2=nNum+1;
 		bSwitch(nNum,n2);
 		nNum=n2;
-	},3000);
+	},6000);
 	
 	$(".notice_box").animate({bottom:0});
 	$(".notice_box_t .close").click(function(){
