@@ -140,6 +140,8 @@ body{
 }
 .head-menu a{
 	cursor:pointer;
+	color:#fff;
+	text-decoration:none;
 }
 .head-menu a:hover{
 	text-decoration:underline;
@@ -414,7 +416,7 @@ body{
 	text-align:right;
 	margin-top:-5px;
 }
-.main .note button{
+.main button{
 	background-color:#c8161e;
 	border:none;
 	border-bottom:1px solid #6d0c10;
@@ -424,7 +426,7 @@ body{
 	cursor:pointer;
 	box-shadow:none;
 }
-.main .note button:hover{
+.main button:hover{
 	background-color:#ea2730;
 }
 .main .note .tip{
@@ -442,7 +444,7 @@ body{
 	border:1px solid #eee;
 	background-color:#fff;
 	float:left;
-	padding:0 16px;
+	padding:6px 16px 20px 16px;
 }
 .results .t{
 	height:60px;
@@ -482,12 +484,12 @@ body{
 	border:none;
 	color:#424242;
 	font-size:18px;
-	margin:0 36px;
+	margin:0 40px 0 25px;
 	vertical-align:top;
 	padding-left:10px;
-	background:url('../images/datepicker.png') no-repeat 210px 6px;
+	background:url('../images/datepicker.png') no-repeat 125px 6px;
 	background-color:#fff;
-	width:242px;
+	width:155px;
 }
 .results .drawDate .timepick{
 	height:35px;
@@ -495,16 +497,22 @@ body{
 	border:none;
 	color:#424242;
 	font-size:18px;
-	margin:0 36px;
+	margin:0 55px 0 25px;
 	vertical-align:top;
 	padding-left:8px;
 	width:76px;
 	background:url('../images/timepicker.png') no-repeat 60px 14px;
 	background-color:#fff;
 }
+.results .drawDate button{
+	padding: 0px 13px;
+    vertical-align: top;
+    font-size: 28px;
+    font-family: "MyriadPro-Cond";
+    height: 35px;
+}
 .results .list{
 	margin-top:17px;
-	margin-bottom:20px;
 	border-radius:4px;
 	background-color:#eee;
 	padding:22px;
@@ -568,4 +576,7 @@ body{
 	width:100%;
 	font-size:28px;
 	color:#bcbcbc;
+}
+.xdsoft_datetimepicker .xdsoft_month{
+	width:70px;	
 }
