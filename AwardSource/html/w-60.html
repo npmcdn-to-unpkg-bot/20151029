@@ -25,61 +25,10 @@
 			<div class="drawDate">
 				<label>Date Of Draw</label>
 				<input class="datepick" type="text" readonly="readonly" id="datepick" value="">
-				<label>Time</label>
-				<input class="timepick" type="text" readonly="readonly" id="timepick" value="">
-				<button>Show Results</button>
+				<button id="seachHistory">Show Results</button>
 			</div>
 			<div class="list">
 				<ul>
-					<li>
-						<label class="num">No.20160328-719</label>
-						<label class="drawtime">Draw time 2016-03-28 11:59:00</label>
-						<label class="result">Draw result</label>
-						<span>8</span><span>8</span><span>8</span><span>8</span><span>8</span>
-					</li>
-					<li>
-						<label class="num">No.20160328-719</label>
-						<label class="drawtime">Draw time 2016-03-28 11:59:00</label>
-						<label class="result">Draw result</label>
-						<span>8</span><span>8</span><span>8</span><span>8</span><span>8</span>
-					</li>
-					<li>
-						<label class="num">No.20160328-719</label>
-						<label class="drawtime">Draw time 2016-03-28 11:59:00</label>
-						<label class="result">Draw result</label>
-						<span>8</span><span>8</span><span>8</span><span>8</span><span>8</span>
-					</li>
-					<li>
-						<label class="num">No.20160328-719</label>
-						<label class="drawtime">Draw time 2016-03-28 11:59:00</label>
-						<label class="result">Draw result</label>
-						<span>8</span><span>8</span><span>8</span><span>8</span><span>8</span>
-					</li>
-					<li>
-						<label class="num">No.20160328-719</label>
-						<label class="drawtime">Draw time 2016-03-28 11:59:00</label>
-						<label class="result">Draw result</label>
-						<span>8</span><span>8</span><span>8</span><span>8</span><span>8</span>
-					</li>
-					<li>
-						<label class="num">No.20160328-719</label>
-						<label class="drawtime">Draw time 2016-03-28 11:59:00</label>
-						<label class="result">Draw result</label>
-						<span>8</span><span>8</span><span>8</span><span>8</span><span>8</span>
-					</li>
-					<li>
-						<label class="num">No.20160328-719</label>
-						<label class="drawtime">Draw time 2016-03-28 11:59:00</label>
-						<label class="result">Draw result</label>
-						<span>8</span><span>8</span><span>8</span><span>8</span><span>8</span>
-					</li>
-					<li>
-						<label class="num">No.20160328-719</label>
-						<label class="drawtime">Draw time 2016-03-28 11:59:00</label>
-						<label class="result">Draw result</label>
-						<span>8</span><span>8</span><span>8</span><span>8</span><span>8</span>
-					</li>
-					
 				</ul>
 			</div>
 		</div>
@@ -103,19 +52,17 @@
 <script>
 (function(){
 	var date = new Date();
-	$('#datepick').val(date.pattern('yyyy-MM-dd'));
-	$('#timepick').val(date.pattern('HH:mm'));
-	
+	$('#datepick').val(date.pattern('yyyy/MM/dd'));
+		
 	$('#datepick').datetimepicker({
 		lang:'ch',
 		timepicker:false,
-		format:"Y-m-d"
+		format:"Y/m/d"
 	});
-	$('#timepick').datetimepicker({
-		datepicker:false,
-		format:'H:i',
-		step:1
-	});
+
+	$('#seachHistory').on('click',function(){
+		Common.getHistory('WBGFFC');
+	}).trigger('click');
 })();
 </script>
 </body>
