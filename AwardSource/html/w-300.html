@@ -52,7 +52,7 @@
 				<p><span>PHONE</span><input type="text"></p>
 				<p><span>*EMAIL</span><input type="text"></p>
 				<p><span>*MESSAGE</span><textarea></textarea></p>
-				<div class="btnP"><button>SUBMIT</button></div>
+				<div class="btnP"><button id="noteBtn">SUBMIT</button></div>
 				<div class="tip">IT APPEARS THAT YOU HAVE NOT FILLED OUT ALL THE REQUIRED FIELDS. PLEASE CHECK AND RESUBMIT.</div>
 			</div>
 		</div>
@@ -63,18 +63,12 @@
 <script src="../js/common.js"></script>
 <script>
 (function(){
-	var date = new Date();
-	$('#datepick').val(date.pattern('yyyy/MM/dd'));
-		
-	$('#datepick').datetimepicker({
-		lang:'ch',
-		timepicker:false,
-		format:"Y/m/d"
-	});
-
+	Common.initHistory();
+	
 	$('#seachHistory').on('click',function(){
 		Common.getHistory('WBG5FC');
 	}).trigger('click');
+	
 })();
 </script>
 </body>

@@ -368,10 +368,9 @@ body{
 .main .note{
 	border:1px solid #eeeeee;
 	width:280px;
-	height:414px;
 	background-color:#fff;
 	margin-top:22px;
-	padding-top:14px;
+	padding:14px 25px;
 }
 .main .note .t{
 	color:#85754e;
@@ -385,7 +384,7 @@ body{
 }
 .main .note span{
 	display:inline-block;
-	width:80px;
+	width:60px;
 	color:#bcbcbc;
 	margin-right:8px;
 	text-align:right;
@@ -399,16 +398,16 @@ body{
 	line-height:23px;
 	font-size:10px;
 	padding:0 6px;
-	width:170px;
+	width:160px;
 }
 .main .note textarea{
-	height:155px;
+	height:150px;
 	border:1px solid #eee;
 	background-color:#f8f8f8;
 	line-height:18px;
 	font-size:10px;
 	padding:3px 6px;
-	width:170px;
+	width:160px;
 	resize:none;
 }
 .main .note .btnP{
@@ -432,8 +431,9 @@ body{
 .main .note .tip{
 	color:#c6c6c6;
 	font-size:14px;
-	padding:10px 25px;
+	padding-top:10px;
 	text-align:center;
+	display:none;
 }
 .morelist{
 	padding-top:38px;
