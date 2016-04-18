@@ -37,7 +37,7 @@ $(document).ready(function(){
 			(nNum+1)>tNum?n2=0:n2=nNum+1;
 			bSwitch(nNum,n2);
 			nNum=n2;
-		},3000);
+		},5000);
 	};
 	
 	setI();
@@ -55,25 +55,28 @@ $(document).ready(function(){
 		});
 	};
 	
-	$(".banner_ctrl .prev").click(function(){
+	$('.m_banner').hover(function(){
 		clearInterval(switchTime);
+	},function(){
+		clearInterval(switchTime);
+		setI();
+	});
+	
+	$(".banner_ctrl .prev").click(function(){
 		if(showing){
 			return;
 		}
 		(nNum-1)<0?n2=tNum:n2=nNum-1;
 		bSwitch(nNum,n2);
 		nNum=n2;
-		setI();
 	});	
 	$(".banner_ctrl .next").click(function(){
-		clearInterval(switchTime);
 		if(showing){
 			return;
 		}
 		(nNum+1)>tNum?n2=0:n2=nNum+1;
 		bSwitch(nNum,n2);
 		nNum=n2;
-		setI();
 	});
 	
 	$(".notice_box").animate({bottom:0});
