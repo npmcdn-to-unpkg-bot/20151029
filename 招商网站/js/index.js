@@ -27,28 +27,54 @@ $(document).ready(function(){
 	});
 			
 	var tNum=$(".m_banner .banner").length-1;
-	var nNum=0;		
+	var nNum=0;
+	
+	var showing = false;
+	
+	var switchTime;
+	var setI = function(){
+		switchTime = setInterval(function(){
+			(nNum+1)>tNum?n2=0:n2=nNum+1;
+			bSwitch(nNum,n2);
+			nNum=n2;
+		},3000);
+	};
+	
+	setI();
+	
+	function bSwitch(nNum,n2){
+		showing = true;
+		var e1 = $(".m_banner .banner:eq("+nNum+")");
+		var e2 = $(".m_banner .banner:eq("+n2+")");
+		
+		e1.fadeOut();
+		e2.fadeIn(function(){
+			$('.act').removeClass('act');
+			e2.addClass('act');
+			showing = false; 
+		});
+	};
+	
 	$(".banner_ctrl .prev").click(function(){
+		clearInterval(switchTime);
+		if(showing){
+			return;
+		}
 		(nNum-1)<0?n2=tNum:n2=nNum-1;
 		bSwitch(nNum,n2);
 		nNum=n2;
+		setI();
 	});	
 	$(".banner_ctrl .next").click(function(){
+		clearInterval(switchTime);
+		if(showing){
+			return;
+		}
 		(nNum+1)>tNum?n2=0:n2=nNum+1;
 		bSwitch(nNum,n2);
 		nNum=n2;
+		setI();
 	});
-	function bSwitch(nNum,n2){
-		$(".m_banner .banner:eq("+nNum+")").removeClass('act').fadeOut();
-		$(".m_banner .banner:eq("+n2+")").addClass('act').fadeIn();
-	};
-							
-	
-	var switchTime = setInterval(function(){
-		(nNum+1)>tNum?n2=0:n2=nNum+1;
-		bSwitch(nNum,n2);
-		nNum=n2;
-	},6000);
 	
 	$(".notice_box").animate({bottom:0});
 	$(".notice_box_t .close").click(function(){

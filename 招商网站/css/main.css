@@ -111,10 +111,9 @@ body{
   top: 0;
   width: 100%;
   height:auto;
-  display: none;
+  display: block;
 }
 .m_banner .banner.act{
-  display: block;
   position: static;
 }
 .m_banner .banner img{
