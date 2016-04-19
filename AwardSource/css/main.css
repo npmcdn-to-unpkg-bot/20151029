@@ -32,7 +32,7 @@ html{
 }
 body{
 	min-width:1200px;
-	font-family: "MyriadPro-Cond";
+	font-family: "MyriadPro-Cond","微软雅黑";
 	overflow:auto;
 	height:100%;
 }
@@ -229,6 +229,7 @@ body{
 	margin-left:34px;
 	margin-top:30px;
 	margin-bottom:4px;
+	height:90px;
 }
 .lottery .num span{
 	display:inline-block;
@@ -284,6 +285,10 @@ body{
 	line-height:40px;
 	font-family:"MyriadPro-Bold";
 	text-align:center;
+}
+.lottery .info .nexttime.pause{
+	font-size:28px;
+	font-family:"MyriadPro-Bold","微软雅黑";
 }
 .lottery .info .nexttime label{
 	position:relative;
@@ -525,6 +530,12 @@ body{
 	height:50px;
 	border-top:1px solid #eee;
 	line-height:50px;
+}
+.results .list ul li.nodata{
+	background-color:#eee;
+	line-height:1em;
+	height:1em;
+	color:#858585;
 }
 .results .list ul li:first-child{
 	border-top:none;

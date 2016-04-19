@@ -37,7 +37,7 @@ $(document).ready(function(){
 			(nNum+1)>tNum?n2=0:n2=nNum+1;
 			bSwitch(nNum,n2);
 			nNum=n2;
-		},5000);
+		},6000);
 	};
 	
 	setI();

@@ -25,10 +25,10 @@ var Common = {
 	timeArray : ['w300','w60'],
 	bc : '<label>:</label>',
 	api : {
-		host : 'http://www.dev.sobet.com/lottery',
-		getTime : '/api/anon/v1/lottery/times',
-		getIssue : '/api/anon/v1/lottery/issue_info',
-		getHistory : '/api/anon/v1/lottery/trend'
+		host : 'http://www.sobet.tk/lottery',
+		getTime : '/api/anon/v1/lottery/times_callback',
+		getIssue : '/api/anon/v1/lottery/issue_info_callback',
+		getHistory : '/api/anon/v1/lottery/trend_callback'
 	},
 	init : function(){
 		var me = this;
@@ -172,11 +172,9 @@ var Common = {
 		var me = this;
 		$.ajax({
 			url: me.api.host + url,
-			data:{
-				source:1
-			},
 			dataType:'jsonp',    
-	        jsonp:'callbackfunc'
+	        jsonp:'xxx',
+	        jsonpCallback:'callback'
 		}).done(function(res){
 			func(res);
 		});
@@ -190,23 +188,31 @@ var Common = {
 		me.getAjax(url,function(res){
 			//var res = {"result":{"time":{"3DFC":20654,"WBGFFC":4,"GD11Y":194,"XJSSC":134,"WBGMMC":-1,"WBG":-2,"CQSSC":199,"SD11Y":434,"WBG5FC":224,"JX11Y":74,"CQ11Y":-2,"JXSSC":-2},"now":1460615746},"code":1,"msg":"ok"};
 			clearInterval(me.t);
-			var m_300 = Math.floor(res.result.time.WBG5FC/60);
-			var s_300 = res.result.time.WBG5FC%60;
 			
-			var m_60 = Math.floor(res.result.time.WBGFFC/60);
-			var s_60 = res.result.time.WBGFFC%60;
+			var result = new Array();
+			result.push(res.result.time.WBG5FC,res.result.time.WBGFFC);
 			
-			m_300 < 10 ? m_300 = '0' + m_300 : m_300;
-			s_300 < 10 ? s_300 = '0' + s_300 : s_300;
-			m_60 < 10 ? m_60 = '0' + m_60 : m_60;
-			s_60 < 10 ? s_60 = '0' + s_60 : s_60;
-			
-			$('.w300 .nexttime').html('00<label>:</label>' + m_300 + '<label>:</label>' + s_300);
-			$('.w60 .nexttime').html('00<label>:</label>' + m_60 + '<label>:</label>' + s_60);
+			$(result).each(function(){
+				var e = $('.' + me.timeArray[arguments[0]] + ' .nexttime');
+				if(arguments[1] == '-1'){
+					e.addClass('pause').html('暂停销售');
+				}else{
+					var m = Math.floor(arguments[1]/60);
+					var s = arguments[1]%60;
+					
+					m < 10 ? m = '0' + m : m;
+					s < 10 ? s = '0' + s : s;
+					
+					e.removeClass('pause').html('00<label>:</label>' + m + '<label>:</label>' + s);
+				}
+			});
 			
 			me.t = setInterval(function(){
-				$(me.timeArray).each(function(i,e){		
-					me.countDown($('.' + e).find('.nexttime'),i);
+				$(me.timeArray).each(function(i,e){
+					var e = $('.' + arguments[1]).find('.nexttime');
+					if(!e.hasClass('pause')){
+						me.countDown(e,arguments[0]);
+					}
 				});
 			},1000);
 		});
@@ -221,7 +227,7 @@ var Common = {
 			el.find('.dataNo label').html(data[0].issue);
 			
 			$(data[0].code.split(',')).each(function(){
-				el.find('.num').append('<span>' + arguments[1] + '</span>');
+				el.find('.num span').eq(arguments[0]).html(arguments[1]);
 			});
 			
 			$(data).each(function(){
@@ -254,15 +260,20 @@ var Common = {
 		me.getAjax(url,function(res){
 			//var res = {"result":{"data":[{"code":"0,0,5,8,3","issue":"20160414-146"},{"code":"5,7,1,5,3","issue":"20160414-147"},{"code":"1,4,1,0,6","issue":"20160414-148"},{"code":"2,8,4,4,4","issue":"20160414-149"},{"code":"0,8,7,2,1","issue":"20160414-150"},{"code":"8,5,4,7,2","issue":"20160414-151"},{"code":"8,4,2,1,0","issue":"20160414-152"},{"code":"2,7,8,9,5","issue":"20160414-153"},{"code":"0,3,9,3,6","issue":"20160414-154"},{"code":"8,7,1,9,4","issue":"20160414-155"},{"code":"1,9,3,1,8","issue":"20160414-156"},{"code":"6,5,5,6,2","issue":"20160414-157"},{"code":"9,2,9,0,7","issue":"20160414-158"},{"code":"9,1,0,9,3","issue":"20160414-159"},{"code":"7,9,3,0,9","issue":"20160414-160"},{"code":"4,1,6,1,7","issue":"20160414-161"},{"code":"5,8,1,1,4","issue":"20160414-162"},{"code":"9,1,7,9,5","issue":"20160414-163"},{"code":"1,0,6,5,7","issue":"20160414-164"},{"code":"0,6,7,5,1","issue":"20160414-165"},{"code":"0,3,8,8,9","issue":"20160414-166"},{"code":"3,4,6,6,5","issue":"20160414-167"},{"code":"7,2,2,7,8","issue":"20160414-168"},{"code":"6,8,3,3,3","issue":"20160414-169"},{"code":"7,6,9,3,3","issue":"20160414-170"},{"code":"3,7,8,0,3","issue":"20160414-171"},{"code":"0,0,1,2,3","issue":"20160414-172"},{"code":"0,9,3,2,5","issue":"20160414-173"},{"code":"2,3,4,9,9","issue":"20160414-174"},{"code":"2,5,4,5,3","issue":"20160414-175"}],"lottery":"WBG5FC"},"code":1,"msg":"ok"};
 			var data = res.result.data;
-			$(data).each(function(){
-				var $h = $('<li><label class="num">No.' + arguments[1].issue + '</label><label class="result">Draw result</label></li>');
-				var code = arguments[1].code.split(',');
-				$(code).each(function(){
-					$h.append('<span>' + arguments[1] + '</span>');
-				});
+			if(data.length > 0){
+				$(data).each(function(){
+					var $h = $('<li><label class="num">No.' + arguments[1].issue + '</label><label class="result">Draw result</label></li>');
+					var code = arguments[1].code.split(',');
+					$(code).each(function(){
+						$h.append('<span>' + arguments[1] + '</span>');
+					});
 
-				$('.morelist .list ul').append($h);
-			});
+					$('.morelist .list ul').append($h);
+				});
+			}else{
+				$('.morelist .list ul').html('<li class="nodata">暂无数据</li>');
+			}
+			
 		});
 	}
 };
