@@ -173,8 +173,7 @@ var Common = {
 		$.ajax({
 			url: me.api.host + url,
 			dataType:'jsonp',    
-	        jsonp:'xxx',
-	        jsonpCallback:'callback'
+	        jsonp:'callback'
 		}).done(function(res){
 			func(res);
 		});
