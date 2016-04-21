@@ -259,6 +259,9 @@ body{
 	width:305px;
 	border-right:1px solid #eeeeee;
 }
+.lottery .info label{
+	display:inline-block;
+}
 .lottery .info .t{
 	font-size:32px;
 	color:#85754e;
@@ -338,9 +341,16 @@ body{
 .lottery .history .list li{
 	height:32px;
 	line-height:32px;
-	padding-left:10px;
 	margin-bottom:16px;
 }
+
+.w300 .history .list li{
+	padding-left:10px;
+}
+.w60 .history .list li{
+	padding-left:8px;
+}
+
 .lottery .history .list label{
 	font-size:14px;
 	color:#858585;
