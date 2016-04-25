@@ -1,0 +1,109 @@
+﻿<!doctype html>
+<html>
+<head>
+</head>
+<script src="jquery-1.11.3.min.js"></script>
+<style>
+#fixed{
+	position:fixed;
+	top:20px;
+	left:400px;
+}
+</style>
+<body>
+<div id="id"></div>
+<div id="fixed">
+<p>总注数  <span id="total"></span></p>
+<p>有效注数  <span id="youxiao"></span></p>
+<div id="repeat_count">
+</div>
+
+<div id="gongshi"></div>
+</div>
+</body>
+<script>
+var arr = [[1,2,3,4,5,6,7,8,9,10],[1,2,3,4,5,6,7,8,9,10],[1,2,3,4,5,6,7,8,9,10],[1,2,3,4,5,6,7,8,9,10],[1,2,3,4,5,6,7,8,9,10]];
+
+var totalR = '';
+$(arr).each(function(){
+	
+	var len = $(this).length;
+	totalR = totalR + len;
+	
+	if(arguments[0] != arr.length -1){
+		totalR += ' * ';
+	}
+})
+
+var newArr = [];
+
+function pk10(arr){
+	if(arr.length == 1){
+		return;
+	}
+
+	for(var i=0;i<arr[0].length;i++){
+		for(var j=0;j<arr[1].length;j++){
+			var item = String(arr[0][i]) + '-' + arr[1][j];
+			newArr.push(item);
+		}
+	}
+	arr.splice(0,2,newArr);
+	newArr = [];
+	pk10(arr);
+}
+pk10(arr);
+
+var h = '';
+$(arr[0]).each(function(){
+	h = h +  "<p>" + arguments[1] + "</p>";
+});
+
+$('#id').append(h);
+
+$('#total').html($('#id p').length);
+
+$('#id p').each(function(){
+	var item = $(this).html().split('');
+	var count = 0;
+	for(var i=0;i<item.length;i++){
+		for(var j=i+1;j<item.length;j++){
+			if(item[i] == item[j]){
+				count += 1;
+			}
+		}
+	}
+	if(count > 0){
+		var classR = "repeat repeat-" + count;
+		$(this).addClass(classR);	
+	}
+});
+
+$('#youxiao').html($('#id p:not(".repeat")').length);
+
+var count = {};
+$('.repeat').each(function(){
+	var item = $(this).attr('class').split(' ');
+	var repeat_c = item[1];
+	
+	if(count[repeat_c] != undefined){
+		count[repeat_c] += 1;
+	}else{
+		count[repeat_c] = 1;
+	}
+});
+
+var c1 = '';
+for(var p in count){
+	var c = count[p];
+	if(p == 'repeat-1'){
+		continue;
+	}
+	var r = "<p>重复 " + p.split('-')[1] + ' 次：  ' + c + "</p>";
+	$('#repeat_count').append(r);
+	
+	c1 += c + ' * ' + (parseInt(p.split('-')[1]) - 1) + ' + ';
+}
+c1 = c1.substring(0,c1.length-2);
+</script>
+</html>

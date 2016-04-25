@@ -1,0 +1,64 @@
+﻿<!doctype html>
+<html>
+<meta charset="utf-8">
+<head>
+</head>
+<script src="jquery-1.11.3.min.js"></script>
+<style>
+#fixed{
+	position:fixed;
+	top:20px;
+	left:400px;
+}
+</style>
+<body>
+<div id="id"></div>
+<div id="fixed">
+<p>有效注数 <span id="youxiao"></span></p>
+<p>花费时间 <span id="time"></span></p>
+<div id="repeat_count">
+</div>
+
+<div id="gongshi"></div>
+</div>
+</body>
+<script>
+
+var time1 = new Date();
+var arr = [[1,2,3,4,5,6,7,8,9,10],[1,2,3,4,5,6,7,8,9,10],[1,2,3,4,5,6,7,8,9,10],[1,2,3,4,5,6,7,8,9,10],[1,2,3,4,5,6,7,8,9,10]];
+
+var newArr = [];
+
+$(arr).each(function(){
+	var e = arguments[1];
+	if(e[e.length-1] === 10){
+		e[e.length-1] = 0;
+	}
+});
+function pk10(arr){
+	if(arr.length == 1){
+		return;
+	}
+	for(var i=0;i<arr[0].length;i++){
+		for(var j=0;j<arr[1].length;j++){
+			if(String(arr[0][i]).indexOf(arr[1][j]) == -1){
+				var item = arr[0][i] + '-' + arr[1][j];
+				newArr.push(item);
+			}
+		}
+	}
+	arr.splice(0,2,newArr);
+	newArr = [];
+	pk10(arr);
+}
+pk10(arr);
+
+$('#youxiao').html(arr[0].length);
+var time2 = new Date();
+
+var time = time2.getTime() - time1.getTime() + '毫秒';
+
+$('#time').html(time)
+
+</script>
+</html>
