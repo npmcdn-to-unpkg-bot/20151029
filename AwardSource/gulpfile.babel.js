@@ -30,7 +30,7 @@ gulp.task('styles',function(){
 	//文件输出至指定目录
 	.pipe(gulp.dest('_dist/css'))
 	//输出任务完成信息
-	.pipe(notify({message:'------------------- styles task complete --------------------------'}))
+	//.pipe(notify({message:'------------------- styles task complete --------------------------'}))
 });
 
 gulp.task('scripts',function(){
@@ -48,7 +48,7 @@ gulp.task('scripts',function(){
 	//文件输出至指定目录
 	.pipe(gulp.dest('_dist/js'))
 	//输出任务完成信息
-	.pipe(notify({message:'------------------- scripts task complete --------------------------'}))
+	//.pipe(notify({message:'------------------- scripts task complete --------------------------'}))
 });
 
 gulp.task('images',function(){
@@ -58,7 +58,7 @@ gulp.task('images',function(){
 	//文件输出至指定目录
 	.pipe(gulp.dest('_dist/images'))
 	//输出任务完成信息
-	.pipe(notify({message:'------------------- images task complete --------------------------'}))
+	//.pipe(notify({message:'------------------- images task complete --------------------------'}))
 });
 
 gulp.task('fonts',function(){
@@ -66,7 +66,7 @@ gulp.task('fonts',function(){
 	//文件输出至指定目录
 	.pipe(gulp.dest('_dist/css/font/'))
 	//输出任务完成信息
-	.pipe(notify({message:'------------------- fonts task complete --------------------------'}))
+	//.pipe(notify({message:'------------------- fonts task complete --------------------------'}))
 });
 
 gulp.task('html',function(){
@@ -82,13 +82,13 @@ gulp.task('html',function(){
         minifyCSS: true//压缩页面CSS
     };
 	
-	return gulp.src('app/html/*.html')
+	return gulp.src('app/*.html')
 	//.pipe(rename('index.html'))
 	.pipe(minifyHtml())
 	.pipe(htmlmin(options))
-	.pipe(gulp.dest('_dist/html'))
+	.pipe(gulp.dest('_dist'))
 	//输出任务完成信息
-	.pipe(notify({message:'------------------- html task complete --------------------------'}))
+	//.pipe(notify({message:'------------------- html task complete --------------------------'}))
 });
 
 gulp.task('clean',function(){
