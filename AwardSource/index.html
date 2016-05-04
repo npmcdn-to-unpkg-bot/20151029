@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" media="screen" />
+	<title>WBG Award</title>
+	<meta name="keywords" content="奖源网站,摩臣娱乐,摩臣188,摩臣招商,摩臣代理,摩臣开户,摩臣平台,摩臣彩票,摩臣官网" />
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+<div class="m">
+	<div class="main clearfix">
+		<div class="banner"><img src="images/banner.png"></div>
+		<div class="lottery">
+			<div class="w300 clearfix">
+				<div class="lt">
+					<p class="title">
+						<span class="t">WBG 300s Lottery</span>
+						<span class="latest">Latest Results</span>
+						<span class="pick5">Pick5 Numbers</span>
+						<span class="dateNo">DATE No. <label></label></span>
+					</p>
+					<div class="num"><span></span><span></span><span></span><span></span><span></span></div>
+					<div class="info">
+						<span>
+							<label class="t">JACKPOT</label><label class="s">Every 300 seconds</label>
+							<label class="prize">CNY 20,000.00</label>
+						</span>
+						<span>
+							<label class="nextdraw">Next Drawing...</label>
+							<span class="nexttime"></span>
+						</span>
+					</div>
+				</div>
+				<div class="history">
+					<div class="t">Winning Numbers History<a class="more" href="w-300.html"><label>Check More</label><i></i></a></div>
+					<ul class="list">
+					</ul>
+				</div>
+			</div>
+			<div class="w60 clearfix">
+				<div class="lt">
+					<p class="title">
+						<span class="t">WBG 60s Lottery</span>
+						<span class="latest">Latest Results</span>
+						<span class="pick5">Pick5 Numbers</span>
+						<span class="dateNo">DATE No. <label></label></span>
+					</p>
+					<div class="num"><span></span><span></span><span></span><span></span><span></span></div>
+					<div class="info">
+						<span>
+							<label class="t">JACKPOT</label><label class="s">Every 60 seconds</label>
+							<label class="prize">CNY 20,000.00</label>
+						</span>
+						<span>
+							<label class="nextdraw">Next Drawing...</label>
+							<span class="nexttime"></span>
+						</span>
+					</div>
+				</div>
+				<div class="history">
+					<div class="t">Winning Numbers History<a class="more" href="w-60.html"><label>Check More</label><i></i></a></div>
+					<ul class="list"></ul>
+				</div>
+			</div>
+		</div>
+		<div class="v">
+			<div class="video"></div>
+			<div class="note">
+				<div class="t">SEND US A QUICK NOTE</div>
+				<p><span>*NAME</span><input id="noteName" type="text"></p>
+				<p><span>PHONE</span><input id="notePhone" type="text"></p>
+				<p><span>*EMAIL</span><input id="noteEmail" type="text"></p>
+				<p><span>*MESSAGE</span><textarea id="noteMsg"></textarea></p>
+				<div class="btnP"><button id="noteBtn">SUBMIT</button></div>
+				<div class="tip"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="js/jquery-1.12.1.min.js"></script>
+<script src="js/common.js"></script>
+<script>
+(function(){
+	Common.getTime();
+	
+	Common.getIssue('WBG5FC',$('.w300'));
+	Common.getIssue('WBGFFC',$('.w60'));
+})();
+</script>
+</body>
+</html>
