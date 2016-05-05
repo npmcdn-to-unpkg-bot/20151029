@@ -259,6 +259,7 @@ var Common = {
 
 	},
 	getHistory : function(lt){
+		$('.morelist .list ul li').remove();
 		var date = $('#datepick').val();
 		var me = this;
 		var url = me.api.getHistory + '?lottery=' + lt+ '&startTime=' + date + '&endTime=' + date + '&issuecount=20&_=' + new Date().getTime();
