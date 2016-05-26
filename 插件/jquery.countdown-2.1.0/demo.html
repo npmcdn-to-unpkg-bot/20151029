@@ -3,18 +3,30 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>artDialog</title>
+<title>countdown</title>
 </head>
+<style>
+.c{
+	width:100px;
+	height:100px;
+}
+</style>
 <body>
-<div id="countdown"></div>
+<div id="c1" class="c"></div>
+<div id="c2" class="c"></div>
+<pre>
 
+</pre>
+<script src="jquery-1.11.3.min.js"></script>
 <script src="jquery.countdown.js"></script>
 </body>
 <script>
-   $("#countdown").countdown("2016/01/01", function(event) {
+  $("#c1").countdown("2017/01/01", function(event) {
      $(this).text(
        event.strftime('%D days %H:%M:%S')
      );
   });
-   </script>
+  
+  $('#c2').countdown('2012/20/20 12:34:56');
+</script>
 </html>

@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Touch, responsive, flickable carousels">
+  <meta name="viewport" content="width=device-width">
+
+  <title>Flickity &middot; Style</title>
+
+    <link rel="stylesheet" href="css/flickity-docs.css" media="screen">
+
+</head>
+<body class="page--style export">
+
+<nav class="site-nav">
+  <div class="content-wrap">
+    <ul class="site-nav__list">
+      <li class="site-nav__item site-nav__item--homepage"><a href=".">Flickity</a></li>
+      <li class="site-nav__item site-nav__item--style"><a href="style.html">Style</a></li>
+      <li class="site-nav__item site-nav__item--options"><a href="options.html">Options</a></li>
+      <li class="site-nav__item site-nav__item--api"><a href="api.html">API</a></li>
+      <li class="site-nav__item site-nav__item--extras"><a href="extras.html">Extras</a></li>
+      <li class="site-nav__item site-nav__item--license"><a href="license.html">License</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<div class="main">
+  <div class="content-wrap">
+      <h1 class="page-title">Style</h1>
+
+
+    <ul class="page-nav js-stickeroo">
+<li class="page-nav__item--h2"><a href="#cell-style">Cell style</a></li>
+<li class="page-nav__item--h3"><a href="#cell-sizing">Cell sizing</a></li>
+<li class="page-nav__item--h3"><a href="#selected-cell">Selected cell</a></li>
+<li class="page-nav__item--h2"><a href="#previous-next-buttons">Previous &amp; next buttons</a></li>
+<li class="page-nav__item--h2"><a href="#page-dots">Page dots</a></li>
+<li class="page-nav__item--h2"><a href="#carousel">Carousel</a></li>
+</ul>
+
+
+<h2 id="cell-style">Cell style</h2>
+
+<h3 id="cell-sizing">Cell sizing</h3>
+
+<p>All sizing and styling of the cells are handled by your own CSS. The height of the carousel is set to the maximum height of the cells.</p>
+
+<div class="example duo">
+  <div class="example__code duo__cell">
+<pre><code class="css"><span class="class">.carousel-cell</span> <span class="rules">{
+  <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100%</span></span></span>; <span class="comment">/* full width */</span>
+  <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">160px</span></span></span>; <span class="comment">/* height of carousel */</span>
+  <span class="rule"><span class="attribute">margin-right</span>:<span class="value"> <span class="number">10px</span></span></span>;
+<span class="rule">}</span></span>
+</code></pre>
+  </div>
+  <div class="example__demo duo__cell">
+    <div class="carousel carousel--full-width js-flickity">
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+    </div>
+    <p class="edit-demo">
+        <a href="http://codepen.io/desandro/pen/dPdyJK">Edit this demo on CodePen</a>
+    </p>
+  </div>
+</div>
+
+<div class="example duo">
+  <div class="example__code duo__cell">
+<pre><code class="css"><span class="class">.carousel-cell</span> <span class="rules">{
+  <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">50%</span></span></span>; <span class="comment">/* half-width */</span>
+  <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">160px</span></span></span>;
+  <span class="rule"><span class="attribute">margin-right</span>:<span class="value"> <span class="number">10px</span></span></span>;
+<span class="rule">}</span></span>
+</code></pre>
+  </div>
+  <div class="example__demo duo__cell">
+    <div class="carousel carousel--half-width js-flickity">
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+    </div>
+    <p class="edit-demo">
+        <a href="http://codepen.io/desandro/pen/gbvOvy">Edit this demo on CodePen</a>
+    </p>
+  </div>
+</div>
+
+<p>Cells can be different sizes. You can use any unit you like: percent, pixels, etc.</p>
+
+<div class="example duo">
+  <div class="example__code duo__cell">
+<pre><code class="css"><span class="class">.carousel-cell</span> <span class="rules">{
+  <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">33%</span></span></span>;
+  <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">160px</span></span></span>;
+  <span class="rule"><span class="attribute">margin-right</span>:<span class="value"> <span class="number">10px</span></span></span>;
+<span class="rule">}</span></span>
+<span class="class">.carousel-cell</span><span class="class">.size-180</span> <span class="rules">{ <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">180px</span></span></span>; <span class="rule">}</span></span>
+<span class="class">.carousel-cell</span><span class="class">.size-large</span> <span class="rules">{ <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">75%</span></span></span>; <span class="rule">}</span></span>
+</code></pre>
+  </div>
+  <div class="example__demo duo__cell">
+    <div class="carousel carousel--various-widths js-flickity">
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell size-180"></div>
+      <div class="carousel-cell size-large"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell size-large"></div>
+    </div>
+    <p class="edit-demo">
+        <a href="http://codepen.io/desandro/pen/raJNdm">Edit this demo on CodePen</a>
+    </p>
+  </div>
+</div>
+
+<p>You can use media queries to show different number of cells for different breakpoints.</p>
+
+<div class="example">
+  <div class="example__code">
+<pre><code class="css"><span class="comment">/* default full-width cells */</span>
+<span class="class">.carousel-cell</span> <span class="rules">{
+  <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100%</span></span></span>;
+  <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">160px</span></span></span>;
+  <span class="rule"><span class="attribute">margin-right</span>:<span class="value"> <span class="number">10px</span></span></span>;
+<span class="rule">}</span></span>
+
+<span class="at_rule">@<span class="keyword">media</span> screen and ( min-width: <span class="number">768px</span> ) </span>{
+  <span class="comment">/* half-width cells for larger devices */</span>
+  <span class="class">.carousel-cell</span> <span class="rules">{ <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">50%</span></span></span>; <span class="rule">}</span></span>
+}
+</code></pre>
+  </div>
+  <div class="example__demo">
+    <div class="carousel carousel--media-queried js-flickity">
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+    </div>
+    <p class="edit-demo">
+        <a href="http://codepen.io/desandro/pen/azqbGV">Edit this demo on CodePen</a>
+    </p>
+  </div>
+</div>
+
+<h3 id="selected-cell">Selected cell</h3>
+
+<p>Flickity adds <code>is-selected</code> class to the selected cell.</p>
+
+<div class="example duo">
+  <div class="example__code duo__cell">
+<pre><code class="css"><span class="class">.carousel-cell</span><span class="class">.is-selected</span> <span class="rules">{
+  <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#ED2</span></span></span>;
+<span class="rule">}</span></span>
+</code></pre>
+  </div>
+  <div class="example__demo duo__cell">
+    <div class="carousel carousel--selected-cell carousel--show-several js-flickity">
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+    </div>
+    <p class="edit-demo">
+        <a href="http://codepen.io/desandro/pen/YPezvR">Edit this demo on CodePen</a>
+    </p>
+  </div>
+</div>
+
+
+<h2 id="previous-next-buttons">Previous &amp; next buttons</h2>
+
+<p>Style and position previous &amp; next buttons with CSS.</p>
+
+<div class="example duo">
+  <div class="example__code duo__cell">
+<pre><code class="css"><span class="comment">/* big buttons, no circle */</span>
+<span class="class">.flickity-prev-next-button</span> <span class="rules">{
+  <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100px</span></span></span>;
+  <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100px</span></span></span>;
+  <span class="rule"><span class="attribute">background</span>:<span class="value"> transparent</span></span>;
+<span class="rule">}</span></span>
+<span class="class">.flickity-prev-next-button</span><span class="pseudo">:hover</span> <span class="rules">{
+  <span class="rule"><span class="attribute">background</span>:<span class="value"> transparent</span></span>;
+<span class="rule">}</span></span>
+<span class="comment">/* arrow color */</span>
+<span class="class">.flickity-prev-next-button</span> <span class="class">.arrow</span> <span class="rules">{
+  <span class="rule"><span class="attribute">fill</span>:<span class="value"> white</span></span>;
+<span class="rule">}</span></span>
+<span class="class">.flickity-prev-next-button</span><span class="class">.no-svg</span> <span class="rules">{
+  <span class="rule"><span class="attribute">color</span>:<span class="value"> white</span></span>;
+<span class="rule">}</span></span>
+<span class="comment">/* hide disabled button */</span>
+<span class="class">.flickity-prev-next-button</span><span class="pseudo">:disabled</span> <span class="rules">{
+  <span class="rule"><span class="attribute">display</span>:<span class="value"> none</span></span>;
+<span class="rule">}</span></span>
+</code></pre>
+  </div>
+  <div class="example__demo duo__cell">
+    <div class="carousel carousel--full-width carousel--prev-next-big-arrow js-flickity">
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+    </div>
+    <p class="edit-demo">
+        <a href="http://codepen.io/desandro/pen/EaQxpb">Edit this demo on CodePen</a>
+    </p>
+  </div>
+</div>
+
+<div class="example duo">
+  <div class="example__code duo__cell">
+<pre><code class="css"><span class="comment">/* smaller, dark, rounded square */</span>
+<span class="class">.flickity-prev-next-button</span> <span class="rules">{
+  <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">30px</span></span></span>;
+  <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">30px</span></span></span>;
+  <span class="rule"><span class="attribute">border-radius</span>:<span class="value"> <span class="number">5px</span></span></span>;
+  <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#333</span></span></span>;
+<span class="rule">}</span></span>
+<span class="class">.flickity-prev-next-button</span><span class="pseudo">:hover</span> <span class="rules">{
+  <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#F90</span></span></span>;
+<span class="rule">}</span></span>
+<span class="comment">/* arrow color */</span>
+<span class="class">.flickity-prev-next-button</span> <span class="class">.arrow</span> <span class="rules">{
+  <span class="rule"><span class="attribute">fill</span>:<span class="value"> white</span></span>;
+<span class="rule">}</span></span>
+<span class="class">.flickity-prev-next-button</span><span class="class">.no-svg</span> <span class="rules">{
+  <span class="rule"><span class="attribute">color</span>:<span class="value"> white</span></span>;
+<span class="rule">}</span></span>
+<span class="comment">/* position outside */</span>
+<span class="class">.flickity-prev-next-button</span><span class="class">.previous</span> <span class="rules">{
+  <span class="rule"><span class="attribute">left</span>:<span class="value"> -<span class="number">40px</span></span></span>;
+<span class="rule">}</span></span>
+<span class="class">.flickity-prev-next-button</span><span class="class">.next</span> <span class="rules">{
+  <span class="rule"><span class="attribute">right</span>:<span class="value"> -<span class="number">40px</span></span></span>;
+<span class="rule">}</span></span>
+</code></pre>
+  </div>
+  <div class="example__demo duo__cell">
+    <div class="carousel carousel--full-width carousel--prev-next-small-outside js-flickity">
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+    </div>
+    <p class="edit-demo">
+        <a href="http://codepen.io/desandro/pen/zxRYMP">Edit this demo on CodePen</a>
+    </p>
+  </div>
+</div>
+
+<p>Previous &amp; next buttons have <code>:focus</code> style. Click on a carousel, then hit <kbd>TAB</kbd> to see it.</p>
+
+<div class="example duo">
+  <div class="example__code duo__cell">
+<pre><code class="css"><span class="comment">/* already included in flickity.css */</span>
+<span class="class">.flickity-prev-next-button</span><span class="pseudo">:focus</span> <span class="rules">{
+  <span class="rule"><span class="attribute">outline</span>:<span class="value"> none</span></span>;
+  <span class="rule"><span class="attribute">box-shadow</span>:<span class="value"> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">5px</span> <span class="hexcolor">#09F</span></span></span>;
+<span class="rule">}</span></span>
+</code></pre>
+  </div>
+  <div class="example__demo duo__cell">
+    <div class="carousel js-flickity">
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+    </div>
+  </div>
+</div>
+
+
+<h2 id="page-dots">Page dots</h2>
+
+<p>Style and position page dots with CSS.</p>
+
+<div class="example duo">
+  <div class="example__code duo__cell">
+<pre><code class="css"><span class="comment">/* position dots in carousel */</span>
+<span class="class">.flickity-page-dots</span> <span class="rules">{
+  <span class="rule"><span class="attribute">bottom</span>:<span class="value"> <span class="number">0px</span></span></span>;
+<span class="rule">}</span></span>
+<span class="comment">/* white circles */</span>
+<span class="class">.flickity-page-dots</span> <span class="class">.dot</span> <span class="rules">{
+  <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">12px</span></span></span>;
+  <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">12px</span></span></span>;
+  <span class="rule"><span class="attribute">opacity</span>:<span class="value"> <span class="number">1</span></span></span>;
+  <span class="rule"><span class="attribute">background</span>:<span class="value"> transparent</span></span>;
+  <span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">2px</span> solid white</span></span>;
+<span class="rule">}</span></span>
+<span class="comment">/* fill-in selected dot */</span>
+<span class="class">.flickity-page-dots</span> <span class="class">.dot</span><span class="class">.is-selected</span> <span class="rules">{
+  <span class="rule"><span class="attribute">background</span>:<span class="value"> white</span></span>;
+<span class="rule">}</span></span>
+</code></pre>
+  </div>
+  <div class="example__demo duo__cell">
+    <div class="carousel carousel--full-width carousel--o-dots js-flickity">
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+    </div>
+    <p class="edit-demo">
+        <a href="http://codepen.io/desandro/pen/EaQaYL">Edit this demo on CodePen</a>
+    </p>
+  </div>
+</div>
+
+<div class="example duo">
+  <div class="example__code duo__cell">
+<pre><code class="css"><span class="comment">/* position dots up a bit */</span>
+<span class="class">.flickity-page-dots</span> <span class="rules">{
+  <span class="rule"><span class="attribute">bottom</span>:<span class="value"> -<span class="number">22px</span></span></span>;
+<span class="rule">}</span></span>
+<span class="comment">/* dots are lines */</span>
+<span class="class">.flickity-page-dots</span> <span class="class">.dot</span> <span class="rules">{
+  <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">4px</span></span></span>;
+  <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">40px</span></span></span>;
+  <span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">0</span></span></span>;
+  <span class="rule"><span class="attribute">border-radius</span>:<span class="value"> <span class="number">0</span></span></span>;
+<span class="rule">}</span></span>
+</code></pre>
+  </div>
+  <div class="example__demo duo__cell">
+    <div class="carousel carousel--full-width carousel--line-dots js-flickity">
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+    </div>
+    <p class="edit-demo">
+        <a href="http://codepen.io/desandro/pen/ByYyao">Edit this demo on CodePen</a>
+    </p>
+  </div>
+</div>
+
+
+<h2 id="carousel">Carousel</h2>
+
+<p>Add a carousel <code>:focus</code> style style to aid accessibility. When focused, users can navigate the carousel with their keyboard.</p>
+
+<div class="example duo">
+  <div class="example__code duo__cell">
+<pre><code class="css"><span class="class">.flickity-enabled</span><span class="pseudo">:focus</span> <span class="class">.flickity-viewport</span> <span class="rules">{
+  <span class="rule"><span class="attribute">outline</span>:<span class="value"> thin dotted</span></span>;
+  <span class="rule"><span class="attribute">outline</span>:<span class="value"> <span class="number">5px</span> auto -webkit-focus-ring-color</span></span>;
+<span class="rule">}</span></span>
+</code></pre>
+  </div>
+  <div class="example__demo duo__cell">
+    <div class="carousel carousel--carousel-focus js-flickity">
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+      <div class="carousel-cell"></div>
+    </div>
+    <p class="edit-demo">
+        <a href="http://codepen.io/desandro/pen/RNQOGm">Edit this demo on CodePen</a>
+    </p>
+  </div>
+</div>
+  </div>
+</div>
+
+<nav class="site-nav">
+  <div class="content-wrap">
+    <ul class="site-nav__list">
+      <li class="site-nav__item site-nav__item--homepage"><a href=".">Flickity</a></li>
+      <li class="site-nav__item site-nav__item--style"><a href="style.html">Style</a></li>
+      <li class="site-nav__item site-nav__item--options"><a href="options.html">Options</a></li>
+      <li class="site-nav__item site-nav__item--api"><a href="api.html">API</a></li>
+      <li class="site-nav__item site-nav__item--extras"><a href="extras.html">Extras</a></li>
+      <li class="site-nav__item site-nav__item--license"><a href="license.html">License</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="site-footer">
+  <div class="content-wrap">
+
+    <p class="site-footer__follow">Follow <a href="https://twitter.com/metafizzyco">@metafizzyco on Twitter for Flickity updates</a>.</p>
+
+    <p class="site-footer__help">Help improve these docs.
+      <a href="https://github.com/metafizzy/flickity-docs/issues/">Open an issue</a> or
+      <a href="https://github.com/metafizzy/flickity-docs/blob/master/content/style.mustache">pull request</a>.</p>
+
+    <p class="site-footer__brand">
+      <a class="site-footer__brand__link" href="http://metafizzy.co">
+        <svg class="metafizzy-logo site-footer__metafizzy-logo" viewbox="0 0 400 512">
+          <path fill="#333" d="M329.4 15c-25 0-44 15-52 26.4C271 27 251 0 213 0c-39 0-69 30.4-70 69-9 3.6-32 17-38 22-10-5-21-8-33-8-35 0-71 27.4-71 71.6 0 40 34.4 68.4 65.6 69.5 6 10 13 21 22.5 35 0.6 0-38 23.5-38 23.5-15 9.5-31 27-31 56.5 0 38.4 32 66 66 66 12.4 0 24.5-3 35-10l8-5-12 34c-15 46 20 88 62.5 88 28 0 53.4-18 63-45l3.6-10c9.6 -1 19-4 28-9l47.5-29c13-8 23-20 28-35l23.5-67c9.6-27 7-64 1-95 4-8 26-57 26-113 0-79-43-94-70-94z"/>
+          <defs>
+            <path id="metafizzy-logo__body-path" d="M290.4 84c-1-18 10-34 27.6-40 21-7 43 5 50 26 11 34 4 75-7 112-8-23-37-68-71-98zm31 77.4c-30-45-65-82-104-82-7 0-13-6-13-14 0-7 6.4-13 14-13 22 0.6 36.6 8 37.5 8-5-26-38-45-66-28-18 11-26 33.6-18 53-19 5.4-55 27-68 38.5-14-16-38-20-56-9-21 13-27 40-15 61 10 17 29.6 24 47.6 20 8 15 23 38 45 71l-61 38C46 317 40 342 52 360c13 20 38 23.4 55 13 11.6-7 31-19 31-19 0-2 0-4 -1-5-1-7 4-14 11-15 7-1 14 4 15 11 2.5 15 0 27-1 32 0 0-11 31-20 57-9 28 12.5 53 37 53 15 0 32-9 38-27l31-89c1-4 4-7 8-8 12.6-4 23-14 23-14 5.4-5 14-4 19 1 5 5.4 4.5 14 -1 19 0 0.5-11 10-26 17l-15 43c1 -1 2.6-1 4-2l47.5-29c8-5 14-12 17-21l23.5-67c14-41-3-112-26-147z"/>
+          </defs>
+          <use class="metafizzy-logo__body" xlink:href="#metafizzy-logo__body-path"/>
+          <clippath id="metafizzy-logo__body-clip">
+            <use xlink:href="#metafizzy-logo__body-path"/>
+          </clippath>
+          <g clip-path="url(#metafizzy-logo__body-clip)">
+            <path class="metafizzy-logo__stripe1" d="M-65 186l379-238 55 87L-11 273z"/>
+            <path class="metafizzy-logo__stripe2" d="M-11 272l379-238 55 87-379 239z"/>
+            <path class="metafizzy-logo__stripe3" d="M43 358l379-238 46 73-379 238z"/>
+            <path class="metafizzy-logo__stripe4" d="M89 430l379-238 55 87-379 239z"/>
+          </g>
+          <ellipse transform="rotate(-121.393 260.234 218.053)" fill="#FFF" cx="260" cy="218" rx="32" ry="49"/>
+          <path fill="#333" d="M196.4 196c6.6 11-8 7-19 14-11 6.6-14 21-21 10-7-11-3-25 8-32 11-7 25-3 32 8zM287 140c6.6 11-8 7-19 14s-14 21-21 10-3-25 8-32c11-7 25-3 32 8z"/>
+          <path fill="#333" d="M243 199l17.4-11c5-3 11-1 14 3 2 3 2 7 0 10.5l-6 10c-2 3-4 4.4-8 5l-11 1c-4 0-7-1-9-5-3-5-1-11 3.5-14z"/>
+        </svg>
+
+        <svg class="metafizzy-wordmark site-footer__metafizzy-wordmark" xmlns="http://www.w3.org/2000/svg" width="1000" height="300" viewbox="0 0 1000 300">
+          <path d="M491 121l13-39H480l-3 8c-23-31-63 7-72 41-4 10-12 25-23 25-13 0 0-35 6-56v 0c4-12 11-36 11-36H423c25 0 51 5 71-13l-14-15c-9 8-17 8-27 8h-48l7-23h-25L380 44h-29l-6 21H374l-6 19c-7 22-11 49-30 64-14 10-38 17-53 7 19-8 51-21 51-45 0-13-8-29-28-29-39 0-57 40-57 60 0 25 24 40 49 40 21 0 39-7 54-19 3 9 11 16 24 16 13 0 23-5 30-14 7 10 19 16 33 14 11-1 19-7 25-14 4 8 11 14 25 15L498 157c-21-1-10-26-7-36zM277 132c3-10 13-33 28-29 5 1 6 7 4 12-4 12-20 20-33 26 0-3 0-6 1-8zm166 24c-9 3-14-2-15-11-3-19 25-60 42-33l-4 14c-3 12-12 26-23 30zm-192 33L236 207c-31-18-33-59-24-87 10-31 19-50 19-50l-50 65h-23c 0-18-4-50-8-65L136 115c-13 44-37 119-97 109-18-3-32-16-36-34-4-23 12-45 30-60l13 17c-14 11-29 33-13 50 13 14 31 6 42-5 23-22 30-56 38-86C121 82 135 35 135 35c 0 0 -1-1-1-1-5 9-15 14-25 13-11-1-17-11-14-21 3-10 14-18 25-18 15 0 23 1 34 12 14 13 23 50 26 80L244 21h23l-28 94c-7 23-13 59 12 74zM649 48c-2 6-11 18-24 18-14 0-20-11-17-21 3-8 9-14 17-16-8-9-28-7-38 2-9 8-12 20-15 31l-6 21h65l-29 94h-25l22-73H558s-14 48-22 72c-8 27-34 57-64 59L478 212c16-1 29-25 34-41 4-13 18-58 21-68h-19l7-21H539c4-12 7-24 11-36C559 21 583 1 614 1c28 0 42 21 35 47zm78 35h-82l-6 21H685l-62 56-5 17c39 0 75 9 94-15l-16-14c-11 13-27 9-39 10L721 99l6-17zM999 70c0 38-27 89-102 123-2 6-4 12-5 18-7 24-23 88-86 88-22 0-41-12-41-36 0-26 23-38 36-46 24-14 50-25 76-36l3-9c-4 2-8 3-13 3-13 1-28-4-35-15-10 8-23 14-35 17-22 5-57 0-79 0l5-18 61-55h-46l6-21h82l-6 17-64 58c11 0 22 0 33 0 14-1 31-10 41-26 3-4 16-50 16-50h24l-11 38c-4 13-7 35 8 35 12 0 23-13 26-23l15-50h25l-26 85c72-42 76-101 64-114-5 9-15 16-26 14-11-1-17-11-14-21 3-10 14-18 25-18 34 0 44 27 44 44zM867 206l-15 7c-14 7-30 13-48 25-10 7-23 19-15 32 6 11 24 9 34 5 13-6 26-19 32-32 6-11 9-24 13-37z"/>
+        </svg>
+      </a>
+
+    </p>
+
+  </div> 
+</div> 
+
+  <script src="js/flickity-docs.min.js"></script>
+
+
+</body>
+</html>
