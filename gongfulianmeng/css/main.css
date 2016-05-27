@@ -1,0 +1,270 @@
+*{
+	margin:0;
+	padding: 0;
+	box-sizing:border-box;
+}
+body{
+	font-family:'Microsoft Yahei';
+	min-width:1060px;
+}
+.header{
+	
+}
+.header .top{
+	width:100%;
+	min-width:1060px;
+	background-color:#272d3e;
+	color:#cccccc;
+	font-size:14px;
+}
+.header .top .content{
+	width:1060px;
+	height:32px;
+	line-height:32px;
+	margin:0 auto;
+}
+.header .top .left{
+	float:left;
+	height:32px;
+}
+.header .top i{
+	display:inline-block;
+	height:32px;
+	width:82px;
+}
+.header .top .weibo{
+	background:url('../image/weibo.png') no-repeat center;
+	margin-right:40px;
+}
+.header .top .wechat{
+	background:url('../image/wechat.png') no-repeat center;
+}
+.header .top .right{
+	float:right;
+	height:32px;
+}
+.header .top .qq{
+	margin-left:30px;
+}
+.header .menu{
+	width:100%;
+	background-color:#fff;
+}
+.header .menu .content{
+	width:1060px;
+	height:80px;
+	margin:0 auto;
+}
+.header .menu .logo{
+	display:inline-block;
+	height:80px;
+	width:347px;
+	background:url('../image/logo.png') no-repeat center;
+}
+.header .menu ul{
+	float:right;
+	height:80px;
+	line-height:80px;
+	list-style:none;
+	color:#333333;
+	font-size:18px;
+}
+.header .menu li{
+	float:left;
+	height:100%;
+	width:116px;
+	text-align:center;
+	cursor:pointer;
+}
+.header .menu li.on{
+	background-color:#f5f2f2;
+	color:#ff6f69;
+	border-top:3px solid #ff6f69;
+}
+#slider{
+	width:100%;
+	overflow:hidden;
+	height:374px;
+	position:relative;
+}
+#slider img{
+	height:374px;
+}
+.ad{
+	background-color:#f6f6f6;
+}
+.ad div{
+	background:url('../image/advantage.png') no-repeat center;
+	width:1060px;
+	margin:0 auto;
+	height:160px;
+}
+.step{
+	background-color:#ff6f69;
+	height:402px;
+	position:relative;
+	box-shadow:0 2px 17px 3px #ccc;
+}
+.step .m{
+	background:url('../image/m.png') no-repeat center;
+	width:1060px;
+	margin:0 auto;
+	height:402px;
+	padding-top:124px;
+}
+.step .m ul{
+	list-style:none;
+}
+.step .m li{
+	width:28px;
+	float:left;
+	text-align:center;
+	margin-right:44px;
+}
+.step .m li.gap{
+	margin-right:140px;
+}
+.step .m li.last{
+	margin-right:0px;
+}
+.step .m a{
+	cursor:pointer;
+}
+.step .m a:hover label{
+	background-color:#ff6f69;
+	border:1px solid #fff;
+}
+.step .m a:hover span{
+	background-color:#f26b65;
+}
+.step .m li label{
+	display:inline-block;
+	width:20px;
+	height:20px;
+	border-radius:50%;
+	border:1px solid #e25d58;
+	font-size:14px;
+	text-align:center;
+	line-height:20px;
+	color:#ffffff;
+	background-color:#eb615b;
+	margin-bottom:10px;
+}
+.step .m span{
+	font-size:18px;
+	color:#fff;
+	border:1px solid #ffa9a5;
+	width:28px;
+	padding:10px 5px;
+	display:block;
+	background-color:#df645e;
+}
+.step .m i,.step .m em{
+	display:block;
+	width:18px;
+	height:6px;
+	vertical-align:top;
+	margin:0 auto;
+	background:url('../image/m-t.png') no-repeat;
+}
+.step .m i{
+	background-position:0 0;
+}
+.step .m em{
+	background-position:0 -10px;
+}
+.step .m .g{
+	margin:7px 0;
+}
+.q{
+	background-color:#f5f5f5;
+}
+.q div{
+	width:1060px;
+	margin:0 auto;
+}
+.q1{
+	background:url('../image/q1.png') no-repeat center;
+	height:306px;
+}
+.q2{
+	background:url('../image/q2.png') no-repeat center;
+	height:187px;
+}
+.q3{
+	background:url('../image/q3.png') no-repeat center;
+	height:173px;
+}
+.news{
+	background-color:#fff;
+}
+.news div{
+	background:url('../image/news.png') no-repeat center;
+	width:1060px;
+	margin:0 auto;
+	height:74px;
+}
+.footer{
+	height:168px;
+	background-color:#272d3e;
+	padding-top:30px;
+}
+.footer .content{
+	width:1060px;
+	margin:0 auto;
+}
+.footer .f-logo{
+	background:url('../image/f-logo.png') no-repeat;	
+	height:96px;
+	width:177px;
+	padding-top:64px;
+	float:left;
+}
+.footer .f-logo a{
+	display:inline-block;
+	height:32px;
+	width:32px;
+	margin-right:40px;
+	float:left;
+	cursor:pointer;
+}
+.footer .f-logo .qq{
+	background:url('../image/qq.png') no-repeat center;
+}
+.footer .f-logo .email{
+	background:url('../image/email.png') no-repeat center;
+}
+.footer .f-logo .phone{
+	background:url('../image/phone.png') no-repeat center;
+	margin-right:0px;
+}
+.footer ul{
+	list-style:none;
+	color:#899aab;
+	font-size:14px;
+	float:left;
+	margin-left:100px;
+}
+.footer ul .title{
+	font-size:18px;
+	color:#fff;
+}
+.footer ul li{
+	line-height:25px;
+}
+.footer .QR{
+	background:url('../image/QR.png') no-repeat center;
+	width:96px;
+	height:118px;
+	float:right;
+}
+.flickity-page-dots .dot{
+	background-color:transparent;
+	border:1px solid #9e9c9e;
+}
+.flickity-page-dots .dot.is-selected{
+	background-color:#9e9c9e;
+}
+.flickity-page-dots{
+	bottom:20px;
+}
