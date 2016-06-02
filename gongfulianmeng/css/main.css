@@ -268,3 +268,100 @@ body{
 .flickity-page-dots{
 	bottom:20px;
 }
+.service{
+	position:fixed;
+	right:50px;
+	top:50%;
+	margin-top:-198px;
+	height:396px;
+	width:144px;
+	background:url('../image/service.png') no-repeat center;
+	padding:187px 21px 0 43px;
+}
+.service span{
+	display:block;
+	width:72px;
+	height:22px;
+	line-height:19px;
+	border:1px solid #6479d9;
+	background-color:#7387ea;
+	border-radius:3px;
+	font-size:12px;
+	color:#ffffff;
+	margin-bottom:10px;
+	cursor:pointer;
+}
+.service span i{
+	display:inline-block;
+	height:15px;
+	width:17px;
+	vertical-align:top;
+	background:url('../image/service-qqicon.png') no-repeat center;
+	margin:2px;
+}
+.service span.off{
+	color:#e5e5e5;
+	cursor:default;
+}
+.service span.off i{
+	background:url('../image/service-qqicon-off.png') no-repeat center;
+}
+.service label{
+	color:#3f4e94;
+	font-size:12px;
+	position:absolute;
+	right:30px;
+	bottom:32px;
+	cursor:pointer;
+}
+.info {
+	width:100%;
+	background-color:#f6f6f6;
+	padding-top:10px;
+	padding-bottom:30px;
+}
+.info .nav{
+	padding:20px 10px;
+	font-size:14px;
+	color:#333333;
+	width:1060px;
+	margin:0 auto;
+}
+.info .nav .goHome{
+	float:right;
+	cursor:pointer;
+}
+.info .nav .goHome:hover{
+	text-decoration:underline;
+}
+.info .main{
+	width:1060px;
+	margin:0 auto;
+	border:1px solid #cccccc;
+	padding:18px 30px;
+	background-color:#fff;
+}
+.info .info-ul {
+	list-style:none;
+	margin-bottom:20px;
+}
+.info .info-ul li{
+	line-height:45px;
+	height:45px;
+	border-bottom:1px solid #dddee2;
+	font-size:18px;
+	color:#333333;
+	cursor:pointer;
+}
+.info .info-ul li .b{
+	display:inline-block;
+	height:20px;
+	width:2px;
+	background-color:#ff6f69;
+	vertical-align:top;
+	margin-top:11px;
+	margin-right:12px;
+}
+.info .info-ul li:hover{
+	color:#ff6f69;
+}
