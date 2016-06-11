@@ -22,77 +22,121 @@
 	
 	<title>摩臣娱乐</title>
 </head>
-<body onload="loaded();">
-<header><div class="logo"></div></header>
-<section id="wrapper">
-	<div id="scroller">
-		<div class="banner swiper-container">
-			<div class="swiper-wrapper">
-				<div class="swiper-slide">
-					<img src="img/banner/1.jpg">
+<body onload="Main.loaded()">
+<div id="index" class="page">
+	<header><div class="logo"></div></header>
+	<section class="wrapper">
+		<div id="scroller">
+			<div class="banner swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide">
+						<img src="img/banner/1.jpg">
+					</div>
+					<div class="swiper-slide">
+						<img src="img/banner/2.jpg">
+					</div>
+					<div class="swiper-slide">
+						<img src="img/banner/3.jpg">
+					</div>
+					<div class="swiper-slide">
+						<img src="img/banner/41.jpg">
+					</div>
 				</div>
-				<div class="swiper-slide">
-					<img src="img/banner/2.jpg">
+			</div>
+			<div class="notice">
+				<i></i><span>活动活动活动</span>
+			</div>
+			<div class="lts clearfix">
+				<div>
+					<img src="img/lt/cqssc.png">
+					<span><label class="t">重庆时时彩</label><label class="tip">让彩票融入生活</label></span>
 				</div>
-				<div class="swiper-slide">
-					<img src="img/banner/3.jpg">
+				<div>
+					<img src="img/lt/mmc.png">
+					<span><label class="t">WBG秒秒彩</label><label class="tip">随心所欲&nbsp;即买即开</label></span>
 				</div>
-				<div class="swiper-slide">
-					<img src="img/banner/4.jpg">
+				<div>
+					<img src="img/lt/bjpk10.png">
+					<span><label class="t">PK拾</label><label class="tip">10分钟一期</label></span>
+				</div>
+				<div>
+					<img src="img/lt/3dfc.png">
+					<span><label class="t">福彩3D</label><label class="tip">每天一期 20:30开奖</label></span>
+				</div>
+				<div>
+					<img src="img/lt/gd11y.png">
+					<span><label class="t">广东11选5</label><label class="tip">让彩票融入生活</label></span>
+				</div>
+				<div>
+					<img src="img/lt/ffc.png">
+					<span><label class="t">WBG分分彩</label><label class="tip">每分钟开奖&nbsp;全天参与</label></span>
+				</div>
+				<div>
+					<img src="img/lt/xjssc.png">
+					<span><label class="t">新疆时时彩</label><label class="tip">让彩票融入生活</label></span>
+				</div>
+				<div>
+					<img src="img/lt/5fc.png">
+					<span><label class="t">WBG五分彩</label><label class="tip">5分钟一期&nbsp;全天参与</label></span>
+				</div>
+				<div>
+					<img src="img/lt/sd11y.png">
+					<span><label class="t">山东11选5</label><label class="tip">让彩票融入生活</label></span>
+				</div>
+				<div>
+					<img src="img/lt/jx11y.png">
+					<span><label class="t">江西11选5</label><label class="tip">让彩票融入生活</label></span>
 				</div>
 			</div>
 		</div>
-		<div class="notice">
-			<i></i><span>活动活动活动</span>
-		</div>
-		<div class="lts clearfix">
-			<div>
-				<img src="img/lt/cqssc.png">
-				<span><label class="t">重庆时时彩</label><label class="tip">让彩票融入生活</label></span>
-			</div>
-			<div>
-				<img src="img/lt/mmc.png">
-				<span><label class="t">WBG秒秒彩</label><label class="tip">随心所欲&nbsp;即买即开</label></span>
-			</div>
-			<div>
-				<img src="img/lt/bjpk10.png">
-				<span><label class="t">PK拾</label><label class="tip">10分钟一期</label></span>
-			</div>
-			<div>
-				<img src="img/lt/3dfc.png">
-				<span><label class="t">福彩3D</label><label class="tip">每天一期 20:30开奖</label></span>
-			</div>
-			<div>
-				<img src="img/lt/gd11y.png">
-				<span><label class="t">广东11选5</label><label class="tip">让彩票融入生活</label></span>
-			</div>
-			<div>
-				<img src="img/lt/ffc.png">
-				<span><label class="t">WBG分分彩</label><label class="tip">每分钟开奖&nbsp;全天参与</label></span>
-			</div>
-			<div>
-				<img src="img/lt/xjssc.png">
-				<span><label class="t">新疆时时彩</label><label class="tip">让彩票融入生活</label></span>
-			</div>
-			<div>
-				<img src="img/lt/5fc.png">
-				<span><label class="t">WBG五分彩</label><label class="tip">5分钟一期&nbsp;全天参与</label></span>
-			</div>
-			<div>
-				<img src="img/lt/sd11y.png">
-				<span><label class="t">山东11选5</label><label class="tip">让彩票融入生活</label></span>
-			</div>
-			<div>
-				<img src="img/lt/jx11y.png">
-				<span><label class="t">江西11选5</label><label class="tip">让彩票融入生活</label></span>
+	</section>
+	<footer class="footer">
+		<div class="home"><i></i>购彩大厅</div>
+		<div class="account"><i></i>我的账户</div>
+	</footer>
+</div>
+<div id="lottery" class="page pageNext">
+	<header><div class="tab">五星直选<i></i></div></header>
+	<div class="lt-info"><span>重庆时时彩</span>距<em>032</em>期截止：<label class="time">00:55</label></div>
+	<section class="wrapper">
+		<div class="scroller">
+			<div class="number">
+				<dl>
+					<dt>万</dt>
+					<dd><i>0</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i></dd>
+				</dl>
+				<dl>
+					<dt>千</dt>
+					<dd><i>0</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i></dd>
+				</dl>
+				<dl>
+					<dt>百</dt>
+					<dd><i>0</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i></dd>
+				</dl>
+				<dl>
+					<dt>百</dt>
+					<dd><i>0</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i></dd>
+				</dl>
+				<dl>
+					<dt>百</dt>
+					<dd><i>0</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i></dd>
+				</dl>
+				<dl>
+					<dt>百</dt>
+					<dd><i>0</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i></dd>
+				</dl>
+				<dl>
+					<dt>百</dt>
+					<dd><i>0</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i></dd>
+				</dl>
 			</div>
 		</div>
-	</div>
-</section>
-<footer class="footer">
-	<div class="home"><i></i>购彩大厅</div>
-	<div class="account"><i></i>我的账户</div>
-</footer>
+	</section>
+	<footer class="footer">
+		<div class="home"><i></i>购彩大厅</div>
+		<div class="account"><i></i>我的账户</div>
+	</footer>
+</div>
 <script src="js/zepto.min.js"></script>
 <script src="js/swiper.jquery.min.js"></script>
 <script src="js/iscroll.js"></script>

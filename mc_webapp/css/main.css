@@ -10,6 +10,7 @@ body{
 	-webkit-user-select: none;
 	-webkit-text-size-adjust: none;
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	overflow:hidden;
 }
 img { -webkit-touch-callout: none; }
 .clearfix:after{content:"";display:block;height:0;visibility:hidden; clear:both;}
@@ -20,11 +21,12 @@ header{
 	background-color:#442d7b;
 	background: linear-gradient(to bottom, #7051b3, #3642a2);
 	position: absolute;
-	z-index: 1000;
+	z-index: 10;
+	height:50px;
 	top: 0;
 	left: 0;
 }
-#wrapper{
+.wrapper{
 	position: absolute;
 	z-index: 1;
 	top: 50px;
@@ -34,7 +36,7 @@ header{
 	width: 100%;
 	overflow: hidden;
 }
-#scroller {
+.scroller {
 	position: absolute;
 	z-index: 1;
 	width: 100%;
@@ -60,12 +62,32 @@ footer{
 	display:table;
 	width:100%;
 	position: absolute;
-	z-index: 1000;
+	z-index: 10;
 	bottom: 0;
 	left: 0;
 }
+.page{
+	width:100%;
+	position:absolute;
+	top:0;
+	left:0;
+	bottom:0;
+	right:0;
+	z-index:100;
+	background-color:#fff;
+}
+.page.pageNext{
+	transform: translate3d(100%,0,0);
+}
+.page.pageCurrent{
+	transition: transform 400ms;
+    transform: translate3d(0,0,0);
+    z-index:1000;
+}
+
 /****************** common end ***********************/
 
+/*********************** page 1 start ********************************/
 header .logo{
 	width:150px;
 	height:50px;
@@ -91,21 +113,6 @@ header .logo{
 	top: 0;
 	width:400%;
 	height: auto;
-	-webkit-transform: translateZ(0);
-	-moz-transform: translateZ(0);
-	-ms-transform: translateZ(0);
-	-o-transform: translateZ(0);
-	transform: translateZ(0);
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	-webkit-text-size-adjust: none;
-	-moz-text-size-adjust: none;
-	-ms-text-size-adjust: none;
-	-o-text-size-adjust: none;
-	text-size-adjust: none;
 	display:-webkit-box;
 	z-index:10;
 }
@@ -203,4 +210,91 @@ footer>div.home i{
 footer>div.account i{
 	background:url("../img/accountIcon.png") no-repeat center;
 	background-size: auto 100% ;
+}
+/************************ page 1 end *******************************/
+
+/************************ page 2 start *******************************/
+header .tab{
+	height:30px;
+	line-height:30px;
+	margin:0 auto;
+	background-color:#fff;
+	color:#333;
+	width:100px;
+	margin-top:10px;
+	border-radius:5px;
+	text-align:center;
+}
+header .tab i{
+	display:inline-block;
+	background:url("../img/arrow.png") no-repeat 0 0 ;
+	width:16px;
+	background-size:16px auto;
+	height:14px;
+	margin-left:3px;
+	vertical-align:middle;
+}
+#lottery .wrapper{
+	top:80px;
+}
+.lt-info{
+	background-color:#fff;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	font-size:0.8rem;
+	border-bottom:1px solid #dadada;
+	position:absolute;
+	top:50px;
+	width:100%;
+}
+.lt-info .time{
+	font-weight:bold;
+	color:#ff3232;
+	font-size:1rem;
+}
+.number{
+	background-color:#f6f6f4;
+	padding:0 10px;
+}
+.number dl{
+	width:100%;
+	border-bottom:1px solid #dadada;
+	display:-webkit-box;
+	padding:8px 0;
+}
+.number dt{
+	height:30px;
+	line-height:30px;
+	width:30px;
+	background-color:#dadada;
+	color:#fff;
+	font-size:1rem;
+	border-radius:4px;
+	position:relative;
+	text-align:center;
+	top:8px;
+}
+.number dt:after{
+	border: 15px solid transparent;
+  	border-left: 13px solid #dadada;
+  	position: absolute;
+  	top: 0;
+  	right: -27px;
+  	content: '';
+}
+.number dd{
+	-webkit-box-flex: 1;
+	padding-left:20px;
+}
+.number dd i{
+	display:inline-block;
+	width:40px;
+	height:40px;
+	border:1px solid #bcbcbc;
+	border-radius:50%;
+	font-style:normal;
+	line-height:40px;
+	text-align:center;
+	margin:4px;
 }
