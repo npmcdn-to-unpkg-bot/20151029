@@ -7,6 +7,9 @@ body{
 	font-family:'Microsoft Yahei';
 	min-width:1060px;
 }
+a{
+	text-decoration:none;
+}
 .header{
 	
 }
@@ -42,6 +45,9 @@ body{
 .header .top .right{
 	float:right;
 	height:32px;
+}
+.header .top .right a{
+	color:#cccccc;
 }
 .header .top .qq{
 	margin-left:30px;
@@ -80,6 +86,13 @@ body{
 	background-color:#f5f2f2;
 	color:#ff6f69;
 	border-top:3px solid #ff6f69;
+	line-height:74px;
+}
+.header .menu li a{
+	color:#333333;
+}
+.header .menu li.on a{
+	color:#ff6f69;
 }
 #slider{
 	width:100%;
@@ -176,25 +189,7 @@ body{
 .step .m .g{
 	margin:7px 0;
 }
-.q{
-	background-color:#f5f5f5;
-}
-.q div{
-	width:1060px;
-	margin:0 auto;
-}
-.q1{
-	background:url('../image/q1.png') no-repeat center;
-	height:306px;
-}
-.q2{
-	background:url('../image/q2.png') no-repeat center;
-	height:187px;
-}
-.q3{
-	background:url('../image/q3.png') no-repeat center;
-	height:173px;
-}
+
 .news{
 	background-color:#fff;
 }
@@ -251,6 +246,9 @@ body{
 }
 .footer ul li{
 	line-height:25px;
+}
+.footer ul li a{
+	color:#899aab;
 }
 .footer .QR{
 	background:url('../image/QR.png') no-repeat center;
@@ -321,11 +319,14 @@ body{
 	padding-bottom:30px;
 }
 .info .nav{
-	padding:20px 10px;
+	padding:15px 10px;
 	font-size:14px;
 	color:#333333;
 	width:1060px;
 	margin:0 auto;
+}
+.info .nav a{
+	color:#333333;
 }
 .info .nav .goHome{
 	float:right;
@@ -353,6 +354,9 @@ body{
 	color:#333333;
 	cursor:pointer;
 }
+.info .info-ul li a{
+	color:#333333;
+}
 .info .info-ul li .b{
 	display:inline-block;
 	height:20px;
@@ -364,4 +368,70 @@ body{
 }
 .info .info-ul li:hover{
 	color:#ff6f69;
+}
+
+.info .main .t{
+	font-size:18px;
+	color:#333333;
+	border-bottom:1px solid #ccc;
+	padding-bottom:10px;
+}
+
+.info .main .m{
+	padding:16px;
+	line-height:24px;
+	font-size:14px;
+	margin-bottom:20px;
+}
+.info .main p{
+	margin-top:15px;
+}
+.info .main p.mini{
+	margin-top:10px;
+}
+.info .main img{
+	margin:10px auto;
+	margin-left:20px;
+	max-width:90%;
+}
+.info .main .b{
+	color:red;
+	font-weight:bold;
+}
+.info .main p.b{
+	margin-top:10px;
+}
+.info .pre,.info .next{
+	color:#333;
+}
+.info .pre a,.info .next a{
+	color:#2a7bc6;
+	font-size:14px;
+	cursor:pointer;
+}
+.q{
+	background-color:#f5f5f5;
+	padding-bottom:20px;
+}
+.q div{
+	width:1060px;
+	margin:0 auto;
+}
+.q1{
+	background:url('../image/q1.png') no-repeat center;
+	height:90px;
+}
+.q .t{
+	color:#333333;
+	font-weight:bold;
+	font-size:15px;
+}
+.q .m{
+	font-size:15px;
+	line-height:32px;
+	margin-top:10px;
+	margin-bottom:20px;
+}
+.q p{
+	padding-left:24px;
 }
