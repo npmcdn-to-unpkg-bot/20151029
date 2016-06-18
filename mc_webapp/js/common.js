@@ -12,7 +12,6 @@ Common = {
 	
 	init : function(){
 		var me = this;
-		me.initEvent();
 		me.initIndex();
 		me.getOdds();
 	},
@@ -73,19 +72,12 @@ Common = {
 		    autoplay:5000
 		});
 	},
-	
-	initEvent : function(){
-		var me = this;
-		$('header .pageback').on('touchend',function(){
-			me.pageOut();
-		});
-	},
-	
+
 	pageIn : function(pageId){
 		var me = this;
 		me.prePage.push(me.currentPage);
 		me.currentPage = pageId;
-		$(me.currentPage).show().addClass('pageIn').css('transform','translate3d(0,0,0)');
+		$(me.currentPage).show().css('transform','translate3d(0,0,0)');
 		me.initWrapper();
 	},
 	
@@ -96,12 +88,41 @@ Common = {
 		me.prePage.pop();
 		me.initWrapper();
 		
-		e.removeClass('pageIn').css('transform','translate3d(100%,0,0)');
+		if(arguments[0]){
+			e.css(arguments[0]);
+		}else{
+			e.css('transform','translate3d(100%,0,0)');
+		}
 		
 		e.one('webkitTransitionEnd transitionend',function(){
-			if(!e.hasClass('pageIn')){
-				e.hide();
-			}
+			e.off('webkitTransitionEnd transitionend');
+			//zepto one事件不只触发一次 ???
+			e.hide();
 		});
+	},
+	
+	showTip : function(tip){
+		$('.mask').addClass('mask-show');
+		
+		var d = $('.dialog');
+		
+		d.find('.content').html(tip.content);
+		
+		d.find('.btnDiv').off('touchend').on('touchend',function(evt){
+			tip.fn(evt);
+		});
+		
+		d.addClass('dialog-show');
+		var h = d.height() / 2;
+		var w = d.width() / 2;
+		d.css({
+			"margin-top":'-' + h + 'px',
+			"margin-left" : '-' + w + 'px'
+		})
+	},
+	
+	closeTip : function(){
+		$('.mask').removeClass('mask-show');
+		$('.dialog').removeClass('dialog-show');
 	}
 };

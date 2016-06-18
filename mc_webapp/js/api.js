@@ -1,8 +1,5 @@
 var Api = Api || {};
 Api = {
-    url: globeEnv[envFlag].caipiao,
-    sso: globeEnv[envFlag].sso,
-    cache: {},
     route: {
         getOdds: "/api/anon/v1/lottery/odds",
         getMarketOdds: "/api/anon/v1/lottery_market/odds",

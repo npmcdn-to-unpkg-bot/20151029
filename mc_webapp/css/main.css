@@ -80,16 +80,16 @@ footer{
 	z-index:100;
 	background-color:#fff;
 	transition: transform 400ms;
+	overflow:hidden;
 }
 .page.pageNext{
 	transform: translate3d(100%,0,0);
 	z-index:200;
 	display:none;
 }
-/*
 .page.pageIn{
-
-}*/
+	
+}
 .pageback{
 	height:50px;
 	width:50px;
@@ -105,4 +105,58 @@ header .title{
 	text-align:center;
 	color:#fff;
 	font-size:1.2rem;
+}
+.mask{
+	position:absolute;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	background-color:#000;
+	opacity:0;
+	z-index:3000;
+	display:none;
+	transition:all 400ms ease-in-out 0;
+}
+.mask-show{
+	display:block;
+	opacity:0.7;
+}
+
+.dialog{
+	display:none;
+	background-color:#fff;
+	border-radius:5px;
+	position:absolute;
+	width:60%;
+	max-width:300px;
+	z-index:4000;
+	left:50%;
+	top:50%;
+	overflow:hidden;
+	transition:all 400ms ease-in-out 0;
+}
+.dialog-show{
+	display:block;
+}
+.dialog .content{
+	border-bottom:1px solid #bcbcbc;
+	line-height:2.5rem;
+	font-size:1rem;
+	color:#333;
+	width:100%;
+	text-align:center;
+}
+.dialog .btnDiv{
+	display:-webkit-box;
+	height:2.5rem;
+}
+.dialog .btnDiv button{
+	-webkit-box-flex:1;
+	border:none;
+	background-color:#fff;
+	display:block;
+}
+.dialog .btnDiv button:first-child{
+	border-right:1px solid #bcbcbc;
 }

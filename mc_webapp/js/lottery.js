@@ -1,48 +1,12 @@
 var Lottery = Lottery || {};
 Lottery = {
     lt: "",
-//    old_lt: "",
-//    issue: "",
     cls: "",
-//    type: "",
-//    odds: {},
-//    lt_odds: 0,
-//    ie: !1,
     method: "",
     methods: null,
     countData: null, //确认号码时生成的数据
     orders: null, 
-//    m_name: "",
-//    noanimation: !1,
-//    serverTime: null ,
-//    tipchs: "请输入投注号码，按空格或回车键确认选号",
-//    isStop: !1,
-//    countDownSec: 2,
-//    lengthMatchDict: {
-//        sm_sm_zxds: 3,
-//        sm_sm_zuxds: 3,
-//        em_em_zxds: 2,
-//        em_em_zuxds: 2,
-//        rxds_rxds_1z1: 1,
-//        rxds_rxds_2z2: 2,
-//        rxds_rxds_3z3: 3,
-//        rxds_rxds_4z4: 4,
-//        rxds_rxds_5z5: 5,
-//        rxds_rxds_6z5: 6,
-//        rxds_rxds_7z5: 7,
-//        rxds_rxds_8z5: 8,
-//        cq5_cq5_ds: 5,
-//        cq4_cq4_ds: 4,
-//        cq3_cq3_ds: 3,
-//        cq2_cq2_ds: 2
-//    },
-//    filterReg: /['\r\n','\n','\r','\t','\v','\D','\f','\s+','　','；','，',';',',']/g,
-//    filterRegSelect: /['\r\n','\n','\r','\t','\v','\D','\f','　','；','，',';',',']/g,
-//    filterRegLine: /['\r\n','\n','\r','\v',',','，',';','；',':','：','|']/g,
-//    filterRegBreak: /['　',' ',\u4E00-\u9FA5]/g,
-//    startDate: 0,
-//    
-
+    
     init: function() {
         var me = this;
         me.initTab(LotteryClass[me.lt]);
@@ -99,6 +63,8 @@ Lottery = {
 	        	var numObj = ltMethod[m0][m1].num;
 	        	me.renderNum(numObj);
 	        	
+	        	me.resetCount();
+	        	
 	        	me.updateOdds();
 	        	
 	        	//刷新 wrapper插件
@@ -137,7 +103,6 @@ Lottery = {
     	el.off("tap").on("tap", function(evt) {
     		me.numHandler(evt)
     	});
-    	me.resetCount();
     },
     renderCodes: function(n) {
         var me = this;
@@ -153,9 +118,9 @@ Lottery = {
         		tpl += '<i>' + txt[i] + '</i>';
         	}else{
         		if((me.cls == "11y" ||  (me.cls == "pk10" && m[0] != "hz")) && (i < 10)){
-        			tpl += '<i>0' + i + '</i>';
+        			tpl += '<i data-code="0' + i + '">0' + i + '</i>';
         		}else{
-        			tpl += '<i>' + i + '</i>';
+        			tpl += '<i data-code="' + i + '">' + i + '</i>';
         		}
         	}
         }
@@ -164,6 +129,9 @@ Lottery = {
     
     resetCount : function(){
     	var me = this;
+
+		$('#lottery .number i.on').removeClass('on');
+		
     	var count = $('#lottery .count');
     	count.find('.times input').val('1');
     	count.find('.totalMoney em').html('0');
@@ -189,14 +157,13 @@ Lottery = {
             if(me.cls == 'pk10' && me.methods[0] == 'hz'){
             	me.updateOdds();
             }
-            me.calcNum();
+            
+            me.getStack();
+            
+            me.calcMoney();
     	}
     },
-    calcNum : function() {
-        var me = this;
-        $("#lottery .count .totalCount").html(me.getStack());
-        me.calcMoney();
-    },
+    
     getStack : function(){
     	var me = this;
     	var m = me.methods;
@@ -498,7 +465,8 @@ Lottery = {
         } else {
         	
         }
-        return n;
+    	
+        $("#lottery .count .totalCount").html(n);
     },
     
     calcMoney: function() {
@@ -667,8 +635,16 @@ Lottery = {
     },
     initCount : function(){
     	var me = this;
-    	var count = $('#lottery>.count');
+    	var el = $('#lottery');
     	
+    	el.find('.pageback').on("touchend",function(){
+    		el.find('.tabDiv').removeClass('tabShow');
+    		var obj = el.hasClass('addLottery') ?  {'transform':'translate3d(0,100%,0)'} : undefined;
+        	Common.pageOut(obj);
+    	});
+    	
+    	var count = $('#lottery>.count');
+	
     	count.on('change','.times input',function(evt){
     		evt.preventDefault();
     		var val = $(this).val();
@@ -690,7 +666,6 @@ Lottery = {
     	
     	count.find('.clear button').on('touchend',function(evt){
     		evt.preventDefault();
-    		$('#lottery .number i.on').removeClass('on');
     		me.resetCount();
     	});
     	
@@ -701,57 +676,163 @@ Lottery = {
     			return false;
     		}
     		me.initSubmit();
-    		Common.pageIn('#submit');
     		
-    		$('#lottery .number i.on').removeClass('on');
-    		me.resetCount();
+    		if(el.hasClass('addLottery') || el.hasClass('restore')){
+    			Common.pageOut({
+    				'transform':'translate3d(0,100%,0)'
+    			});
+    		}else{
+    			Common.pageIn('#submit');	
+        		$('#submit').one('webkitTransitionEnd transitionend',function(){
+        			$(this).off('webkitTransitionEnd transitionend');
+        			$('#lottery').hide().css('transform','translate3d(0,100%,0)');
+        			me.resetCount();
+        		});
+    		}
     	});
     },
     initSubmit　: function(){
     	var me = this;
+    	var lt = $('#lottery');
     	var el = $('#submit');
+    	
+    	var list = el.find('.order-list');
+    	
     	var order = me.getOrder();
-    	el.find('.order-list').append(order);
+    	
+    	if(lt.hasClass('restore')){
+    		var index = lt.attr('data-restore');
+    		list.find('li').eq(index).replaceWith(order);
+    		lt.removeClass('restore');
+    	} else if(lt.hasClass('addLottery')){
+    		list.append(order);
+    		lt.removeClass('addLottery');
+    	} else {
+    		list.append(order);
+        	el.find('.clearOrder span').on('touchend',function(evt){
+        		evt.preventDefault();
+        		
+        		var tip = {
+        			content : '确定要清空注单吗？',
+        			fn : function(e){
+        				var _e = $(e.target);
+        				if(_e.hasClass('yes')){
+        					el.find('.order-list li').remove();
+        				}
+        				Common.closeTip();
+        			}
+        		}
+        		Common.showTip(tip);
+        	});
+        	
+        	el.find('.addOrder span').on('touchend',function(evt){
+        		evt.preventDefault();
+        		Common.pageIn('#lottery');
+        		lt.addClass('addLottery');
+        	});
+        	
+        	list.on('touchend',function(evt){
+        		evt.preventDefault();
+        		var _this = $(evt.target);
+        		
+        		if(_this.hasClass('delete')){
+        			
+        			var tip = {
+            			content : '确定要删除吗？',
+            			fn : function(e){
+            				var _e = $(e.target);
+            				if(_e.hasClass('yes')){
+            					_this.parent('li').remove();
+            				}
+            				Common.closeTip();
+            			}
+            		}
+            		Common.showTip(tip);
+        			
+        		} else if(_this.hasClass('update')){
+        			Common.pageIn('#lottery');
+        			var li = _this.parent('li');
+        			
+        			$('#lottery').addClass('restore').attr('data-restore',li.index());
+        			me.restoreLottery(li);
+        		}
+        	});
+        	
+        	el.find('.submit button').on('touchend',function(evt){
+        		if ($(this).hasClass("locked")){
+        			return false;
+                }
+        		evt.preventDefault();
+        		
+        		if ($(this).hasClass("disabled")){
+        			return false;
+                }
+                
+        		if(me.isStop){
+        			alert('当前彩种暂停销售');
+        		}
+        		
+        		me.addOrderApi();
+        	});
+    	}
+    	
     	me.setSubmitData();
-    	
-    	el.find('.clearOrder span').on('touchend',function(evt){
-    		evt.preventDefault();
-    		el.find('.order-list li').remove();
-    	});
-    	
-    	el.find('.order-list').on('touchend',function(evt){
-    		evt.preventDefault();
-    		var _this = $(evt.target);
-    		
-    		if(_this.hasClass('delete')){
-    			_this.parent('li').remove();
-    		}
-    	});
-    	
-    	el.find('.submit button').on('touchend',function(evt){
-    		if ($(this).hasClass("locked")){
-    			return false;
-            }
-    		evt.preventDefault();
-    		
-    		if ($(this).hasClass("disabled")){
-    			return false;
-            }
-            
-    		if(me.isStop){
-    			alert('当前彩种暂停销售');
-    		}
-    		
-    		me.addOrderApi();
-    	});
     },
-    
+    restoreLottery : function(li){
+    	var me = this;
+    	var e = $('#lottery');
+		
+		me.method = li.attr('data-method');
+		me.methods = me.method.split('_');
+		me.countData = li.attr('data-count');
+		var data = me.countData.split('|');
+		
+		var m = me.methods;
+		var m1 = m[1] + '_' + m[2];
+		var tabName = e.find('.tabDiv .tabName[data-type="' + m[0] + '"]');
+		var s = tabName.next().find('span[data-type="' + m1 + '"]');
+		s.trigger('tap');
+
+		//万十百千个 位置选择
+		var pos = data[6].split(',');
+		if(pos.length > 0){
+			var dl_pos = e.find('.number dl.dl-pos');
+			$(pos).each(function(){
+				$(dl_pos).find('i[data-pos="' + arguments[1] + '"]').addClass('on');
+			});
+		}
+		
+		var code = li.attr('data-code').split(',');
+		var dl = e.find('.number dl').not('.dl-pos');
+		$(code).each(function(){
+			var dom = dl[arguments[0]];
+			var num = arguments[1].split('');
+			$(num).each(function(){
+				$(dom).find('i[data-code="' + arguments[1] + '"]').addClass('on');
+			});
+		});
+		
+		//pk10和值不同 赔率不同
+        if(me.cls == 'pk10' && me.methods[0] == 'hz'){
+        	me.updateOdds();
+        }
+                        
+        var count = e.find('.count');
+        count.find('.mode select').val(data[2]);
+        count.find('.times input').val(data[1]);
+        count.find('.odds select').val(data[3]);
+        
+        me.getStack();
+        
+        me.calcMoney();
+    },
     getOrder : function(){
     	var me = this;
+    	
     	var method = me.method;
     	var m = me.methods;
     
-    	//  注数  | 倍数  | 元角分厘   | 奖金模式  | 返点  | 总金额   | 选择位置（任选玩法） | 元角分厘
+    	//  注数  | 倍数  | 元角分厘 (2,0.2,0.02)  | 奖金模式  | 返点  | 总金额   | 选择位置（任选玩法） | 元角分厘 
         var count = me.countData.split("|");
     
         var code = me.codeFormat(me.getCode()); // code = 01,01,01,01
@@ -797,7 +878,7 @@ Lottery = {
                 var win = me.getMoneyWin(count, hz_num, hz_method).win;
                 
                 
-                html = html + '<li data-count="' + me.countData + '"><div class="delete"></div><div class="content"><div class="title">\
+                html = html + '<li data-method="' + me.method + '" data-count="' + me.countData + '" data-code="' + desc + '"><div class="delete"></div><div class="content"><div class="title">\
 						<span class="lt-name">' + name + '</span><span class="odd">奖金模式<em>' + count[3] + '</em></span></div>\
 						<div class="code">' + desc + '</div><div class="info">\
 						<span><em class="count">' + count[0] + '</em>注<em class="times">' + count[1] + '</em>倍</span>\
@@ -808,7 +889,7 @@ Lottery = {
         } else {
         	var win = me.getMoneyWin(count, code, method).win;
         	var desc = code;
-        	html = html + '<li data-count="' + me.countData + '" data-code="' + desc + '"><div class="delete"></div><div class="content"><div class="title">\
+        	html = html + '<li data-method="' + me.method + '" data-count="' + me.countData + '" data-code="' + desc + '"><div class="delete"></div><div class="content"><div class="title">\
 				<span class="lt-name">' + name + '</span><span class="odd">奖金模式<em>' + count[3] + '</em></span></div>\
 				<div class="code">' + desc + '</div><div class="info">\
 				<span><em class="count">' + count[0] + '</em>注<em class="times">' + count[1] + '</em>倍</span>\
@@ -1017,6 +1098,3 @@ Lottery = {
         });
     }
 };
-Math.factorial = function(e) {
-    return 0 >= e ? 1 : e * Math.factorial(e - 1)
-}

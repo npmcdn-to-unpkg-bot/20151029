@@ -1,3 +1,6 @@
+#lottery.addLottery,#lottery.restore{
+	z-index:500;
+}
 #lottery header{
 	text-align:center;
 }
