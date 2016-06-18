@@ -1,4 +1,6 @@
-
+#submit{
+	background-color:#f6f6f6;
+}
 #submit .orderTop{
 	display:-webkit-box;
 	width:100%;
@@ -6,6 +8,7 @@
 	border-bottom:1px solid #dadada;
 	padding-top:8px;
 	font-size:0.8rem;
+	background-color:#fff;
 }
 #submit .orderTop>div{
 	text-align:center;
@@ -14,7 +17,6 @@
 #submit .orderTop .addOrder,#submit .orderTop .clearOrder{
 	width:90px;
 }
-
 
 #submit .orderTop span{
 	padding:5px 0px;
@@ -49,3 +51,145 @@
 	font-size:1rem;
 	font-weight:bold;
 }
+#submit .order-t{
+	width:90%;
+	margin:0 auto;
+	height:12px;
+	border-radius:5px;
+	margin-top:15px;
+	background-color:#404040;
+}
+#submit .order{
+	width:86%;
+	position: absolute;
+	z-index: 1;
+	top: 70px;
+	bottom: 40px;
+	left: 7%;
+	right:7%;
+	overflow: hidden;
+	box-shadow:0 5px 9px 3px #bcbcbc;
+	background-size:10px auto;
+	border-top-left-radius:4px;
+	border-top-right-radius:4px;
+	background-color:#f2f2f2;
+}
+#submit .order .scroller{
+}
+#submit .order-list{
+	width:100%;
+	list-style:none;
+}
+#submit .order-list li{
+	padding:14px 0;
+	border-bottom:1px solid #bcbcbc;
+	display:-webkit-box;
+}
+
+#submit .order-list .delete,#submit .order-list .update{
+	width:45px;
+}
+#submit .order-list .delete{
+	background:url("../img/orderDel.png") no-repeat center ;
+	background-size:auto 20px;
+}
+#submit .order-list .update{
+	background:url("../img/orderUpdate.png") no-repeat center ;
+	background-size:auto 20px;
+}
+#submit .order-list .content{
+	-webkit-box-flex:1;
+}
+#submit .order-list .title{
+	color:#707070;
+	font-size:0.8rem;
+	font-weight:bold;
+}
+#submit .order-list .odd{
+	margin-left:20px;
+}
+#submit .order-list .odd em{
+	margin:0 5px;
+}
+#submit .order-list .code{
+	width: 100%;
+    color: #5a66e0;
+    font-size: 2rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
+    margin:5px 0;
+}
+#submit .order-list .info{
+	color:#636363;
+	font-size:0.9rem;
+}
+#submit .order-list .info>span{
+	margin-right:20px;
+	white-space:nowrap;
+}
+#submit .order-list .mode em,#submit .order-list .profit em{
+	margin:0 4px;
+}
+#submit .orderBtmImg{
+	height:40px;
+	width:86%;
+	position: absolute;
+	z-index: 1;
+	bottom: 0px;
+	left: 7%;
+	right:7%;
+	background:url("../img/orderBtm.png") repeat-x left top;
+	background-size:50px auto;
+	background-color:#f6f6f6;
+}
+
+
+#submit .orderTotal{
+	width:100%;
+	display:-webkit-box;
+	background-color:#432d7a;
+	z-index:1000;
+}
+#submit .orderTotal .total{
+	padding-top:0.8rem;
+	font-weight:bold;
+	font-size:0.8rem;
+	line-height:0.8rem;
+	width:65%;
+	height:100%;
+	text-align:center;
+}
+#submit .orderTotal .submit{
+	width:35%;
+	height:100%;
+}
+
+#submit .orderTotal .totalMoney{
+	color:#ffc800;
+	font-size:0.8rem;
+	margin-bottom:4px;
+}
+#submit .orderTotal .totalTimes{
+	margin-left:5px;
+}
+#submit .orderTotal em{
+	margin: 0 5px;
+}
+#submit .orderTotal em.totalCount{
+	margin-left:0;
+}
+#submit .submit button{
+	height:100%;
+	width:100%;
+	background-color:#fea300;
+	color:#fff;
+	font-size:1.3rem;
+	font-weight:bold;
+	border:none;
+}
+
+

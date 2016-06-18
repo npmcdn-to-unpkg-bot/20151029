@@ -97,8 +97,11 @@ header .logo{
 	color:#a6a6a6;
 	font-size:0.6rem;
 }
-
-footer>div{
+#index footer{
+	display:table;
+	background-color:#57399d;
+}
+#index footer>div{
 	width:50%;
 	-webkit-box-flex: 1;
 	text-align:center;
@@ -107,17 +110,17 @@ footer>div{
 	vertical-align:middle;
 	font-size:0.8rem;
 }
-footer>div i{
+#index footer>div i{
 	display:block;
 	width:20px;
 	height:20px;
 	margin:0 auto;
 }
-footer>div.home i{
+#index footer>div.home i{
 	background:url("../img/homeIcon.png") no-repeat center;	
 	background-size: auto 100% ;
 }
-footer>div.account i{
+#index footer>div.account i{
 	background:url("../img/accountIcon.png") no-repeat center;
 	background-size: auto 100% ;
 }

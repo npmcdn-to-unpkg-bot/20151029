@@ -109,27 +109,24 @@
 		<div class="scroller">
 		</div>
 	</section>
-	<footer class="footer count">
+	<footer class="count">
 		<div class="top">
 			<div class="mode">
 				模式
 				<select>
-					<option>元</option>
-					<option>角</option>
-					<option>分</option>
-					<option>厘</option>
+					<option value="2">元</option>
+					<option value="0.2">角</option>
+					<option value="0.02">分</option>
+					<option value="0.002">厘</option>
 				</select>
 			</div>
 			<div class="times">
 				倍数
-				<input type="number" pattern="[0-9]*" value="1">  
+				<input type="number" pattern="[0-9]*" value="1" min='1' max="99999">  
 			</div>
 			<div class="odds">
-				奖金
-				<select>
-					<option>1850000% ~ 0</option>
-					<option>2850000% ~ 0</option>
-				</select>
+				奖金<em>0</em>
+				<select></select>
 			</div>
 		</div>
 		<div class="bottom">
@@ -137,8 +134,8 @@
 				<button>清空</button>
 			</div>
 			<div class="total">
-				<p class="totalMoney">共<em>1000000000</em>元</p>
-				<p><em class="totalCount">100000</em>注<em class="totalTimes">1</em>倍</p>
+				<p class="totalMoney">共<em>0</em>元</p>
+				<p><em class="totalCount">0</em>注<em class="totalTimes">1</em>倍</p>
 			</div>
 			<div class="confirm">
 				<button>确定选号</button>
@@ -146,9 +143,9 @@
 		</div>
 	</footer>
 </div>
-<div id="submit" class="page pageNext">
+<div id="submit" class="page pageNext" data-wrapper=".order">
 	<header><div class="pageback"></div><div class="title">投注页面</div></header>
-	<section data-wrapper="no" class="wrapper">
+	<section class="wrapper">
 		<div class="orderTop">
 			<div class="addOrder"><span><i></i>添加号码</span></div>
 			<div class="orderTime">
@@ -157,23 +154,40 @@
 			</div>
 			<div class="clearOrder"><span><i></i>清空注单</span></div>
 		</div>
+		<div class="order-t"></div>
+		<div class="order">
+			<div class="scroller">
+				<ul class="order-list"></ul>
+			</div>
+		</div>
+		<div class="orderBtmImg"></div>
 	</section>
-	<footer class="footer count">
+	<footer class="orderTotal">
+		<div class="total">
+			<p class="totalMoney">共<em>0</em>元</p>
+			<p><em class="totalCount">0</em>注</p>
+		</div>
+		<div class="submit">
+			<button>立即投注</button>
+		</div>
 	</footer>
 </div>
 
-<script src="js/zepto/zepto.min.js"></script>
-<script src="js/zepto/fx.js"></script>
-<script src="js/zepto/fx_methods.js"></script>
+<script src="js/vendor/zepto/zepto.min.js"></script>
+<script src="js/vendor/zepto/fx.js"></script>
+<script src="js/vendor/zepto/fx_methods.js"></script>
 <!-- <script src="js/zepto/touch.js"></script> -->
 
-<script src="js/swiper.jquery.min.js"></script>
-<script src="js/iscroll.js"></script>
+<script src="js/vendor/swiper.jquery.min.js"></script>
+<script src="js/vendor/iscroll.js"></script>
 
+<script src="js/q.js"></script>
+<script src="js/api.js"></script>
 <script src="js/config.js"></script>
 <script src="js/lottery.js"></script>
-
 <script src="js/common.js"></script>
+
+<script src="js/main.js"></script>
 
 </body>
 </html>
