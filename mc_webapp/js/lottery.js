@@ -5,20 +5,21 @@ Lottery = {
     method: "",
     methods: null,
     countData: null, //确认号码时生成的数据
-    orders: null, 
+    orders: null, //提交注单时提交的注单数据
+    orderlist : {}, //提交注单页返回购彩大厅时保存的数据
     
     init: function() {
         var me = this;
         me.initTab(LotteryClass[me.lt]);
-        me.initCount();
         
         //取期号 倒计时
-//      me.updateIssue();
+        me.updateIssue();
         
     },
     initTab: function(obj) {
         var me = this;
-        var tabDiv = $("#lottery .tabDiv");
+        var el = $("#lottery");
+        var tabDiv = el.find(".tabDiv");
         var ltTab = obj.ltTab;
         var ltMethod = obj.ltMethod;
         var tpl = '';
@@ -73,6 +74,7 @@ Lottery = {
         });
         
 		tabDiv.find('.subTab span').eq(0).trigger('tap');
+	
     },
     
     renderNum : function(obj){
@@ -133,6 +135,8 @@ Lottery = {
 		$('#lottery .number i.on').removeClass('on');
 		
     	var count = $('#lottery .count');
+    	
+    	count.find('.mode select').val('2');
     	count.find('.times input').val('1');
     	count.find('.totalMoney em').html('0');
     	count.find('.totalCount').html('0');
@@ -147,12 +151,13 @@ Lottery = {
     	
     	var _this = evt.target;
     	if(_this.nodeName == 'I'){
+    		
             $(_this).toggleClass("on");
-            
+    		
             $(_this).addClass("ball").one("webkitAnimationEnd", function() {
                 $(this).removeClass("ball");
             });
-            
+    		
             //pk10和值不同 赔率不同
             if(me.cls == 'pk10' && me.methods[0] == 'hz'){
             	me.updateOdds();
@@ -416,7 +421,7 @@ Lottery = {
             }
         } else if ("dxds" === m[1]) { //大小单双
             n = arr[0].length * arr[1].length;
-        } else if (me.cls = "pk10" && ("dx" === m[1] || "ds" === m[1] || "hz" === m[1] || "lh" === m[1])) { //pk10 大小 单双 龙虎 pk10 和值
+        } else if (me.cls == "pk10" && ("dx" === m[1] || "ds" === m[1] || "hz" === m[1] || "lh" === m[1])) { //pk10 大小 单双 龙虎 pk10 和值
             n = arr[0].length;
         } else if ("sm" === m[1]) { //11选5的三码 不影响时时彩三妈
             switch (m[2]) {
@@ -629,17 +634,24 @@ Lottery = {
                 }
                 
                 $odds.find("select").html('<option value="' + odd + '" data-point="-1"></option>').hide();
-                a.find("em").html(odd).show();
+                $odds.find("em").html(odd).show();
             }
         }
     },
-    initCount : function(){
+    updateIssue : function(){
+    	var me = this;
+    	
+    	var el = $('#lottery');
+    	
+		el.find('.lt-info span').html(me.ltName)
+    },
+    initLottery : function(){
     	var me = this;
     	var el = $('#lottery');
     	
     	el.find('.pageback').on("touchend",function(){
     		el.find('.tabDiv').removeClass('tabShow');
-    		var obj = el.hasClass('addLottery') ?  {'transform':'translate3d(0,100%,0)'} : undefined;
+    		var obj = el.hasClass('edit') ?  {'transform':'translate3d(0,100%,0)'} : undefined;
         	Common.pageOut(obj);
     	});
     	
@@ -648,8 +660,8 @@ Lottery = {
     	count.on('change','.times input',function(evt){
     		evt.preventDefault();
     		var val = $(this).val();
-    		var min = $(this).attr('min');
-    		var max = $(this).attr('max');
+    		var min = 1;
+    		var max = 99999;
     		
     		if(val === ''){
     			$(this).val(min);
@@ -675,108 +687,137 @@ Lottery = {
     		if($(this).hasClass('disabled')){
     			return false;
     		}
-    		me.initSubmit();
+    		me.renderOrderList();
     		
-    		if(el.hasClass('addLottery') || el.hasClass('restore')){
+    		if(el.hasClass('edit')){
     			Common.pageOut({
     				'transform':'translate3d(0,100%,0)'
     			});
+    			el.removeClass('add restore');
     		}else{
-    			Common.pageIn('#submit');	
-        		$('#submit').one('webkitTransitionEnd transitionend',function(){
-        			$(this).off('webkitTransitionEnd transitionend');
-        			$('#lottery').hide().css('transform','translate3d(0,100%,0)');
-        			me.resetCount();
-        		});
+    			me.lotteryToSubmit();
+    			Common.prePage.pop();
     		}
+    		me.resetCount();
     	});
     },
-    initSubmit　: function(){
+    lotteryToSubmit : function(){
+    	Common.pageIn('#submit');
+		$('#submit').one('webkitTransitionEnd transitionend',function(){
+			$(this).off('webkitTransitionEnd transitionend');
+			$('#lottery').hide().addClass('edit').css('transform','translate3d(0,100%,0)');
+		});
+    },
+    renderOrderList : function(){
     	var me = this;
     	var lt = $('#lottery');
     	var el = $('#submit');
     	
     	var list = el.find('.order-list');
     	
-    	var order = me.getOrder();
+    	var order = me.orderlist[me.lt] ? me.orderlist[me.lt] : me.getOrder();
     	
     	if(lt.hasClass('restore')){
     		var index = lt.attr('data-restore');
     		list.find('li').eq(index).replaceWith(order);
-    		lt.removeClass('restore');
-    	} else if(lt.hasClass('addLottery')){
-    		list.append(order);
-    		lt.removeClass('addLottery');
     	} else {
     		list.append(order);
-        	el.find('.clearOrder span').on('touchend',function(evt){
-        		evt.preventDefault();
-        		
-        		var tip = {
-        			content : '确定要清空注单吗？',
+    	}
+    	
+    	me.setSubmitData();
+    },
+    initSubmit　: function(){
+    	var me = this;
+    	var lt = $('#lottery');
+    	var el = $('#submit');
+    	var list = el.find('.order-list');
+    	
+		el.find('.pageback').on("touchend",function(evt){
+			evt.preventDefault();
+    		var tip = {
+    			content : '要保存号码吗？',
+    			fn : function(e){
+    				var _e = $(e.target);
+    				if (_e.hasClass('yes')) {
+    					me.orderlist[me.lt] = list.html();
+    				} else {
+    					me.orderlist[me.lt] = undefined;
+    				}
+    				
+    				list.find('li').remove();
+    				Common.closeTip();
+    				lt.removeClass('edit').css('transform','translate3d(100%,0,0)')
+    				Common.pageOut();
+    			}
+    		}
+    		Common.showTip(tip);
+		});
+    	el.find('.clearOrder span').on('touchend',function(evt){
+    		evt.preventDefault();
+    		
+    		var tip = {
+    			content : '确定要清空注单吗？',
+    			fn : function(e){
+    				var _e = $(e.target);
+    				if(_e.hasClass('yes')){
+    					list.find('li').remove();
+    				}
+    				Common.closeTip();
+    			}
+    		}
+    		Common.showTip(tip);
+    	});
+    	
+    	el.find('.addOrder span').on('touchend',function(evt){
+    		evt.preventDefault();
+    		me.resetCount();
+    		Common.pageIn('#lottery');
+    		lt.addClass('add');
+    	});
+    	
+    	list.on('touchend',function(evt){
+    		evt.preventDefault();
+    		var _this = $(evt.target);
+    		
+    		if(_this.hasClass('delete')){
+    			
+    			var tip = {
+        			content : '确定要删除吗？',
         			fn : function(e){
         				var _e = $(e.target);
         				if(_e.hasClass('yes')){
-        					el.find('.order-list li').remove();
+        					_this.parent('li').remove();
         				}
         				Common.closeTip();
         			}
         		}
         		Common.showTip(tip);
-        	});
-        	
-        	el.find('.addOrder span').on('touchend',function(evt){
-        		evt.preventDefault();
-        		Common.pageIn('#lottery');
-        		lt.addClass('addLottery');
-        	});
-        	
-        	list.on('touchend',function(evt){
-        		evt.preventDefault();
-        		var _this = $(evt.target);
-        		
-        		if(_this.hasClass('delete')){
-        			
-        			var tip = {
-            			content : '确定要删除吗？',
-            			fn : function(e){
-            				var _e = $(e.target);
-            				if(_e.hasClass('yes')){
-            					_this.parent('li').remove();
-            				}
-            				Common.closeTip();
-            			}
-            		}
-            		Common.showTip(tip);
-        			
-        		} else if(_this.hasClass('update')){
-        			Common.pageIn('#lottery');
-        			var li = _this.parent('li');
-        			
-        			$('#lottery').addClass('restore').attr('data-restore',li.index());
-        			me.restoreLottery(li);
-        		}
-        	});
-        	
-        	el.find('.submit button').on('touchend',function(evt){
-        		if ($(this).hasClass("locked")){
-        			return false;
-                }
-        		evt.preventDefault();
-        		
-        		if ($(this).hasClass("disabled")){
-        			return false;
-                }
-                
-        		if(me.isStop){
-        			alert('当前彩种暂停销售');
-        		}
-        		
-        		me.addOrderApi();
-        	});
-    	}
+    			
+    		} else if(_this.hasClass('update')){
+    			Common.pageIn('#lottery');
+    			var li = _this.parent('li');
+    			
+    			$('#lottery').addClass('restore').attr('data-restore',li.index());
+    			me.restoreLottery(li);
+    		}
+    	});
     	
-    	me.setSubmitData();
+    	el.find('.submit button').on('touchend',function(evt){
+    		if ($(this).hasClass("locked")){
+    			return false;
+            }
+    		evt.preventDefault();
+    		
+    		if ($(this).hasClass("disabled")){
+    			return false;
+            }
+            
+    		if(me.isStop){
+    			alert('当前彩种暂停销售');
+    		}
+    		
+    		me.addOrderApi();
+    	});
     },
     restoreLottery : function(li){
     	var me = this;
@@ -806,7 +847,17 @@ Lottery = {
 		var dl = e.find('.number dl').not('.dl-pos');
 		$(code).each(function(){
 			var dom = dl[arguments[0]];
-			var num = arguments[1].split('');
+			
+			var num;
+			
+			//坑爹的pk10和值
+			if(me.cls == 'pk10' && me.methods[0] == 'hz'){
+				num = arguments[1].split();
+			} else{
+				var reg = me.cls == '11y' || (me.cls == 'pk10' && me.method.indexOf('hz') == -1) ? /(?=(?:\d{2})+?$)/ : '';
+				num = arguments[1].split(reg);
+			}
+			
 			$(num).each(function(){
 				$(dom).find('i[data-code="' + arguments[1] + '"]').addClass('on');
 			});
@@ -835,14 +886,14 @@ Lottery = {
     	//  注数  | 倍数  | 元角分厘 (2,0.2,0.02)  | 奖金模式  | 返点  | 总金额   | 选择位置（任选玩法） | 元角分厘 
         var count = me.countData.split("|");
     
-        var code = me.codeFormat(me.getCode()); // code = 01,01,01,01
+        var code = me.getCode(); // code = 01,01,01,01
         
         var name = Q.getMethodName(method,me.lt);
         var html = '';
         
         //pk10 和值订单拆分
         if ("pk10" == me.cls && -1 != method.indexOf("hz")){
-        	code = code.split(',');
+        	code = code[0];
         	
         	count[0] = 1;
         	count[5] = count[2];
@@ -851,9 +902,7 @@ Lottery = {
         		var hz_num = arguments[1];
         		var hz_method;
         		
-        		var desc = hz_num; //me.descFormat(hz_num, me.method)
-        		
-        		var arr =  Q.PkHzNum[m[2]];
+        		var arr = Q.PkHzNum[m[2]];
         		
                 $(arr).each(function() {
                 	if(arguments[1].split('_').indexOf(hz_num) != -1){
@@ -865,8 +914,8 @@ Lottery = {
                 var obj = me.odds[me.lt][hz_method];
                 
                 if (obj.point !== undefined) {
-                    var p = $("#lottery .count .odds select option:selected").attr("data-point");
-                    if (p == o) {
+                    var p = $("#lottery .count .odds option").not(function(){ return !this.selected }).attr("data-point");
+                    if (p == 0) {
                         var val = (obj.odds + obj.x * obj.point).toFixed(3);
                         count[3] = val.substr(0, val.length - 1);
                     } else {
@@ -875,12 +924,12 @@ Lottery = {
                 } else {
                 	count[3] = obj.odds;
                 }
-                var win = me.getMoneyWin(count, hz_num, hz_method).win;
+                var win = me.getMoneyWin(count, hz_num.split(), hz_method).win;
                 
                 
-                html = html + '<li data-method="' + me.method + '" data-count="' + me.countData + '" data-code="' + desc + '"><div class="delete"></div><div class="content"><div class="title">\
+                html = html + '<li data-method="' + me.method + '" data-count="' + count.join('|') + '" data-code="' + hz_num + '"><div class="delete"></div><div class="content"><div class="title">\
 						<span class="lt-name">' + name + '</span><span class="odd">奖金模式<em>' + count[3] + '</em></span></div>\
-						<div class="code">' + desc + '</div><div class="info">\
+						<div class="code">' + hz_num + '</div><div class="info">\
 						<span><em class="count">' + count[0] + '</em>注<em class="times">' + count[1] + '</em>倍</span>\
 						<span class="mode">模式<em>' + count[7] + '</em></span>\
 						<span class="profit">盈利<em>' + win +'</em></span></div></div><div class="update"></div></li>';
@@ -888,7 +937,7 @@ Lottery = {
         	});
         } else {
         	var win = me.getMoneyWin(count, code, method).win;
-        	var desc = code;
+        	var desc = me.codeFormat(code);
         	html = html + '<li data-method="' + me.method + '" data-count="' + me.countData + '" data-code="' + desc + '"><div class="delete"></div><div class="content"><div class="title">\
 				<span class="lt-name">' + name + '</span><span class="odd">奖金模式<em>' + count[3] + '</em></span></div>\
 				<div class="code">' + desc + '</div><div class="info">\
@@ -899,6 +948,7 @@ Lottery = {
         
         return html;
     },
+    
     getCode : function(){
     	var me = this;
     	var dl = $('#lottery>.number dl').not(".dl-pos");
@@ -919,6 +969,7 @@ Lottery = {
            
     	return data;
     },
+    
     getMoneyWin : function(count, code, method){
     	//buytype 0  odds-奖金模式  total-注数  times-倍数  mode-元角分厘  code-所选号码   method-玩法
     	
@@ -934,7 +985,6 @@ Lottery = {
     	var precision = Math.precision(odds) + Math.precision(mode);
     	var m = method.split('_');
     	var isBuy = true;
-    	var code = code.split('|');
     	
     	if(m[2] === 'zh'){
     		//特殊处理五星、四星组合玩法
@@ -1046,6 +1096,7 @@ Lottery = {
         	wintime : wintime
         };
     },
+    
     codeFormat : function(code){
     	var arr = [];
     	$(code).each(function(){
@@ -1053,6 +1104,7 @@ Lottery = {
     	});
     	return arr.join(',');
     },
+    
     setSubmitData: function() {
     	var me = this;
     	var _el = $('#submit');

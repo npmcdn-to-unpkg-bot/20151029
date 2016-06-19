@@ -95,6 +95,7 @@
 	</section>
 	<footer class="footer">
 		<div class="home"><i></i>购彩大厅</div>
+		<div class="history"><i></i>开奖中心</div>
 		<div class="account"><i></i>我的账户</div>
 	</footer>
 </div>
@@ -122,7 +123,7 @@
 			</div>
 			<div class="times">
 				倍数
-				<input type="number" pattern="[0-9]*" value="1" min='1' max="99999">  
+				<input type="number" pattern="[0-9]*" value="1">  
 			</div>
 			<div class="odds">
 				奖金<em>0</em>
@@ -163,12 +164,25 @@
 		<div class="orderBtmImg"></div>
 	</section>
 	<footer class="orderTotal">
-		<div class="total">
-			<p class="totalMoney">共<em>0</em>元</p>
-			<p><em class="totalCount">0</em>注</p>
+		<div class="top">
+			<div class="trace">
+				连续投
+				<input type="number" pattern="[0-9]*" value="1">  
+				期
+			</div>
+			<div class="autoStop">
+				<input type="radio">
+				追中即停
+			</div>
 		</div>
-		<div class="submit">
-			<button>立即投注</button>
+		<div class="bottom">
+			<div class="total">
+				<p class="totalMoney">共<em>0</em>元</p>
+				<p><em class="totalCount">0</em>注</p>
+			</div>
+			<div class="submit">
+				<button>立即投注</button>
+			</div>
 		</div>
 	</footer>
 </div>

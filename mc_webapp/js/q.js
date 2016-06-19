@@ -20,6 +20,9 @@ Q = {
         var m = a[1] + '_' + a[2];
         return LotteryClass[t].ltMethod[a[0]][m].name;
     },
+    getLtName: function(lt) {
+        return LotteryClass.names[lt];
+    },
     PkHzNum: {
         q2: ["3_19", "4_18", "5_17", "6_16", "7_15", "8_14", "9_13", "10_12", "11"],
         q3: ["6_27", "7_26", "8_25", "9_24", "10_23", "11_22", "12_21", "13_20", "14_19", "15_18", "16_17"]

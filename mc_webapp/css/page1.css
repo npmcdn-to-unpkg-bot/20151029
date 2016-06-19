@@ -102,7 +102,6 @@ header .logo{
 	background-color:#57399d;
 }
 #index footer>div{
-	width:50%;
 	-webkit-box-flex: 1;
 	text-align:center;
 	color:#fff;
@@ -118,6 +117,10 @@ header .logo{
 }
 #index footer>div.home i{
 	background:url("../img/homeIcon.png") no-repeat center;	
+	background-size: auto 100% ;
+}
+#index footer>div.history i{
+	background:url("../img/historyIcon.png") no-repeat center;
 	background-size: auto 100% ;
 }
 #index footer>div.account i{

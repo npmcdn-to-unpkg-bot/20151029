@@ -1,6 +1,9 @@
 #submit{
 	background-color:#f6f6f6;
 }
+#submit .wrapper{
+	bottom:95px;
+}
 #submit .orderTop{
 	display:-webkit-box;
 	width:100%;
@@ -147,12 +150,51 @@
 	background-color:#f6f6f6;
 }
 
-
 #submit .orderTotal{
+	height:95px;
 	width:100%;
-	display:-webkit-box;
+	display:block;
 	background-color:#432d7a;
 	z-index:1000;
+}
+
+#submit .orderTotal .top{
+	display:-webkit-box;
+	width:100%;
+	height:45px;
+	line-height:45px;
+	background-color:#7a57de;
+}
+
+#submit .orderTotal .top>div{
+	-webkit-box-flex:1;
+	text-align:center;
+	height:100%;
+}
+#submit .orderTotal input{
+	margin: 0 5px;
+	line-height:0.8rem;
+	font-size:0.8rem;
+	border-radius:4px;
+	color:#ff3232;
+	text-align:center;
+	border:none;
+	font-size:0.9rem;
+}
+#submit .orderTotal .trace input{
+	width:50px;
+	height:25px;
+}
+#submit .orderTotal .autoStop input{
+	height:16px;
+	vertical-align:top;
+	margin-top:15px;
+	width:20px;
+}
+
+#submit .orderTotal .bottom{
+	display:-webkit-box;
+	height:50px;
 }
 #submit .orderTotal .total{
 	padding-top:0.8rem;

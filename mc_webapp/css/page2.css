@@ -1,4 +1,4 @@
-#lottery.addLottery,#lottery.restore{
+#lottery.edit{
 	z-index:500;
 }
 #lottery header{
@@ -91,6 +91,9 @@
 	top:50px;
 	width:100%;
 	z-index:100;
+}
+#lottery .lt-info span{
+	margin-right:5px;
 }
 #lottery .lt-info em{
 	font-style:normal;
