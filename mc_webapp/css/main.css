@@ -106,6 +106,37 @@ header .title{
 	color:#fff;
 	font-size:1.2rem;
 }
+
+footer.menu{
+	display:table;
+	background-color:#57399d;
+}
+footer.menu>div{
+	-webkit-box-flex: 1;
+	text-align:center;
+	color:#fff;
+	display:table-cell;
+	vertical-align:middle;
+	font-size:0.8rem;
+}
+footer.menu>div i{
+	display:block;
+	width:20px;
+	height:20px;
+	margin:0 auto;
+}
+footer.menu>div.index i{
+	background:url("../img/homeIcon.png") no-repeat center;	
+	background-size: auto 100% ;
+}
+footer.menu>div.history i{
+	background:url("../img/historyIcon.png") no-repeat center;
+	background-size: auto 100% ;
+}
+footer.menu>div.account i{
+	background:url("../img/accountIcon.png") no-repeat center;
+	background-size: auto 100% ;
+}
 .mask{
 	position:absolute;
 	top:0;

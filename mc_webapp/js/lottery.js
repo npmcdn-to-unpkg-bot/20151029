@@ -1148,5 +1148,22 @@ Lottery = {
         Api.addOrder(obj, function(d) {
         	
         });
+    },
+    initHistory　: function(){
+    	var me = this;
+    	
+    	$('#history .history-list').on('touchend',function(evt){
+    		evt.preventDefault();
+    		var _this = $(evt.target);
+    		
+    		if(_this.hasClass('more')){
+    			Common.pageIn('#morehistory');
+    		}
+    	});
+    	
+    	$('#morehistory .pageback').on('touchend',function(evt){
+    		evt.preventDefault();
+    		Common.pageOut();
+    	});
     }
 };

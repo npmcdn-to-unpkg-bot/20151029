@@ -51,6 +51,7 @@ Common = {
 		me.initIndex();
 		Lottery.initLottery();
 		Lottery.initSubmit();
+		Lottery.initHistory();
 	},
 	
 	initIndex : function(){
@@ -78,6 +79,20 @@ Common = {
 			}
 
 		    Lottery.init();
+		});
+		
+		$('footer.menu').on('touchend',function(e){
+			var t;
+			if(e.target.nodeName == "DIV"){
+				t = $(e.target);
+			}else{
+				t = $(e.target).closest('div');
+			}
+			
+			$(t.attr("data-page")).show();
+			$(t.siblings()).each(function(){
+				$($(this).attr("data-page")).hide();
+			});
 		});
 		
 		me.swiper = new Swiper('.swiper-container', {

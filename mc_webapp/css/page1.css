@@ -97,33 +97,3 @@ header .logo{
 	color:#a6a6a6;
 	font-size:0.6rem;
 }
-#index footer{
-	display:table;
-	background-color:#57399d;
-}
-#index footer>div{
-	-webkit-box-flex: 1;
-	text-align:center;
-	color:#fff;
-	display:table-cell;
-	vertical-align:middle;
-	font-size:0.8rem;
-}
-#index footer>div i{
-	display:block;
-	width:20px;
-	height:20px;
-	margin:0 auto;
-}
-#index footer>div.home i{
-	background:url("../img/homeIcon.png") no-repeat center;	
-	background-size: auto 100% ;
-}
-#index footer>div.history i{
-	background:url("../img/historyIcon.png") no-repeat center;
-	background-size: auto 100% ;
-}
-#index footer>div.account i{
-	background:url("../img/accountIcon.png") no-repeat center;
-	background-size: auto 100% ;
-}
