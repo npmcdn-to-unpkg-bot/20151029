@@ -24,9 +24,25 @@
 	<link rel="stylesheet" type="text/css" href="css/page3.css">
 	
 	<link rel="stylesheet" type="text/css" href="css/history.css">
+	
+	<link rel="stylesheet" type="text/css" href="css/login.css">
 	<title>摩臣娱乐</title>
 </head>
 <body onload="Common.loaded()">
+<div id="login" class="page">
+	<header><div class="title">登陆摩臣娱乐</div></header>
+	<div class="wrapper">
+		<div class="login-form">
+			<p><input type="text" name="username" placeholder="用户名"/></p>
+			<p><input type="text" name="password" placeholder="密码"/></p>
+			<p>
+				<input type="text" name="code" class="codeinput" placeholder="验证码">
+				<img id="vimage" class="verifycode">
+			</p>
+			<button class="login-btn">登陆</button>
+		</div>
+	</div>
+</div>
 <div id="index" class="page" data-wrapper=".wrapper">
 	<header><div class="logo"></div></header>
 	<section class="wrapper">
