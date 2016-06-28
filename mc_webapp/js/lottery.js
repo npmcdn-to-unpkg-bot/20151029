@@ -70,6 +70,18 @@ Lottery = {
 	        	
 	        	//刷新 wrapper插件
 	    		Common.initWrapper();
+	    		
+	    		var el = $(Common.scroll[1].scroller);
+	    		Common.scroll[1].on('scroll',function(){
+	    			var y = this.y;
+	    			if(y > 30){
+	    				el.animate({
+	    					'top':'150px'
+	    				},6000,'ease-out');
+	    			} else {
+	    				//el.css('top',y + 'px');
+	    			}
+	    		})
 	    	}
         });
         

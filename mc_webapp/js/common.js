@@ -34,7 +34,8 @@ Common = {
 				var s = me.currentPage + ' ' + arguments[1];
 				var scroll = new IScroll(s,{
 					momentum: false,
-					tap:true
+					tap:true,
+					probeType:2
 				});
 				me.scroll.push(scroll);
 			});

@@ -27,9 +27,9 @@ var Common = {
 	skipTime: 0,
  	api : {
 		host : 'http://www.mc188.com/lottery',
-		getTime : '/api/anon/v1/lottery/times_callback',
-		getIssue : '/api/anon/v1/lottery/issue_info_callback',
-		getHistory : '/api/anon/v1/lottery/trend_callback'
+		getTime : '/api/call/v1/lottery/times_callback',
+		getIssue : '/api/call/v1/lottery/issue_info_callback',
+		getHistory : '/api/call/v1/lottery/trend_callback'
 	},
 	init : function(){
 		var me = this;

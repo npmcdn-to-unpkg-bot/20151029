@@ -112,7 +112,7 @@
 	background-color:#f6f6f4;
 }
 #lottery .number .scroller{
-	padding:0 10px;
+	padding:0 10px;background-color:#f6f6f4;
 }
 #lottery .number dl{
 	width:100%;
@@ -274,4 +274,11 @@
 	font-size:1.3rem;
 	font-weight:bold;
 	border:none;
+}
+
+
+#lottery .lastfive{
+	position:absolute;
+	top:0;
+	left:0;
 }
