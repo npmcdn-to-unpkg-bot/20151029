@@ -14,7 +14,7 @@ User = {
     'verify': '/m/sobet/validateImageCode', //2.1.验证码输入判断接口
     'exist': '/m/sobet/customerRegister/cnValidate', //2.2.验证用户是否存在
     'register': '/m/sobet/customerRegister', //2.3.验证码输入判断接口 [用户中心接口，需提供appId参数]
-    'logout': '/m/sobet/logout', //2.4.退出
+    'logout': '/sso/logout', //2.4.退出
     '': ''
   },
   looptime: 30000,
@@ -247,7 +247,7 @@ User = {
     });
   },
   //[用户中心接口2.4]OLD //[用户中心退出]跨域方式，暂未使用
-  ssoUserLogout: function(s, fn) {
+  ssoUserLogout: function(fn) {
     var ssoParams = [
       User.api['logout'],
       '?',
@@ -285,7 +285,13 @@ Q = {
         }
         var a = e.split("_");
         var m = a[1] + '_' + a[2];
-        return LotteryClass[t].ltMethod[a[0]][m].name;
+        var ma = LotteryClass[t].ltMethod[a[0]][m];
+        if (ma!=undefined) {
+        	 return ma.name;
+		}else {
+			return "-";
+		}
+       
     },
     getLtName: function(lt) {
         return LotteryClass.names[lt];
@@ -906,6 +912,7 @@ var Api = Api || {};
 Api = {
     route: {
     	getSlides: '/m/sobet/api/i/anon/activity/queryCurrentActivity',
+    	getAdminNotice:'/m/sobet/adminCommon/getAdminNotice.do',
         getOdds: "/lottery-mobile/api/anon/v1/lottery/odds",
         getOddsByLt: "/lottery-mobile/api/anon/v1/lottery/odds_app",
         getAllHistory: "/lottery-mobile/api/m/v1/lottery/open_issue_app",
@@ -920,10 +927,12 @@ Api = {
         stopTrace : "/lottery-mobile/api/m/v1/lottery/trace_cancel",
         getTraceIssue : "/lottery-mobile/api/m/v1/lottery/trace_issue",
         cancelOrder : "/lottery-mobile/api/m/v1/lottery/cancel_order",
-        getRechargeList : "/sobet/query/rechargeOrder_ajaxList",
-        getDrawList : "/sobet/query/drawOrder_ajaxList",
-        getWithDrawInfo : '/sobet/pay/m/drawCashIndexView',
-        withDrawSubmit : '/sobet/pay/m/withdrawCash',
+        getRechargeList : "/m/sobet/m/query/rechargeOrder_ajaxList",
+        rechargeIndex : "/m/sobet/pay/m/rechargeIndexView",
+        recharge : "/m/sobet/pay/m/recharge",
+        getDrawList : "/m/sobet/m/query/drawOrder_ajaxList",
+        getWithDrawInfo : '/m/sobet/pay/m/drawCashIndexView',
+        withDrawSubmit : '/m/sobet/pay/m/withdrawCash',
         
         
         
@@ -996,15 +1005,18 @@ Api = {
     },
     
     getData : function(url,fn){
+    	Common.showLoading();
     	var param = {
             url: url,
             type: "GET",
             cache: false,
             dataType: "json",
             success : function(xhr) {
+            	Common.closeLoading();
 				fn(xhr);
 			},
 			error : function(){
+				Common.closeLoading();
 				fn("error");
 			}
     	};    
@@ -1014,15 +1026,18 @@ Api = {
     	$.ajax(param);
     },
     postData : function(url,fn){
+    	Common.showLoading();
     	var param = {
             url: url,
             type: "POST",
             cache: false,
             dataType: "json",
             success : function(xhr) {
+            	Common.closeLoading();
 				fn(xhr);
 			},
 			error : function(){
+				Common.closeLoading();
 				fn("error");
 			}
     	};    
@@ -1081,6 +1096,12 @@ Api = {
     getRechargeList:function(obj,fn){
     	Api.getData(Api.route.getRechargeList,fn,obj);
     },
+    rechargeIndex:function(obj,fn){
+    	Api.getData(Api.route.rechargeIndex,fn,obj);
+    },
+   /* recharge:function(obj,fn){
+    	Api.getData(Api.route.recharge,fn,obj);
+    },*/
     getDrawList:function(obj,fn){
     	Api.getData(Api.route.getDrawList,fn,obj);
     },
@@ -1090,8 +1111,9 @@ Api = {
     withDrawSubmit:function(obj,fn){
     	Api.getData(Api.route.withDrawSubmit,fn,obj);
     },
-    
-    
+    getAdminNotice:function(obj,fn){
+    	Api.getData(Api.route.getAdminNotice,fn,obj);
+    },
     
     
     
@@ -2085,11 +2107,11 @@ LotteryClass = {
                     num: "千位,百位,十位,个位|0-9|all",
                     name: "四星直选复式"
                 },
-//                zx_ds: {
-//                    desc: "单式",
-//                    num: "input|zx|4",
-//                    name: "四星直选单式"
-//                },
+                zx_ds: {
+                    desc: "单式",
+                    num: "input|zx|4",
+                    name: "四星直选单式"
+                },
                 zx_zh: {
                     desc: "组合",
                     num: "千位,百位,十位,个位|0-9|all",
@@ -2122,11 +2144,11 @@ LotteryClass = {
                     num: "百位,十位,个位|0-9|all",
                     name: "后三码直选复式"
                 },
-//                zx_ds: {
-//                    desc: "单式",
-//                    num: "input|zx|3",
-//                    name: "后三码直选单式"
-//                },
+                zx_ds: {
+                    desc: "单式",
+                    num: "input|zx|3",
+                    name: "后三码直选单式"
+                },
                 zx_hz: {
                     desc: "和值",
                     num: "直选和值|0-27|",
@@ -2142,11 +2164,11 @@ LotteryClass = {
                     num: "组六|0-9|all",
                     name: "后三码组选六"
                 },
-//                zux_hh: {
-//                    desc: "混合",
-//                    num: "input|hh|3",
-//                    name: "后三码混合组选"
-//                },
+                zux_hh: {
+                    desc: "混合",
+                    num: "input|hh|3",
+                    name: "后三码混合组选"
+                },
                 zux_hz: {
                     desc: "和值",
                     num: "组选和值|1-26|",
@@ -2159,11 +2181,11 @@ LotteryClass = {
                     num: "万位,千位,百位|0-9|all",
                     name: "前三码直选复式"
                 },
-//                zx_ds: {
-//                    desc: "单式",
-//                    num: "input|zx|3",
-//                    name: "前三码直选单式"
-//                },
+                zx_ds: {
+                    desc: "单式",
+                    num: "input|zx|3",
+                    name: "前三码直选单式"
+                },
                 zx_hz: {
                     desc: "和值",
                     num: "直选和值|0-27|",
@@ -2179,11 +2201,11 @@ LotteryClass = {
                     num: "组六|0-9|all",
                     name: "前三码组选六"
                 },
-//                zux_hh: {
-//                    desc: "混合",
-//                    num: "input|hh|3",
-//                    name: "前三码混合组选"
-//                },
+                zux_hh: {
+                    desc: "混合",
+                    num: "input|hh|3",
+                    name: "前三码混合组选"
+                },
                 zux_hz: {
                     desc: "和值",
                     num: "组选和值|1-26|",
@@ -2196,11 +2218,11 @@ LotteryClass = {
                     num: "千位,百位,十位|0-9|all",
                     name: "中三码直选复式"
                 },
-//                zx_ds: {
-//                    desc: "单式",
-//                    num: "input|zx|3",
-//                    name: "中三码直选单式"
-//                },
+                zx_ds: {
+                    desc: "单式",
+                    num: "input|zx|3",
+                    name: "中三码直选单式"
+                },
                 zx_hz: {
                     desc: "和值",
                     num: "直选和值|0-27|",
@@ -2216,11 +2238,11 @@ LotteryClass = {
                     num: "组六|0-9|all",
                     name: "中三码组选六"
                 },
-//                zux_hh: {
-//                    desc: "混合",
-//                    num: "input|hh|3",
-//                    name: "中三码混合组选"
-//                },
+                zux_hh: {
+                    desc: "混合",
+                    num: "input|hh|3",
+                    name: "中三码混合组选"
+                },
                 zux_hz: {
                     desc: "和值",
                     num: "组选和值|1-26|",
@@ -2233,11 +2255,11 @@ LotteryClass = {
                     num: "十位,个位|0-9|all",
                     name: "后二直选复式"
                 },
-//                zx_hds: {
-//                    desc: "后二直选(单式)",
-//                    num: "input|zx|2",
-//                    name: "后二直选单式"
-//                },
+                zx_hds: {
+                    desc: "后二直选(单式)",
+                    num: "input|zx|2",
+                    name: "后二直选单式"
+                },
                 zx_hhz: {
                     desc: "后二直选(和值)",
                     num: "和值|0-18|",
@@ -2248,11 +2270,11 @@ LotteryClass = {
                     num: "万位,千位|0-9|all",
                     name: "前二直选复式"
                 },
-//                zx_qds: {
-//                    desc: "前二直选(单式)",
-//                    num: "input|zx|2",
-//                    name: "前二直选单式"
-//                },
+                zx_qds: {
+                    desc: "前二直选(单式)",
+                    num: "input|zx|2",
+                    name: "前二直选单式"
+                },
                 zx_qhz: {
                     desc: "前二直选(和值)",
                     num: "和值|0-18|",
@@ -2263,11 +2285,11 @@ LotteryClass = {
                     num: "组选|0-9|all",
                     name: "后二组选复式"
                 },
-//                zux_hds: {
-//                    desc: "后二组选(单式)",
-//                    num: "input|zux|2",
-//                    name: "后二组选单式"
-//                },
+                zux_hds: {
+                    desc: "后二组选(单式)",
+                    num: "input|zux|2",
+                    name: "后二组选单式"
+                },
                 zux_hhz: {
                     desc: "后二组选(和值)",
                     num: "和值|1-17|",
@@ -2278,11 +2300,11 @@ LotteryClass = {
                     num: "组选|0-9|all",
                     name: "前二组选复式"
                 },
-//                zux_qds: {
-//                    desc: "前二组选(单式)",
-//                    num: "input|zux|2",
-//                    name: "前二组选单式"
-//                },
+                zux_qds: {
+                    desc: "前二组选(单式)",
+                    num: "input|zux|2",
+                    name: "前二组选单式"
+                },
                 zux_qhz: {
                     desc: "前二组选(和值)",
                     num: "和值|1-17|",
@@ -2336,11 +2358,11 @@ LotteryClass = {
                     num: "万位,千位,百位,十位,个位|0-9|all",
                     name: "任二直选复式"
                 },
-//                zx_ds: {
-//                    desc: "直选单式",
-//                    num: "input|zx|2",
-//                    name: "任二直选单式"
-//                },
+                zx_ds: {
+                    desc: "直选单式",
+                    num: "input|zx|2",
+                    name: "任二直选单式"
+                },
                 zx_hz: {
                     desc: "直选和值",
                     num: "直选和值|0-18|",
@@ -2351,11 +2373,11 @@ LotteryClass = {
                     num: "组选复式|0-9|all",
                     name: "任二组选复式"
                 },
-//                zux_ds: {
-//                    desc: "组选单式",
-//                    num: "input|zux|2",
-//                    name: "任二组选单式"
-//                },
+                zux_ds: {
+                    desc: "组选单式",
+                    num: "input|zux|2",
+                    name: "任二组选单式"
+                },
                 zux_hz: {
                     desc: "组选和值",
                     num: "组选和值|1-17|",
@@ -2368,11 +2390,11 @@ LotteryClass = {
                     num: "万位,千位,百位,十位,个位|0-9|all",
                     name: "任三直选复式"
                 },
-//                zx_ds: {
-//                    desc: "单式",
-//                    num: "input|zx|3",
-//                    name: "任三直选单式"
-//                },
+                zx_ds: {
+                    desc: "单式",
+                    num: "input|zx|3",
+                    name: "任三直选单式"
+                },
                 zx_hz: {
                     desc: "和值",
                     num: "直选和值|0-27|",
@@ -2388,11 +2410,11 @@ LotteryClass = {
                     num: "组六|0-9|all",
                     name: "任三组选六"
                 },
-//                zux_hh: {
-//                    desc: "混合组选",
-//                    num: "input|hh|3",
-//                    name: "任三混合组选"
-//                },
+                zux_hh: {
+                    desc: "混合组选",
+                    num: "input|hh|3",
+                    name: "任三混合组选"
+                },
                 zux_hz: {
                     desc: "组选和值",
                     num: "组选和值|1-26|",
@@ -2405,11 +2427,11 @@ LotteryClass = {
                     num: "万位,千位,百位,十位,个位|0-9|all",
                     name: "任四直选复式"
                 },
-//                zx_ds: {
-//                    desc: "单式",
-//                    num: "input|zx|4",
-//                    name: "任四直选单式"
-//                },
+                zx_ds: {
+                    desc: "单式",
+                    num: "input|zx|4",
+                    name: "任四直选单式"
+                },
                 zux_z24: {
                     desc: "组选24",
                     num: "组24|0-9|all",
@@ -2452,11 +2474,11 @@ LotteryClass = {
                     num: "万位,千位,百位,十位,个位|0-9|all",
                     name: "五星直选复式"
                 },
-//                zx_ds: {
-//                    desc: "单式",
-//                    num: "input|zx|5",
-//                    name: "五星直选单式"
-//                },
+                zx_ds: {
+                    desc: "单式",
+                    num: "input|zx|5",
+                    name: "五星直选单式"
+                },
                 zx_zh: {
                     desc: "组合",
                     num: "万位,千位,百位,十位,个位|0-9|all",
@@ -2499,11 +2521,11 @@ LotteryClass = {
                     num: "千位,百位,十位,个位|0-9|all",
                     name: "四星直选复式"
                 },
-//                zx_ds: {
-//                    desc: "单式",
-//                    num: "input|zx|4",
-//                    name: "四星直选单式"
-//                },
+                zx_ds: {
+                    desc: "单式",
+                    num: "input|zx|4",
+                    name: "四星直选单式"
+                },
                 zx_zh: {
                     desc: "组合",
                     num: "千位,百位,十位,个位|0-9|all",
@@ -2536,11 +2558,11 @@ LotteryClass = {
                     num: "百位,十位,个位|0-9|all",
                     name: "后三码直选复式"
                 },
-//                zx_ds: {
-//                    desc: "单式",
-//                    num: "input|zx|3",
-//                    name: "后三码直选单式"
-//                },
+                zx_ds: {
+                    desc: "单式",
+                    num: "input|zx|3",
+                    name: "后三码直选单式"
+                },
                 zx_hz: {
                     desc: "和值",
                     num: "直选和值|0-27|",
@@ -2556,11 +2578,11 @@ LotteryClass = {
                     num: "组六|0-9|all",
                     name: "后三码组选六"
                 },
-//                zux_hh: {
-//                    desc: "混合",
-//                    num: "input|hh|3",
-//                    name: "后三码混合组选"
-//                },
+                zux_hh: {
+                    desc: "混合",
+                    num: "input|hh|3",
+                    name: "后三码混合组选"
+                },
                 zux_hz: {
                     desc: "和值",
                     num: "组选和值|1-26|",
@@ -2573,11 +2595,11 @@ LotteryClass = {
                     num: "万位,千位,百位|0-9|all",
                     name: "前三码直选复式"
                 },
-//                zx_ds: {
-//                    desc: "单式",
-//                    num: "input|zx|3",
-//                    name: "前三码直选单式"
-//                },
+                zx_ds: {
+                    desc: "单式",
+                    num: "input|zx|3",
+                    name: "前三码直选单式"
+                },
                 zx_hz: {
                     desc: "和值",
                     num: "直选和值|0-27|",
@@ -2593,11 +2615,11 @@ LotteryClass = {
                     num: "组六|0-9|all",
                     name: "前三码组选六"
                 },
-//                zux_hh: {
-//                    desc: "混合",
-//                    num: "input|hh|3",
-//                    name: "前三码混合组选"
-//                },
+                zux_hh: {
+                    desc: "混合",
+                    num: "input|hh|3",
+                    name: "前三码混合组选"
+                },
                 zux_hz: {
                     desc: "和值",
                     num: "组选和值|1-26|",
@@ -2610,11 +2632,11 @@ LotteryClass = {
                     num: "千位,百位,十位|0-9|all",
                     name: "中三码直选复式"
                 },
-//                zx_ds: {
-//                    desc: "单式",
-//                    num: "input|zx|3",
-//                    name: "中三码直选单式"
-//                },
+                zx_ds: {
+                    desc: "单式",
+                    num: "input|zx|3",
+                    name: "中三码直选单式"
+                },
                 zx_hz: {
                     desc: "和值",
                     num: "直选和值|0-27|",
@@ -2630,11 +2652,11 @@ LotteryClass = {
                     num: "组六|0-9|all",
                     name: "中三码组选六"
                 },
-//                zux_hh: {
-//                    desc: "混合",
-//                    num: "input|hh|3",
-//                    name: "中三码混合组选"
-//                },
+                zux_hh: {
+                    desc: "混合",
+                    num: "input|hh|3",
+                    name: "中三码混合组选"
+                },
                 zux_hz: {
                     desc: "和值",
                     num: "组选和值|1-26|",
@@ -2647,11 +2669,11 @@ LotteryClass = {
                     num: "十位,个位|0-9|all",
                     name: "后二直选复式"
                 },
-//                zx_hds: {
-//                    desc: "后二直选(单式)",
-//                    num: "input|zx|2",
-//                    name: "后二直选单式"
-//                },
+                zx_hds: {
+                    desc: "后二直选(单式)",
+                    num: "input|zx|2",
+                    name: "后二直选单式"
+                },
                 zx_hhz: {
                     desc: "后二直选(和值)",
                     num: "和值|0-18|",
@@ -2662,11 +2684,11 @@ LotteryClass = {
                     num: "万位,千位|0-9|all",
                     name: "前二直选复式"
                 },
-//                zx_qds: {
-//                    desc: "前二直选(单式)",
-//                    num: "input|zx|2",
-//                    name: "前二直选单式"
-//                },
+                zx_qds: {
+                    desc: "前二直选(单式)",
+                    num: "input|zx|2",
+                    name: "前二直选单式"
+                },
                 zx_qhz: {
                     desc: "前二直选(和值)",
                     num: "和值|0-18|",
@@ -2677,11 +2699,11 @@ LotteryClass = {
                     num: "组选|0-9|all",
                     name: "后二组选复式"
                 },
-//                zux_hds: {
-//                    desc: "后二组选(单式)",
-//                    num: "input|zux|2",
-//                    name: "后二组选单式"
-//                },
+                zux_hds: {
+                    desc: "后二组选(单式)",
+                    num: "input|zux|2",
+                    name: "后二组选单式"
+                },
                 zux_hhz: {
                     desc: "后二组选(和值)",
                     num: "和值|1-17|",
@@ -2692,11 +2714,11 @@ LotteryClass = {
                     num: "组选|0-9|all",
                     name: "前二组选复式"
                 },
-//                zux_qds: {
-//                    desc: "前二组选(单式)",
-//                    num: "input|zux|2",
-//                    name: "前二组选单式"
-//                },
+                zux_qds: {
+                    desc: "前二组选(单式)",
+                    num: "input|zux|2",
+                    name: "前二组选单式"
+                },
                 zux_qhz: {
                     desc: "前二组选(和值)",
                     num: "和值|1-17|",
@@ -2765,11 +2787,11 @@ LotteryClass = {
                     num: "万位,千位,百位,十位,个位|0-9|all",
                     name: "五星直选复式"
                 },
-//                zx_ds: {
-//                    desc: "单式",
-//                    num: "input|zx|5",
-//                    name: "五星直选单式"
-//                },
+                zx_ds: {
+                    desc: "单式",
+                    num: "input|zx|5",
+                    name: "五星直选单式"
+                },
                 zx_zh: {
                     desc: "组合",
                     num: "万位,千位,百位,十位,个位|0-9|all",
@@ -2812,11 +2834,11 @@ LotteryClass = {
                     num: "千位,百位,十位,个位|0-9|all",
                     name: "四星直选复式"
                 },
-//                zx_ds: {
-//                    desc: "单式",
-//                    num: "input|zx|4",
-//                    name: "四星直选单式"
-//                },
+                zx_ds: {
+                    desc: "单式",
+                    num: "input|zx|4",
+                    name: "四星直选单式"
+                },
                 zx_zh: {
                     desc: "组合",
                     num: "千位,百位,十位,个位|0-9|all",
@@ -2849,11 +2871,11 @@ LotteryClass = {
                     num: "百位,十位,个位|0-9|all",
                     name: "后三码直选复式"
                 },
-//                zx_ds: {
-//                    desc: "单式",
-//                    num: "input|zx|3",
-//                    name: "后三码直选单式"
-//                },
+                zx_ds: {
+                    desc: "单式",
+                    num: "input|zx|3",
+                    name: "后三码直选单式"
+                },
                 zx_hz: {
                     desc: "和值",
                     num: "直选和值|0-27|",
@@ -2869,11 +2891,11 @@ LotteryClass = {
                     num: "组六|0-9|all",
                     name: "后三码组选六"
                 },
-//                zux_hh: {
-//                    desc: "混合",
-//                    num: "input|hh|3",
-//                    name: "后三码混合组选"
-//                },
+                zux_hh: {
+                    desc: "混合",
+                    num: "input|hh|3",
+                    name: "后三码混合组选"
+                },
                 zux_hz: {
                     desc: "和值",
                     num: "组选和值|1-26|",
@@ -2886,11 +2908,11 @@ LotteryClass = {
                     num: "万位,千位,百位|0-9|all",
                     name: "前三码直选复式"
                 },
-//                zx_ds: {
-//                    desc: "单式",
-//                    num: "input|zx|3",
-//                    name: "前三码直选单式"
-//                },
+                zx_ds: {
+                    desc: "单式",
+                    num: "input|zx|3",
+                    name: "前三码直选单式"
+                },
                 zx_hz: {
                     desc: "和值",
                     num: "直选和值|0-27|",
@@ -2906,11 +2928,11 @@ LotteryClass = {
                     num: "组六|0-9|all",
                     name: "前三码组选六"
                 },
-//                zux_hh: {
-//                    desc: "混合",
-//                    num: "input|hh|3",
-//                    name: "前三码混合组选"
-//                },
+                zux_hh: {
+                    desc: "混合",
+                    num: "input|hh|3",
+                    name: "前三码混合组选"
+                },
                 zux_hz: {
                     desc: "和值",
                     num: "组选和值|1-26|",
@@ -2923,11 +2945,11 @@ LotteryClass = {
                     num: "千位,百位,十位|0-9|all",
                     name: "中三码直选复式"
                 },
-//                zx_ds: {
-//                    desc: "单式",
-//                    num: "input|zx|3",
-//                    name: "中三码直选单式"
-//                },
+                zx_ds: {
+                    desc: "单式",
+                    num: "input|zx|3",
+                    name: "中三码直选单式"
+                },
                 zx_hz: {
                     desc: "和值",
                     num: "直选和值|0-27|",
@@ -2943,11 +2965,11 @@ LotteryClass = {
                     num: "组六|0-9|all",
                     name: "中三码组选六"
                 },
-//                zux_hh: {
-//                    desc: "混合",
-//                    num: "input|hh|3",
-//                    name: "中三码混合组选"
-//                },
+                zux_hh: {
+                    desc: "混合",
+                    num: "input|hh|3",
+                    name: "中三码混合组选"
+                },
                 zux_hz: {
                     desc: "和值",
                     num: "组选和值|1-26|",
@@ -2960,11 +2982,11 @@ LotteryClass = {
                     num: "十位,个位|0-9|all",
                     name: "后二直选复式"
                 },
-//                zx_hds: {
-//                    desc: "后二直选(单式)",
-//                    num: "input|zx|2",
-//                    name: "后二直选单式"
-//                },
+                zx_hds: {
+                    desc: "后二直选(单式)",
+                    num: "input|zx|2",
+                    name: "后二直选单式"
+                },
                 zx_hhz: {
                     desc: "后二直选(和值)",
                     num: "和值|0-18|",
@@ -2975,11 +2997,11 @@ LotteryClass = {
                     num: "万位,千位|0-9|all",
                     name: "前二直选复式"
                 },
-//                zx_qds: {
-//                    desc: "前二直选(单式)",
-//                    num: "input|zx|2",
-//                    name: "前二直选单式"
-//                },
+                zx_qds: {
+                    desc: "前二直选(单式)",
+                    num: "input|zx|2",
+                    name: "前二直选单式"
+                },
                 zx_qhz: {
                     desc: "前二直选(和值)",
                     num: "和值|0-18|",
@@ -2990,11 +3012,11 @@ LotteryClass = {
                     num: "组选|0-9|all",
                     name: "后二组选复式"
                 },
-//                zux_hds: {
-//                    desc: "后二组选(单式)",
-//                    num: "input|zux|2",
-//                    name: "后二组选单式"
-//                },
+                zux_hds: {
+                    desc: "后二组选(单式)",
+                    num: "input|zux|2",
+                    name: "后二组选单式"
+                },
                 zux_hhz: {
                     desc: "后二组选(和值)",
                     num: "和值|1-17|",
@@ -3005,11 +3027,11 @@ LotteryClass = {
                     num: "组选|0-9|all",
                     name: "前二组选复式"
                 },
-//                zux_qds: {
-//                    desc: "前二组选(单式)",
-//                    num: "input|zux|2",
-//                    name: "前二组选单式"
-//                },
+                zux_qds: {
+                    desc: "前二组选(单式)",
+                    num: "input|zux|2",
+                    name: "前二组选单式"
+                },
                 zux_qhz: {
                     desc: "前二组选(和值)",
                     num: "和值|1-17|",
@@ -3170,11 +3192,11 @@ LotteryClass = {
                     num: "组六|0-9|all",
                     name: "后三码组选六"
                 },
-//                zux_hh: {
-//                    desc: "混合",
-//                    num: "input|hh|3",
-//                    name: "后三码混合组选"
-//                },
+                zux_hh: {
+                    desc: "混合",
+                    num: "input|hh|3",
+                    name: "后三码混合组选"
+                },
                 zux_hz: {
                     desc: "和值",
                     num: "组选和值|1-26|",
@@ -3202,11 +3224,11 @@ LotteryClass = {
                     num: "组六|0-9|all",
                     name: "前三码组选六"
                 },
-//                zux_hh: {
-//                    desc: "混合",
-//                    num: "input|hh|3",
-//                    name: "前三码混合组选"
-//                },
+                zux_hh: {
+                    desc: "混合",
+                    num: "input|hh|3",
+                    name: "前三码混合组选"
+                },
                 zux_hz: {
                     desc: "和值",
                     num: "组选和值|1-26|",
@@ -3234,11 +3256,11 @@ LotteryClass = {
                     num: "组六|0-9|all",
                     name: "中三码组选六"
                 },
-//                zux_hh: {
-//                    desc: "混合",
-//                    num: "input|hh|3",
-//                    name: "中三码混合组选"
-//                },
+                zux_hh: {
+                    desc: "混合",
+                    num: "input|hh|3",
+                    name: "中三码混合组选"
+                },
                 zux_hz: {
                     desc: "和值",
                     num: "组选和值|1-26|",
@@ -3371,11 +3393,11 @@ LotteryClass = {
                     num: "组六|0-9|all",
                     name: "任三组选六"
                 },
-//                zux_hh: {
-//                    desc: "混合组选",
-//                    num: "input|hh|3",
-//                    name: "任三混合组选"
-//                },
+                zux_hh: {
+                    desc: "混合组选",
+                    num: "input|hh|3",
+                    name: "任三混合组选"
+                },
                 zux_hz: {
                     desc: "组选和值",
                     num: "组选和值|1-26|",
@@ -3522,11 +3544,11 @@ LotteryClass = {
                     num: "组六|0-9|all",
                     name: "后三码组选六"
                 },
-//                zux_hh: {
-//                    desc: "混合",
-//                    num: "input|hh|3",
-//                    name: "后三码混合组选"
-//                },
+                zux_hh: {
+                    desc: "混合",
+                    num: "input|hh|3",
+                    name: "后三码混合组选"
+                },
                 zux_hz: {
                     desc: "和值",
                     num: "组选和值|1-26|",
@@ -3554,11 +3576,11 @@ LotteryClass = {
                     num: "组六|0-9|all",
                     name: "前三码组选六"
                 },
-//                zux_hh: {
-//                    desc: "混合",
-//                    num: "input|hh|3",
-//                    name: "前三码混合组选"
-//                },
+                zux_hh: {
+                    desc: "混合",
+                    num: "input|hh|3",
+                    name: "前三码混合组选"
+                },
                 zux_hz: {
                     desc: "和值",
                     num: "组选和值|1-26|",
@@ -3586,11 +3608,11 @@ LotteryClass = {
                     num: "组六|0-9|all",
                     name: "中三码组选六"
                 },
-//                zux_hh: {
-//                    desc: "混合",
-//                    num: "input|hh|3",
-//                    name: "中三码混合组选"
-//                },
+                zux_hh: {
+                    desc: "混合",
+                    num: "input|hh|3",
+                    name: "中三码混合组选"
+                },
                 zux_hz: {
                     desc: "和值",
                     num: "组选和值|1-26|",
@@ -3723,11 +3745,11 @@ LotteryClass = {
                     num: "组六|0-9|all",
                     name: "任三组选六"
                 },
-//                zux_hh: {
-//                    desc: "混合组选",
-//                    num: "input|hh|3",
-//                    name: "任三混合组选"
-//                },
+                zux_hh: {
+                    desc: "混合组选",
+                    num: "input|hh|3",
+                    name: "任三混合组选"
+                },
                 zux_hz: {
                     desc: "组选和值",
                     num: "组选和值|1-26|",
@@ -4065,11 +4087,11 @@ LotteryClass = {
                     num: "组六|0-9|all",
                     name: "三码组选六"
                 },
-//                zux_hh: {
-//                    desc: "混合",
-//                    num: "input|hh|3",
-//                    name: "三码混合组选"
-//                },
+                zux_hh: {
+                    desc: "混合",
+                    num: "input|hh|3",
+                    name: "三码混合组选"
+                },
                 zux_hz: {
                     desc: "和值",
                     num: "组选和值|1-26|",
@@ -4146,6 +4168,11 @@ LotteryClass = {
                     desc: "猜前二",
                     num: "冠军,第二名|1-10|all",
                     name: "猜前二"
+                },
+                cq2_ds: {
+                    desc: "猜前二(单式)",
+                    num: "冠军,第二名|1-10|all",
+                    name: "猜前二(单式)"
                 }
             },
             cq3: {
@@ -4153,6 +4180,11 @@ LotteryClass = {
                     desc: "猜前三",
                     num: "冠军,第二名,第三名|1-10|all",
                     name: "猜前三"
+                },
+                cq3_ds: {
+                    desc: "猜前三(单式)",
+                    num: "冠军,第二名,第三名|1-10|all",
+                    name: "猜前三(单式)"
                 }
             },
             cq4: {
@@ -4160,6 +4192,11 @@ LotteryClass = {
                     desc: "猜前四",
                     num: "冠军,第二名,第三名,第四名|1-10|all",
                     name: "猜前四"
+                },
+                cq4_ds: {
+                    desc: "猜前四(单式)",
+                    num: "冠军,第二名,第三名,第四名|1-10|all",
+                    name: "猜前四(单式)"
                 }
             },
             cq5: {
@@ -4167,6 +4204,11 @@ LotteryClass = {
                     desc: "猜前五",
                     num: "冠军,第二名,第三名,第四名,第五名|1-10|all",
                     name: "猜前五"
+                },
+                cq5_ds: {
+                    desc: "猜前五(单式)",
+                    num: "冠军,第二名,第三名,第四名,第五名|1-10|all",
+                    name: "猜前五(单式)"
                 }
             },
             dwd: {
@@ -4286,6 +4328,8 @@ Lottery = {
     interval : null, //定时器
     countOver : true, //倒计时
     skipTime : 0,
+    isContinue : true, //秒秒彩是否连续开奖
+    mmcLoading : false, //秒秒彩是否正在开奖
     loadingStatus:0,//下拉刷新上拉加载更多状态
     
     initEvents : function() {
@@ -4315,17 +4359,20 @@ Lottery = {
 		if(!me.odds[me.lt]){
 			Api.getOddsByLt({lottery:me.lt},function(d) {
 				me.odds[me.lt] = d.result[me.lt];
-				me.initTab(LotteryClass[me.lt]);
+				
 		        //取期号 倒计时
 				me.updateIssue();
+				
+				me.initTab(LotteryClass[me.lt]);
 
 				Common.closeDialog();
 			});
 		}else{
-			me.initTab(LotteryClass[me.lt]);
-	        //取期号 倒计时
+			//取期号 倒计时
 			me.updateIssue();
-
+			
+			me.initTab(LotteryClass[me.lt]);
+	        
 			Common.closeDialog();
 		}
 	},
@@ -4344,6 +4391,13 @@ Lottery = {
         	tpl += '<div class="subTab">';
         	
         	for(var m in ltMethod[t]){
+        		if (m.indexOf('zux_hh')!=-1 || m.indexOf('_ds')!=-1|| m.indexOf('_hds')!=-1|| m.indexOf('_qds')!=-1) {
+        			if (m.indexOf('dxds')!=-1) {
+        				
+					}else {
+						continue;
+					}
+				}
         		tpl += '<span data-type="' + m + '">' + ltMethod[t][m].desc + '</span>';
         	}
         	
@@ -4386,14 +4440,14 @@ Lottery = {
 	    		
 	        	if(Common.scroll[1]){
 		    		var el = $(Common.scroll[1].scroller);
-		
-		    		Common.stopScrollBack = true;
 		    		
+		    		Common.stopScrollBack = true;
+		    		var h = 194;
+		    		me.cls == 'pk10' ? h = 388 : h = 194;
 		    		Common.scroll[1].on('scroll',function(){
-		    			if(this.y > 190){
+		    			if(this.y > h){
 		    				Common.stopScrollBack = false;
 		    				el.removeClass('show-five');
-//		    				this.scrollTo(0,190,1000);
 		    			}else if(this.directionY < 0 && this.y > 0){//向下
 			    			if(el.hasClass('show-five')){
 			    				return;
@@ -4401,14 +4455,14 @@ Lottery = {
 			    			Common.stopScrollBack = true;
 			    			
 		    				el.removeClass('hide-five').addClass('show-five');
-		    				this.scrollTo(0,190,1000);
+		    				this.scrollTo(0,h,1000);
 	    				} else if(this.directionY > 0  && this.y > 0){
 	    					if(el.hasClass('hide-five')){
 			    				return;
 			    			}
 	    					Common.stopScrollBack = false;
 		    				el.removeClass('show-five').addClass('hide-five');
-		    				this.scrollTo(0,190,0);
+		    				this.scrollTo(0,h,0);
 	    				}else{
 	    					Common.stopScrollBack = false;
 	    				}
@@ -4520,7 +4574,6 @@ Lottery = {
     	var n = 1;
     	var len = 0;
     	var arr = me.getCode();
-    	
     	var pos = $("#lottery .dl-pos i.on").length; //选择位置 - 万 千 百 十 个
     	var rxNum = parseInt(m[0].charAt(m[0].length - 1)); //任选玩法  2 3 4
     	
@@ -4724,7 +4777,7 @@ Lottery = {
                 	}
                 	for (var i=0; i<arr[0].length; i++){
                 		for (var j = 0; j < arr[1].length; j++){
-                			if (String(arr[0][i]).indexOf(arr[1][j] == -1)) {
+                			if (String(arr[0][i]).indexOf(arr[1][j]) == -1) {
                 				var item = arr[0][i] + "-" + arr[1][j];
                 				newArr.push(item);
                 			}
@@ -4804,7 +4857,9 @@ Lottery = {
             		break;
             }
     	} else if ("rxfs" === m[1]) { //11选5的任选复式
-            n = Math.round(Math.nzn(arr[0].length, parseInt(arr[2], 10)));
+    		//alert(arr[0].length);
+    		//alert(m[2]);
+            n = Math.round(Math.nzn(arr[0].length, parseInt(m[2], 10)));
         } else if ("qw" === m[1]) { //北京快乐8趣味
             n = arr[0].length;
         } else if ("rxx" === m[1]) { //北京快乐8 任选x
@@ -4835,7 +4890,8 @@ Lottery = {
         var btnConfirm = _el.find(".confirm button");
       
         var result = total * times * mode;
-        result = result.toFixed(Math.precision(mode));
+        //Math.precision(mode)
+        result = result.toFixed(4);
         
         if(total > 0){
         	btnConfirm.removeClass('disabled');
@@ -5008,13 +5064,12 @@ Lottery = {
 					el.removeClass('show-mmc');
 					el.find('.lt-info').css('top',50 + 'px');
 					el.find('.number').css('top',80 + 'px');
-					
-					if(me.countOver){//只有当倒计时结束时候才会重新渲染最近5期
+					//if(me.countOver){//只有当倒计时结束时候才会重新渲染最近5期
 						el.find('.issue').html(me.issue);
 						var issue = me.cls === 'pk10' ? me.issue : me.issue.substring(4);
 						$('#submit .orderTime .issue').html(issue);
 						me.updateLastFive(res);
-					}
+					//}
 					
 					me.updateTime(res);
 				}
@@ -5036,12 +5091,13 @@ Lottery = {
     			li += '<span>第<em>' + arguments[1].issue + '</em>期</span>';
     		}
     		
+    		li += '<div>';
     		var code = arguments[1].code.split(',');
     		$(code).each(function(){
     			li += '<i>' + arguments[1] + '</i>';
     		})
     		
-    		li += '</li>';
+    		li += '</div></li>';
     	});
     	el.html(li);
     },
@@ -5066,6 +5122,7 @@ Lottery = {
 			time.hide();
 			me.isStop = true;
 		} else {
+			me.isStop = false;
 	        var h = Math.floor(second/3600);
 	        var m = Math.floor((second%3600)/60)
 	        var s = (second%3600)%60;
@@ -5170,7 +5227,9 @@ Lottery = {
     			$(this).val(min);
     		}else if(parseInt(val) > parseInt(max)){
     			$(this).val(max);
-    		}
+    		}else if (parseInt(val) < parseInt(min)) {
+    			$(this).val(min);
+			}
     		count.find('.totalTimes').html($(this).val());
     		me.calcMoney();
     	});
@@ -5190,6 +5249,16 @@ Lottery = {
     		if($(this).hasClass('disabled')){
     			return false;
     		}
+    		
+    		if(me.isStop){
+    			Common.showDialog({
+    				content:'当前彩种暂停销售',
+    				width:170,
+    				height:41
+    			});
+    			return false;
+    		}
+    		
     		me.renderOrder();
     		
     		if(el.hasClass('edit')){
@@ -5231,8 +5300,8 @@ Lottery = {
     		}
     	}else{
     		el.removeClass('show-mmc');
-        	el.find('.orderTime .ltName').html(Q.getLtName(me.lt));
     	}
+    	el.find('header .title').html(Q.getLtName(me.lt));
     	var list = el.find('.order-list');
     	var order = me.orderlist[me.lt] ? me.orderlist[me.lt] : me.getOrder();
     	
@@ -5253,46 +5322,62 @@ Lottery = {
     	
 		el.find('.pageback').off('touchend').on("touchend",function(evt){
 			evt.preventDefault();
-    		var tip = {
-    			type : 'dialog',
-    			title : '返回',
-    			content : '要保存号码吗？',
-    			cancel : true,
-    			btns :[{
-					cls:'no',
-					text:'清除',
-				    fn:function(){
-						me.orderlist[me.lt] = undefined;
-						list.find('li').remove();
-						me.setSubmitData();
-	    				Common.closeDialog();
-	    				
-	    	    		lt.removeClass('edit').css('transform','translate3d(100%,0,0)')
-	    				Common.pageOut();
-	    	    		
-		        		if(me.interval){
-		        			clearInterval(me.interval);
-		        		}
-					}
-    			},{
-					cls:'yes',
-					text:'保存',
-					fn:function(){
-						me.orderlist[me.lt] = list.html();
-						list.find('li').remove();
-	    				Common.closeDialog();
-	    				me.setSubmitData();
-	    				
-	    	    		lt.removeClass('edit').css('transform','translate3d(100%,0,0)')
-	    				Common.pageOut();
-	    	    		
-		        		if(me.interval){
-		        			clearInterval(me.interval);
-		        		}
-					}
-				}]
-    		}
-    		Common.showDialog(tip);
+			var orderlist = $('.order-list');
+			if(!$('.order-list') || $('.order-list > li').length ==0){
+				me.orderlist[me.lt] = undefined;
+				list.find('li').remove();
+				me.setSubmitData();
+				Common.closeDialog();
+				
+	    		lt.removeClass('edit').css('transform','translate3d(100%,0,0)')
+				Common.pageOut();
+	    		
+        		if(me.interval){
+        			clearInterval(me.interval);
+        		}
+			}else{
+				var tip = {
+		    			type : 'dialog',
+		    			title : '返回',
+		    			content : '要保存号码吗？',
+		    			cancel : true,
+		    			btns :[{
+							cls:'no',
+							text:'清除',
+						    fn:function(){
+								me.orderlist[me.lt] = undefined;
+								list.find('li').remove();
+								me.setSubmitData();
+			    				Common.closeDialog();
+			    				
+			    	    		lt.removeClass('edit').css('transform','translate3d(100%,0,0)')
+			    				Common.pageOut();
+			    	    		
+				        		if(me.interval){
+				        			clearInterval(me.interval);
+				        		}
+							}
+		    			},{
+							cls:'yes',
+							text:'保存',
+							fn:function(){
+								me.orderlist[me.lt] = list.html();
+								list.find('li').remove();
+			    				Common.closeDialog();
+			    				me.setSubmitData();
+			    				
+			    	    		lt.removeClass('edit').css('transform','translate3d(100%,0,0)')
+			    				Common.pageOut();
+			    	    		
+				        		if(me.interval){
+				        			clearInterval(me.interval);
+				        		}
+							}
+						}]
+		    		}
+		    		Common.showDialog(tip);
+			}
+    		
 		});
 		
 		el.find('.winstop').on('touchend',function(evt){
@@ -5384,7 +5469,9 @@ Lottery = {
     			$(this).val(min);
     		}else if(parseInt(val) > parseInt(max)){
     			$(this).val(max);
-    		}
+    		}else if (parseInt(val) < parseInt(min)) {
+    			$(this).val(min);
+			}
     		me.setSubmitData();
     	});
     	
@@ -5398,14 +5485,6 @@ Lottery = {
     			return false;
             }
             
-    		if(me.isStop){
-    			Common.showDialog({
-    				content:'当前彩种暂停销售'
-    			});
-    			
-    			return;
-    		}
-    		
     		me.setSubmitData();
     		
     		if(!me.orderObj){
@@ -5416,7 +5495,7 @@ Lottery = {
     		}
     		//秒秒彩连投
             if(me.lt === 'WBGMMC' && me.orderObj.istrace) {
-	            var content = '<div class="dialog_mmc_trace">\
+	            var content = '<div class="dialog_mmc_trace"><div class="mmc-close">X</div>\
             	    <p><span>第<em id="mmcLoopNow">0</em>次</span><label class="status">开奖中</label></p>\
 	            	<p>\
             	    	<span>已中奖<em id="mmcLoopDone">0</em>次</span>\
@@ -5443,19 +5522,36 @@ Lottery = {
                     switch(type) {
                     	case 1:
                     		$(this).html('继续').attr('data-type', 2);
-                    		isContinue =  false;
+                    		$('.mmc-close').show();
+                    		me.isContinue = false;
                     		break;
                     	case 2:
-                    		$(this).html('停止').attr('data-type', 1);
-                    		me.addOrderMMCLoopApi();
+                    		if(!me.mmcLoading){
+                        		$(this).html('停止').attr('data-type', 1);
+                        		me.isContinue = true;
+                        		me.addOrderMMCLoopApi();
+                        		$('.mmc-close').hide();
+                    		}else{
+                    			Common.showDialog({content:'请等待当前开奖完成'});
+                    		}
                     		break;
                     	case 3://关闭弹出框
+                    		me.isContinue = true;
                         	Common.closeDialog();
                         	break;
                     	default: break;
                     }
                 });
               	
+              	$('.mmc-close').off('touchend').on('touchend',function(evt) {
+              		if(!me.mmcLoading){
+              			me.isContinue = true;
+              			Common.closeDialog();
+          			}else{
+          				Common.showDialog({content:'请等待当前开奖完成'});
+          			}
+                });
+
               	me.addOrderMMCLoopApi();
             } else {
                me.addOrderApi();
@@ -5571,7 +5667,7 @@ Lottery = {
                 var win = me.getMoneyWin(count, hz_num.split(), hz_method).win;
                 
                 
-                html = html + '<li data-method="' + me.method + '" data-count="' + count.join('|') + '" data-code="' + hz_num + '"><div class="delete"></div><div class="content"><div class="title">\
+                html = html + '<li data-method="' + hz_method + '" data-count="' + count.join('|') + '" data-code="' + hz_num + '"><div class="delete"></div><div class="content"><div class="title">\
 						<span class="lt-name">' + name + '</span><span class="odd">奖金模式<em>' + count[3] + '</em></span></div>\
 						<div class="code">' + hz_num + '</div><div class="info">\
 						<span><em class="count">' + count[0] + '</em>注<em class="times">' + count[1] + '</em>倍</span>\
@@ -5690,7 +5786,7 @@ Lottery = {
             	win = total * times * mode;
             }
     	} else if (m[0] === "rxfs" || m[0] === 'rxds') {
-    		code = code[0].split(",");
+    		code = code[0].toString().split(',');
             var rxNum = 1;
             
             if (parseInt(method.substr(-3, 1), 10) <= 5) {
@@ -5778,11 +5874,12 @@ Lottery = {
         	    //  注数  | 倍数  | 元角分厘   | 奖金模式  | 返点  | 总金额   | 选择位置（任选玩法）| 元角分厘名称
         		var data = $(this).attr('data-count').split('|');
         		var code = $(this).attr('data-code');
+        		var method = $(this).attr('data-method');
         		totalCount += parseInt(data[0],10);
         		totalMoney += parseFloat(data[5],10);
-        		
         		var tmpOrder = {
-    				"method" : me.method,
+    				//"method" : me.method,
+        			"method" : method,
     				"code" : code,
     				"nums" : data[0],
     				"piece" : data[1],
@@ -5801,6 +5898,7 @@ Lottery = {
 
     		me.traceCount = traceCount;
     		
+    		totalMoney = totalMoney.toFixed(4);
     		var trace = {
     			"start":me.issue,
     			"totalMoney":totalMoney,
@@ -5867,83 +5965,88 @@ Lottery = {
     },
     addOrderMMCLoopApi : function(){
       	var me = this;
-
-        me.orderObj.sourceType = 1;
         
-      	var obj = me.orderObj;
-      	var winTop = obj.trace.winStop;
-      	var traceCount = JSON.parse(Lottery.orderObj.trace).totalCount;
-      	
-      	var mmcBtn = $('.btn-mmc-loop');
-      
-      	if(mmcBtn.attr('data-type') == 2){
-    		return;
-    	}
-      	
-        var isContinue = true;
-       
-        $("#mmcLoopNow").html(parseInt($("#mmcLoopNow").html(), 10) + 1);
-        $(".dialog_mmc_trace .status").html('开奖中');
-        
-        Api.addOrder(obj, function(d) {
-        	if (d.code && d.code == '1') {
-	            var isStopMMC = parseInt($(".btn-mmc-loop").attr('data-type'), 10);
+        if(me.isContinue){
+        	me.orderObj.sourceType = 1;
+            
+          	var obj = me.orderObj;
+          	//obj.trace.winStop;
+          	var winTop = JSON.parse(obj.trace).winStop;
+          	var traceCount = JSON.parse(obj.trace).totalCount;
+          	
+          	var mmcBtn = $('.btn-mmc-loop');
+          
+          	if(mmcBtn.attr('data-type') == 2){
+        		return;
+        	}
+          	
+        	$("#mmcLoopNow").html(parseInt($("#mmcLoopNow").html(), 10) + 1);
+            $(".dialog_mmc_trace .status").html('开奖中');
+            
+            me.mmcLoading = true;
+            Api.addOrder(obj, function(d) {
+            	if (d.code && d.code == '1') {
+    	            var isStopMMC = parseInt($(".btn-mmc-loop").attr('data-type'), 10);
 
-	            // 秒秒彩动画开始
-	            var prize = parseFloat(parseFloat(d.result.bonus, 10).toFixed(4));
-	            var code = d.result.code.split(',');
-	            
-	            me.flipball.flip(code, true, function() {
-	            	$(".dialog_mmc_trace .status").html('已结束');
-	            	// 连投次数等于总次数 不继续
-	            	if(parseInt($("#mmcLoopNow").html(), 10) === traceCount) {
-	            		$(".btn-mmc-loop").html('确定').attr('data-type', 3);
-	            		$("#mmcLoopNow").parent('span').hide();
-	            		$("#mmcLoopPrize").parent('span').hide();
-	            		isContinue = false;
-	            	}
+    	            // 秒秒彩动画开始
+    	            var prize = parseFloat(parseFloat(d.result.bonus, 10).toFixed(4));
+    	            var code = d.result.code.split(',');
+    	            
+//    	            var prize = 0;
+//    	            var code = [1,2,3,4,5];
+    	            
+    	            me.flipball.flip(code, true, function() {
+    	            	$(".dialog_mmc_trace .status").html('已结束');
+    	            	// 连投次数等于总次数 不继续
+    	            	if(parseInt($("#mmcLoopNow").html(), 10) === traceCount) {
+    	            		$(".btn-mmc-loop").html('确定').attr('data-type', 3);
+    	            		$("#mmcLoopNow").parent('span').hide();
+    	            		$("#mmcLoopPrize").parent('span').hide();
+    	            		me.isContinue = false;
+    	            	}
 
-	            	// 用户停止 不继续
-	            	if(isStopMMC !== 1) {
-	            		isContinue = false;
-	            	}
+    	            	// 用户停止 不继续
+    	            	if(isStopMMC !== 1) {
+    	            		me.isContinue = false;
+    	            	}
+    	            	// 中奖即停
+    	            	if (prize > 0 && winTop) {
+    	            		$(".btn-mmc-loop").html('确定').attr('data-type', 3);
+    	            		$("#mmcLoopDone").html(parseInt($("#mmcLoopDone").html(), 10) + 1);
+    	            		$("#mmcLoopPrize").html($("#mmcLoopNow").html());
+    	            		$("#mmcLoopMoney").html(prize);
+                       
+    	            		var prizeAmount = parseFloat((parseFloat($("#mmcLoopAmount").html(), 10) + prize).toFixed(4));
+    	            		$("#mmcLoopAmount").html(prizeAmount);
+    	            		me.isContinue = false;
+    	            	} else if(prize > 0) {
+    	            		// 投中更新已中奖次数
+    	            		$("#mmcLoopDone").html(parseInt($("#mmcLoopDone").html(), 10) + 1);
+    	            		$("#mmcLoopPrize").html($("#mmcLoopNow").html());
+    	            		$("#mmcLoopMoney").html(prize);
+                      
+    	            		var prizeAmount = parseFloat((parseFloat($("#mmcLoopAmount").html(), 10) + prize).toFixed(4));
+    	            		$("#mmcLoopAmount").html(prizeAmount);
+    	            	}
 
-	            	// 中奖即停
-	            	if (prize > 0 && winTop) {
-	            		$(".btn-mmc-loop").html('确定').attr('data-type', 3);
-	            		$("#mmcLoopDone").html(parseInt($("#mmcLoopDone").html(), 10) + 1);
-	            		$("#mmcLoopPrize").html($("#mmcLoopNow").html());
-	            		$("#mmcLoopMoney").html(prize);
-                   
-	            		var prizeAmount = parseFloat((parseFloat($("#mmcLoopAmount").html(), 10) + prize).toFixed(4));
-	            		$("#mmcLoopAmount").html(prizeAmount);
-	            		isContinue = false;
-	            	} else if(prize > 0) {
-	            		// 投中更新已中奖次数
-	            		$("#mmcLoopDone").html(parseInt($("#mmcLoopDone").html(), 10) + 1);
-	            		$("#mmcLoopPrize").html($("#mmcLoopNow").html());
-	            		$("#mmcLoopMoney").html(prize);
-                  
-	            		var prizeAmount = parseFloat((parseFloat($("#mmcLoopAmount").html(), 10) + prize).toFixed(4));
-	            		$("#mmcLoopAmount").html(prizeAmount);
-	            	}
-
-	            	if(isContinue) {
-	            		setTimeout(function(){
-		            		me.addOrderMMCLoopApi();
-	            		},2000);
-	            	}
-              });
-            } else {
-            	$('#dialog .dialog').hide();
-            	var tip = {
-            		type:'tip',
-            		content:d.msg
-            	}
-	    		Common.showDialog(tip);
-            }
-        });
-      
+    	            	if(me.isContinue) {
+    	            		setTimeout(function(){
+    		            		me.addOrderMMCLoopApi();
+    	            		},2000);
+    	            	}
+                  });
+                } else {
+                	$('#dialog .dialog').hide();
+                	var tip = {
+                		type:'tip',
+                		content:d.msg
+                	}
+    	    		Common.showDialog(tip);
+                }
+            	
+            	me.mmcLoading = false;
+            });
+        }
     },
     initHistory　: function(){
     	var me = this;
@@ -6018,20 +6121,25 @@ Lottery = {
     initSearch　: function(){
     	var me = this;
     	
-    	$('#index .searchMenu>div').on('touchend',function(evt){
-    		evt.preventDefault();
-    		$(this).addClass('on').siblings().removeClass('on');
-    		
-    		var index = $(this).index();
-    		$('#searchPage ul').eq(index).show().siblings().hide();
-    	});
-    	
     	$('#index .searchMenu').on('touchend',function(evt){
     		evt.preventDefault();
     		var _this = evt.target;
     		
     		if(_this.nodeName == 'I'){
-    			$(_this).next().toggle();
+    			var e = $(_this).parent();
+    			if(e.hasClass('on')){
+    				$(_this).next().toggle();
+    			}else{
+        			if(e.hasClass('orderRecord')){
+            			me.getOrderList();
+            		} else if(e.hasClass('traceRecord')){
+            			me.getTraceList();
+            		}
+        			
+        			e.addClass('on').siblings().removeClass('on');
+            		$('#searchPage .list ul').eq(e.index()).show().siblings().hide();
+            		$(this).find('.record-menu').hide().find('.on').removeClass('on');
+    			}
     		} else if(_this.nodeName == 'SPAN') {
     			var e = $(_this).parent().parent();
     			$(_this).addClass('on').siblings().removeClass('on');
@@ -6045,11 +6153,18 @@ Lottery = {
     			}else if(e.hasClass('traceRecord')){
     				me.getTraceList(obj);
     			}
+    			$(_this).parent().hide();
     		} else if($(_this).hasClass('orderRecord')){
+    			$(_this).addClass('on').siblings().removeClass('on');
     			me.getOrderList();
+        		$('#searchPage .list ul').eq($(_this).index()).show().siblings().hide();
+        		$(_this).find('.record-menu').hide().find('.on').removeClass('on');
     		} else if($(_this).hasClass('traceRecord')){
+    			$(_this).addClass('on').siblings().removeClass('on');
     			me.getTraceList();
-    		}
+    			$('#searchPage .list ul').eq($(_this).index()).show().siblings().hide();
+    			$(_this).find('.record-menu').hide().find('.on').removeClass('on');
+    		} 
     	});
     	
     	$('#searchPage').on('touchend',function(evt){
@@ -6065,19 +6180,21 @@ Lottery = {
     					orderId	: id
     				}
         			Common.pageIn('#orderDetail');
+    				$('#orderDetail').attr('data-type','order');
         			me.getOrderDetail(obj);
     			}else if(ul.hasClass('trace-list')){
     				var obj = {
     					traceId	: id
     				}
         			Common.pageIn('#traceDetail');
+    				$('#orderDetail').attr('data-type','trace');
         			me.getTraceDetail(obj);
     			}
     		}
     	});
     	
     	//查看追号信息
-    	$('#orderDetail .getTraceIssue').on('touchend',function(evt){
+    	$('.getTraceIssue').on('touchend',function(evt){
     		evt.preventDefault();
     		
     		var obj = {
@@ -6085,60 +6202,88 @@ Lottery = {
     		} 
     		Common.pageIn('#traceIssue');
     		
-    		$('#traceIssue').one('webkitTransitionEnd transitionend',function(){
-				$(this).off('webkitTransitionEnd transitionend');
-				$('#orderDetail').hide().addClass('edit').css('transform','translate3d(100%,0,0)');
-			});
+//    		$('#traceIssue').one('webkitTransitionEnd transitionend',function(){
+//				$(this).off('webkitTransitionEnd transitionend');
+//				//$('#orderDetail').hide().addClass('edit').css('transform','translate3d(100%,0,0)');
+//				$('#orderDetail').addClass('edit');
+//			});
 			me.getTraceIssue(obj);
     	});
     	
-    	$('#traceDetail .getTraceIssue').on('touchend',function(evt){
-    		evt.preventDefault();
-    		
-    		var obj = {
-    			traceId	: $(this).attr("data-traceid")
-    		} 
-    		Common.pageIn('#traceIssue');
-    		
-    		$('#traceIssue').one('webkitTransitionEnd transitionend',function(){
-				$(this).off('webkitTransitionEnd transitionend');
-				$('#orderDetail').addClass('editTrace');
-			});
-    		
-			me.getTraceIssue(obj);
-    	});
+//    	$('#traceDetail .getTraceIssue').on('touchend',function(evt){
+//    		evt.preventDefault();
+//    		
+//    		var obj = {
+//    			traceId	: $(this).attr("data-traceid")
+//    		} 
+//    		Common.pageIn('#traceIssue');
+//    		
+////    		$('#traceIssue').one('webkitTransitionEnd transitionend',function(){
+////				$(this).off('webkitTransitionEnd transitionend');
+////				$('#orderDetail').addClass('editTrace');
+////			});
+//    		
+//			me.getTraceIssue(obj);
+//    	});
     	
     	$('#orderDetail').find('.pageback').off('touchend').on("touchend",function(evt){
     		evt.preventDefault();
-    		$('#orderDetail').one('webkitTransitionEnd transitionend',function(){
-				$(this).off('webkitTransitionEnd transitionend');
-				if($(this).hasClass('edit')){
-					$(this).removeClass('edit').css('transform','translate3d(0,0,0)').show();
-					$(this).find('button.getTraceIssue').show();
-				} else if($(this).hasClass('editTrace')){
-					$(this).removeClass('editTrace');
-				}
-			});
-    		
+//    		$('#orderDetail').one('webkitTransitionEnd transitionend',function(){
+//				$(this).off('webkitTransitionEnd transitionend');
+//				if($(this).hasClass('edit')){
+//					$(this).removeClass('edit');
+////					$(this).removeClass('edit').css('transform','translate3d(0,0,0)').show();
+////					$(this).find('button.getTraceIssue').show();
+//				} else if($(this).hasClass('editTrace')){
+//					$(this).removeClass('editTrace');
+//				}
+//			});
+//    		
     		Common.pageOut();
+			
+    		var type = $('#orderDetail').attr('data-type');
+    		var el = $('#searchPage');
+    		var fn = type == "order" ? me.getOrderList : me.getTraceList;
+    		//重新绑定下拉刷新等事件
+			me.initScroll(Common.scroll[0],el,fn);
     	});
     	
+    	//撤单
     	$('#orderDetail .cancelOrder').on('touchend',function(evt){
     		evt.preventDefault();
     		
-    		var obj = {
-    			orderId : $('#orderDetail').attr('data-orderId')	
-    		};
-    		
-    		Api.cancelOrder(obj,function(res){
-    			if(res.code == '1'){
-    				var tip = {
-    					content:'撤单成功'
-    				};
-    				Common.showDialog(tip);
-    			}
-    		});
-			
+    		var tip = {
+    			type : 'dialog',
+    		    title : '撤单',
+    			content : '确定要撤销订单吗？',
+    			btns :[{
+					cls:'no',
+					text:'确定',
+				    fn:function(){
+				    	Common.closeDialog();
+				    	var obj = {
+			    			orderId : $('#orderDetail').attr('data-orderId')	
+			    		};
+			    		
+			    		Api.cancelOrder(obj,function(res){
+			    			var tip = {};
+			    			if(res.code == '0'){
+			    				tip.content = '撤单成功';
+			    			}else {
+			    				tip.content = res.msg;
+							}
+							Common.showDialog(tip);
+			    		});
+	    			}
+				},{
+					cls:'yes',
+					text:'取消',
+					fn:function(){
+	    				Common.closeDialog();
+	    			}
+				}]
+    		}
+    		Common.showDialog(tip);
     	});
     },
     
@@ -6182,12 +6327,18 @@ Lottery = {
     		pullUpEl.removeClass('loading flip').hide().find('.icon').html('上拉加载更多');
     		
     		var list = res.result.his_orders;
+    		
     		var h = '';
     		if(list.length > 0){
     			$(list).each(function(){
 					var d = arguments[1];
+					var lt = d.lottery;
+					if (lt=='3DFC') {
+						lt='l'+lt;
+					}
+					var l = 
 					h += '<li id="' + d.orderItemId + '"><div class="title">' + d.orderTime + '</div><div class="content">\
-							<div class="' + d.lottery + ' ltIcon"></div><div class="ltInfo"><p>' + Q.getMethodName(d.method,d.lottery) + 
+							<div class="' + lt + ' ltIcon"></div><div class="ltInfo"><p>' + Q.getMethodName(d.method,d.lottery) + 
 							'</p><p>' + d.amount + '元</p></div><div class="status"><p>' + d.state + '</p><p>' + d.awardMoney +
 							'元</p></div><div class="more"></div></div><div class="btm">';
 					if(d.lottery != 'WBGMMC'){
@@ -6228,14 +6379,9 @@ Lottery = {
     		if(!append){
     			Common.initWrapper();
     			
-    			var param = {
-    		    	pageSize:10
-    		    };
-    			if(obj.status){
-    				param.status = obj.status;
-        		}
+    			me.scrollParam = obj;
     			
-    			me.initScroll(Common.scroll[0],el,ul,me.getOrderList,param);
+    			me.initScroll(Common.scroll[0],el,me.getOrderList);
     		}
 			
 		
@@ -6245,10 +6391,13 @@ Lottery = {
     	});
     },
     
-    initScroll : function(scroll,el,ul,fn,param){
+    initScroll : function(scroll,el,fn){
 		var me = this;
-		var pullDownEl =  el.find('.pullDown');
-    	var pullUpEl =  el.find('.pullUp');
+
+		var param = me.scrollParam;
+		
+		var pullDownEl = el.find('.pullDown');
+    	var pullUpEl = el.find('.pullUp');
     	
     	scroll.on('scroll',function(){
 			if(me.loadingStatus == 0 && !pullDownEl.hasClass('flip') && !pullUpEl.hasClass('flip')){
@@ -6269,16 +6418,14 @@ Lottery = {
 				if(pullDownEl.hasClass('flip')){
 					me.loadingStatus == 2;
 					pullDownEl.addClass('loading').find('.icon').html('');
+					param.currPage = 1;
 					setTimeout(function(){
 						el.addClass('load');
-						fn.call(me);
+						fn.call(me,param);
 					},1000);
 				} else if(pullUpEl.hasClass('flip')){
 					pullUpEl.addClass('loading').find('.icon').html('');
-					
-					var cPage = parseInt(ul.attr('data-currPage'));
-					
-					param.currPage = cPage + 1;
+					param.currPage = param.currPage + 1;
 			    	
 					if(param.currPage > 10){
 						var tip = {
@@ -6318,7 +6465,7 @@ Lottery = {
     			el.find('.odds').html(d.odds);
     			el.find('.amount').html(d.amount);
     			el.find('.awardMoney').html(d.awardMoney);
-    			
+    			0
     			var mode;
     			switch(d.perAmount){
     				case 2 : mode = '元';break;
@@ -6327,7 +6474,6 @@ Lottery = {
     				case 0.002 : mode = '厘';break;
     			}
     			el.find('.perAmount').html(mode);
-    			
     			if(d.lotteryNumber){
     				el.find('.lotteryNumber').html(d.lotteryNumber);
     			}else{
@@ -6341,6 +6487,12 @@ Lottery = {
     			}else{
     				el.find('.getTraceIssue').hide();
     			}
+    			if (d.status == '未开奖') {
+    				el.find('.cancelOrder').show();
+				}else {
+					el.find('.cancelOrder').hide();
+				}
+    			
     		}
     	});
     },
@@ -6364,8 +6516,8 @@ Lottery = {
     	}
     	
     	var el = $('#searchPage');
-    	var pullDownEl =  el.find('.pullDown');
-    	var pullUpEl =  el.find('.pullUp');
+    	var pullDownEl = el.find('.pullDown');
+    	var pullUpEl = el.find('.pullUp');
     	
     	el.one('webkitTransitionEnd transitionend',function(){
 			$(this).off('webkitTransitionEnd transitionend');
@@ -6390,11 +6542,14 @@ Lottery = {
     		if(list.length > 0){
     			$(list).each(function(){
 					var d = arguments[1];
-					
+					var lt = d.lottery;
+					if (lt=='3DFC') {
+						lt='l'+lt;
+					}
 					h += '<li id="' + d.traceId + '"><div class="title">' + d.createTime + '</div><div class="content">\
-						<div class="' + d.lottery + ' ltIcon"></div>\
+						<div class="' + lt + ' ltIcon"></div>\
 						<div class="ltInfo"><p>' + Q.getMethodName(d.method,d.lottery) + '</p><p>起始期号：' + d.start + '</p></div>\
-						<div class="status"><p>' + d.status + '</p><p>追25期，已完成9期</p></div><div class="more"></div></div><div class="btm">\
+						<div class="status"><p>' + d.status + '</p><p>追'+d.issueCount+'期，已完成'+d.finishCount+'期</p></div><div class="more"></div></div><div class="btm">\
 						<span>追号编号' + d.traceId + '</span><span>追号总金额' + d.totalMoney + '元</span>';
 					
 					if(d.winStop){
@@ -6434,14 +6589,9 @@ Lottery = {
 			if(!append){
     			Common.initWrapper();
     			
-    			var param = {
-    		    	pageSize:10
-    		    };
-    			if(obj.status){
-    				param.status = obj.status;
-        		}
+    			me.scrollParam = obj;
     			
-    			me.initScroll(Common.scroll[0],el,ul,me.getTraceList,param);
+    			me.initScroll(Common.scroll[0],el,me.getTraceList);
     		}
 			
 			Common.closeDialog();
@@ -6456,7 +6606,7 @@ Lottery = {
     			var d = res.result;
     			var el = $('#traceDetail .orderdetail');
     			el.find('.traceId').html(d.traceId);
-    			el.find('.username').html(d.username);
+    			el.find('.username').html(d.userName);
     			el.find('.createTime').html(d.createTime);
     			el.find('.code').html(d.code);
     			el.find('.method').html(Q.getMethodName(d.method,d.lottery));
@@ -6470,7 +6620,7 @@ Lottery = {
     				case 0.02 : mode = '分';break;
     				case 0.002 : mode = '厘';break;
     			}
-    			
+    			el.find('.issueCount').html(d.issueCount);
     			el.find('.perAmount').html(mode);
     			el.find('.totalMoney').html(d.totalMoney);
     			el.find('.finishMoney').html(d.finishMoney);
@@ -6489,6 +6639,7 @@ Lottery = {
     	var me = this;
     	var el= $('#traceIssue');
     	var ul = el.find('ul');
+    	
     	el.find('.t .select').on('touchend',function(){
     		var e = $(this).parent();
     		if(e.hasClass('on')){
@@ -6520,27 +6671,50 @@ Lottery = {
     		}
     	});
     	
+    	//中止追号
     	el.find('.stopTraceIssue').on('touchend',function(){
-    		var traceId = ul.attr('data-traceId');
-    		var orderId = [];
-    		$(ul.find('li.on')).each(function(){
-    			orderId.push($(arguments[1]).attr('id'))
-    		});
-    		
-    		var obj = {
-    			traceId:traceId,
-    			issues:orderId
+    		var tip = {
+    			type : 'dialog',
+    		    title : '中止追号',
+    			content : '确定要中止追号吗？',
+    			btns :[{
+					cls:'no',
+					text:'确定',
+				    fn:function(){
+				    	Common.closeDialog();
+				    	var traceId = ul.attr('data-traceId');
+			    		var issues = [];
+			    		$(ul.find('li.on')).each(function(){
+			    			issues.push($(arguments[1]).find('.issue').text())
+			    		});
+			    		
+			    		var obj = {
+			    			traceId:traceId,
+			    			issues:issues
+			    		}
+			    		if (issues.length>0) {
+			        		Api.stopTrace(obj,function(res){
+			        			if(res.code == '1'&&res.result.length>0){
+			        				var tip = {
+			        					content:'中止追号成功'	
+			        				}
+			        				Common.showDialog(tip);
+			        				$(res.result).each(function(i,v){
+			        					$('#'+v.orderId).find('.status').text('已取消');
+			        				});
+			        			}
+			        		});
+			    		}
+	    			}
+				},{
+					cls:'yes',
+					text:'取消',
+					fn:function(){
+	    				Common.closeDialog();
+	    			}
+				}]
     		}
-    		
-    		Api.stopTrace(obj,function(res){
-    			if(res.code == '1'){
-    				var tip = {
-    					content:'中止追号成功'	
-    				}
-    				Common.showDialog(tip);
-    			}
-    		});
-    		
+    		Common.showDialog(tip);
     	});
     },
     
@@ -6550,9 +6724,28 @@ Lottery = {
     			res = res.result;
     			var h = '';
     			$(res).each(function(){
+    				var s = '进行中';
+    				if (arguments[1].status=='1') {
+    					if (arguments[1].lotteryStatus=='1') {
+    						s = '未中奖';
+						}else if(arguments[1].lotteryStatus=='2'){
+							s = '已中奖';
+						}else {
+							s = '未开奖';
+						}
+					}else if (arguments[1].status=='2' || arguments[1].status=='3') {
+						s = '已取消';
+					}
+    				var issue = arguments[1].issue;
     				h += '<li id="' + arguments[1].orderId + '"><div class="select"><i></i></div><div class="issue">' 
-    					+ arguments[1].issue + '</div><div class="times">' + arguments[1].count + '</div><div class="status">'
-    					+ arguments[1].status +'</div><div class="more"><i></i></div></li>';
+    					+ issue + '</div>'
+    					//+'<div class="times">' + arguments[1].count + '</div>
+    					+ '<div class="status">'+ s +'</div>';
+    				if (arguments[1].status=='1' && arguments[1].bonus!=undefined) {
+    					h+='<div class="bonus">'+arguments[1].bonus+'元</div></li>';
+    				}else {
+    					h+='<div class="bonus"></div></li>';
+					}
     			});
     			var ul = $('#traceIssue ul');
     			ul.attr('data-traceId',obj.traceId).html(h);
@@ -6577,59 +6770,147 @@ Lottery = {
     	});
     	
     	$('#index .recharge-btn').on('touchend',function(evt){
+    		me.rechargeIndex();
     		Common.pageIn('#rechargeMoney');
     	});
     	
     	$('#index .withdraw-btn').on('touchend',function(evt){
     		me.getWithDrawInfo();
-    		Common.pageIn('#withDrawMoney');
     	});
     	
     	$('#rechargeMoney .icon').on('touchend',function(evt){
     		$(this).addClass('on').siblings().removeClass('on');
     	});
     	
+    	$('#rechargeMoney .button').on('touchend',function(evt){
+    		me.recharge();
+    	});
+    	
     	$('#withDrawMoney .button').on('touchend',function(evt){
     		me.withDrawSubmit();
     	});
+    	
+    	$('#accountPage .logout').on('touchend',function() {
+			var tip = {
+				type : 'dialog',
+				title : '退出登录',
+				content : '确定要退出登录吗？',
+				btns :[{
+					cls:'no',
+					text:'取消',
+				    fn:function(){
+	    				Common.closeDialog();
+					}
+				},{
+					cls:'yes',
+					text:'确定',
+					fn:function(){
+						User.ssoUserLogout(function(res){
+							if(res.code == 0){
+								Common.closeDialog();
+								User.name = null;
+								Common.pageIn('#login');
+							}
+						});
+					}
+				}]
+			}
+			Common.showDialog(tip);
+		});
     },
     
     initRecharge : function(){
-    	$('#rechargeList .rechargeMenu>div').on('touchend',function(evt){
-    		evt.preventDefault();
-    		$(this).addClass('on').siblings().removeClass('on');
-    		
-    		var index = $(this).index();
-    		$('#rechargeList ul').eq(index).show().siblings().hide();
-    	});
+    	var me = this;
     	
     	$('#rechargeList .rechargeMenu').on('touchend',function(evt){
     		evt.preventDefault();
     		var _this = evt.target;
     		
     		if(_this.nodeName == 'I'){
-    			$(_this).next().toggle();
+    			var e = $(_this).parent();
+    			if(e.hasClass('on')){
+    				$(_this).next().toggle();
+    			}else{
+        			if(e.hasClass('rechargeRecord')){
+            			me.getRechargeList();
+            		} else if(e.hasClass('withdrawRecord')){
+            			me.getDrawList();
+            		}
+        			
+        			e.addClass('on').siblings().removeClass('on');
+            		$('#rechargeList .list ul').eq(e.index()).show().siblings().hide();
+            		$(this).find('.record-menu').hide().find('.on').removeClass('on');
+    			}
     		} else if(_this.nodeName == 'SPAN') {
     			var e = $(_this).parent().parent();
     			$(_this).addClass('on').siblings().removeClass('on');
     			var obj = {
-		    		currPage:1,
+		    		currPage:0,
 		    		pageSize:10,
-		    		status:$(_this).attr('data-value')
-		    	};	
+		    		queryType:$(_this).attr('data-value')
+		    	};
     			if(e.hasClass('rechargeRecord')){
         			me.getRechargeList(obj);
     			}else if(e.hasClass('withdrawRecord')){
     				me.getDrawList(obj);
     			}
+    			$(_this).parent().hide();
     		} else if($(_this).hasClass('rechargeRecord')){
+    			$(_this).addClass('on').siblings().removeClass('on');
     			me.getRechargeList();
+        		$('#rechargeList .list ul').eq($(_this).index()).show().siblings().hide();
+        		$(_this).find('.record-menu').hide().find('.on').removeClass('on');
     		} else if($(_this).hasClass('withdrawRecord')){
+    			$(_this).addClass('on').siblings().removeClass('on');
     			me.getDrawList();
-    		}
+    			$('#rechargeList .list ul').eq($(_this).index()).show().siblings().hide();
+    			$(_this).find('.record-menu').hide().find('.on').removeClass('on');
+    		} 
+    	});
+    	
+    },
+    recharge : function(){
+    	var me = this;
+    	//Common.showLoading();
+    	var amount = $('#rechargeMoney .rechargeInput').val();
+    	var min = $('#rechargeMoneyForm').find('.tip .min').html();
+		var max = $('#rechargeMoneyForm').find('.tip .max').html();
+		//$('#rechargeMoneyForm').find('.tip .todaymax').html(res.rechargeMoneyMaxDay);
+    	//alert(amount);
+    	if((amount.substring(0,1) == 0 && amount.substring(0,2) != '0.') || amount < min || amount > max || amount == null || amount == "" || isNaN(amount)){
+    		Common.showDialog({
+     			  content:'输入的金额不合法'
+  			});
+    		return;
+    	}
+    	$('#rechargeMoneyForm').submit();
+    },
+    rechargeIndex : function(){
+    	var me = this;
+    	Common.showLoading();
+    	var obj = {
+    		currPage:10,
+    		pageSize:10
+    	};
+
+    	var append = false;
+    	if(arguments[0]){
+    		obj = arguments[0];
+    	}
+    	if(arguments[1]){
+    		append = arguments[1];
+    	}
+    	
+    	Api.rechargeIndex(obj,function(res){
+    		me.loadingStatus = 0;
+    		res = res.result;
+			$('#rechargeMoneyForm').find('.tip .min').html(res.rechargeMoneyMin);
+			$('#rechargeMoneyForm').find('.tip .max').html(res.rechargeMoneyMax);
+			$('#rechargeMoneyForm').find('.tip .todaymax').html(res.rechargeMoneyMaxDay);
+			Common.closeDialog();
+			me.loading = false;
     	});
     },
-    
     getRechargeList : function(){
     	var me = this;
     	Common.showLoading();
@@ -6667,27 +6948,27 @@ Lottery = {
     		me.loadingStatus = 0;
     		el.css('top','-2rem');
     		pullUpEl.removeClass('loading flip').hide().find('.icon').html('上拉加载更多');
-    		
     		var list = res.data;
     		var h = '';
-    		if(list.length > 0){
+    		if(list && list.length > 0){
     			$(list).each(function(){
 					var d = arguments[1];
-					
-					h += '<li><div class="title">' + d.orderDare + '</div><div class="t">订单编号</div>'
-					+ '<div class="content"><div class="info"><p class="num">' + d.spsn + '</p><p>'
-					+ d.way == '0' ? '微信支付' : '银联支付'
-					+ '</p></div><div class="status"><p>';
-					
-					var status;
-					switch(d.status){
-						case '3': staus = '待处理';break;
-						case '1': staus = '已成功';break;
-						case '2': staus = '充值失败';break;
-						default:break;
-					}
-					h += status + '</p><p>' + d.cash + '元</p></div></div></li>';
+					//订单状态  0:审核成功   1：认领（初始状态）   4：充值被认领   5：充值一审通过   2,充值失败  6：审核失败（一审没通过）,7：审核失败（二审未通过）					
+					h += '<li><div class="title">' + d.orderDate + '</div>'
+					+ '<div class="content ';
+				var cls;
+				var status;
+				switch(d.status){
+					case 0 : status = '充值成功';cls = 'success';break;
+					case 2 : status = '充值失败';cls = 'fail';break;
+					case 6 : status = '充值失败';cls = 'fail';break;
+					case 7 : status = '充值失败';cls = 'fail';break;
+					default: status = '处理中';cls = '';break;
+				}
 				
+				h+= cls + '"><div class="info"><p class="t">订单编号</p><p class="num">'
+					+ d.spsn + '</p></div><div class="status"><p>'+ status + '</p><p>' + d.cash + '元</p></div></div></li>';
+					
     			});
     			
     			if(append){
@@ -6699,7 +6980,6 @@ Lottery = {
     			}else{
     				ul.html(h);
     			}
-    			
     		}else{
     			if(append){
     				Common.closeDialog();
@@ -6715,19 +6995,12 @@ Lottery = {
     			}
     		}
 
-			Common.initWrapper();
-			
 			if(!append){
     			Common.initWrapper();
     			
-    			var param = {
-    		    	pageSize:10
-    		    };
-    			if(obj.status){
-    				param.status = obj.status;
-        		}
+    			me.scrollParam = obj;
     			
-    			me.initScroll(Common.scroll[0],el,ul,me.getRechargeList,param);
+    			me.initScroll(Common.scroll[0],el,me.getRechargeList);
     		}
 			
 			Common.closeDialog();
@@ -6769,14 +7042,14 @@ Lottery = {
     	
     	ul.attr('data-currPage',obj.currPage);
     	
-    	Api.getRechargeList(obj,function(res){
+    	Api.getDrawList(obj,function(res){
     		me.loadingStatus = 0;
     		el.css('top','-2rem');
     		pullUpEl.removeClass('loading flip').hide().find('.icon').html('上拉加载更多');
     		
     		var list = res.data;
     		var h = '';
-    		if(list.length > 0){
+    		if(list && list.length > 0){
     			$(list).each(function(){
 					var d = arguments[1];
 					h += '<li><div class="title">' + d.createTime + '</div>'
@@ -6784,10 +7057,11 @@ Lottery = {
 					var cls;
 					var status;
 					switch(d.status){
-						case '3': staus = '待处理';cls = '';break;
-						case '1': staus = '已成功';cls = 'success';break;
-						case '2': staus = '提现失败';cls = 'fail';break;
-						default:break;
+						case 0 : status = '充值成功';cls = 'success';break;
+						case 2 : status = '充值失败';cls = 'fail';break;
+						case 6 : status = '充值失败';cls = 'fail';break;
+						case 7 : status = '充值失败';cls = 'fail';break;
+						default: status = '处理中';cls = '';break;
 					}
 					
 					h+= cls + '"><div class="info"><p class="t">订单编号</p><p class="num">'
@@ -6819,19 +7093,12 @@ Lottery = {
     			}
     		}
 
-			Common.initWrapper();
-			
 			if(!append){
     			Common.initWrapper();
     			
-    			var param = {
-    		    	pageSize:10
-    		    };
-    			if(obj.status){
-    				param.status = obj.status;
-        		}
+    			me.scrollParam = obj;
     			
-    			me.initScroll(Common.scroll[0],el,ul,me.getDrawList,param);
+    			me.initScroll(Common.scroll[0],el,me.getDrawList);
     		}
 			
 			Common.closeDialog();
@@ -6843,15 +7110,24 @@ Lottery = {
     getWithDrawInfo : function(){
     	Api.getWithDrawInfo(function(res){
     		if(res.code == '1'){
+    			Common.showDialog({
+    				content:res.msg,
+    				width : 230,
+    				height : 62
+             	});
+    			return;
+    		}else{
     			res = res.result;
+    			$('#withDrawToken').val(res.token);
     			if(res.bankCardList.length > 0){
     				var el = $('#withDrawMoney .withDrawContent');
     				el.find('.drawname').html(res.sn);
 
     				var option = '';
-    				$(res.backCardList).each(function(){
+    				$(res.bankCardList).each(function(){
+    					
     					var d = arguments[1];
-    					option += '<option id="' + d.id + '" data-bindtime="' + d.bindTime + '">' 
+    					option += '<option id="' + d.id + '" data-bindtime="' + d.bindTime + '" cardNo="'+d.bankCardNo+'">' 
     						+ d.bankNameZH + '&nbsp;&nbsp;' + d.bankCardNo + '</option>';
     				});
     				
@@ -6860,11 +7136,13 @@ Lottery = {
     				el.find('.tip .min').html(res.onceWithdrawMin);
     				el.find('.tip .max').html(res.onceWithdrawMax);
     			}
+    			Common.pageIn('#withDrawMoney');
     		}
     	});
     },
     
     withDrawSubmit : function(){
+    	var me = this;
     	var el = $('#withDrawMoney .withDrawContent');
     	
     	var option = el.find('.bankCardSelect option:checked');
@@ -6872,7 +7150,9 @@ Lottery = {
     		withdrawMoney:el.find('.withdrawInput').val(),
     		user_bank_id:option.attr('id'),
     		bindTime:option.attr('data-bindTime'),
-    		payPassword:el.find('.withdrawPwd').val()
+    		payPassword:md5(el.find('.withdrawPwd').val()),
+    		token:$('#withDrawToken').val(),
+    		cardNo:option.attr('cardNo')
     	}
     	
     	var tip = {};
@@ -6890,11 +7170,11 @@ Lottery = {
     	}
     	
     	Api.withDrawSubmit(obj,function(res){
-    		if(res.code == '1'){
-    			tip.content = '提现成功';
-    		}else{
+    		//if(res.code == '1'){
+    		//	tip.content = '提现成功';
+    		//}else{
     			tip.content = res.msg;
-    		}
+    		//}
     		
 			Common.showDialog(tip);
 			me.refreshBalance();
@@ -6947,6 +7227,7 @@ Common = {
 				User.name = res.result.name;
 				$('.userInfo .username').html(User.name);
 				me.getSlides();
+				me.getAdminNotice();
 				me.getOdds();
 			}
  		});
@@ -6958,7 +7239,6 @@ Common = {
 		me.initLogin();
 		me.initDialog();
 		me.initIndex();
-		
 		Lottery.initEvents();
 	},
 	
@@ -7083,33 +7363,82 @@ Common = {
 		var me = this;
 		me.showLoading();
 		Api.getSlides({pageSize:5},function(res){
-		    var data = res.result.entities;
-		    data = [
-		            {frontImagePath:'/m/static/lottery/images/banner/1.jpg'},
-		            {frontImagePath:'/m/static/lottery/images/banner/2.jpg'},
-		            {frontImagePath:'/m/static/lottery/images/banner/3.jpg'},
-		    ]
-		    if (data.length>0) {
-		    	var h = '';
-		    	for (var i = 0; i < data.length; i++) {
-		    		h += '<div class="swiper-slide"><img src="' + data[i].frontImagePath +'"></div>';
-		    	};
-		    	$('#index .swiper-wrapper').html(h);
-		    	
-		    	me.swiper = new Swiper('.swiper-container', {
-				    loop: true,
-				    autoplay:5000
-				});
-		    	
-		    	//第一张活动图片加载完成后刷新wrapper
-		    	$('#index .swiper-wrapper img').eq(0).on('load',function(){
-		    		me.initWrapper();
-				    me.closeDialog();
-		    	});
-		    }
+			if (res.code=='0') {
+			    var data = res.result.entities;
+			    data = [
+			            {frontImagePath:'/m/static/lottery/images/banner/1.jpg'},
+			            {frontImagePath:'/m/static/lottery/images/banner/2.jpg'},
+			            {frontImagePath:'/m/static/lottery/images/banner/3.jpg'},
+			    ]
+			    if (data.length>0) {
+			    	var h = '';
+			    	for (var i = 0; i < data.length; i++) {
+			    		h += '<div class="swiper-slide"><img src="' + data[i].frontImagePath +'"></div>';
+			    	};
+			    	$('#index .banner .swiper-wrapper').html(h);
+			    	
+			    	new Swiper('#index .banner', {
+					    loop: true,
+					    autoplay:5000
+					});
+			    	
+			    	//第一张活动图片加载完成后刷新wrapper
+			    	$('#index .swiper-wrapper img').eq(0).on('load',function(){
+			    		me.initWrapper();
+					    me.closeDialog();
+			    	});
+			    }
+			}
 		    
 		});
 	},
+	getAdminNotice: function(){
+		var me = this;
+		me.showLoading();
+		Api.getAdminNotice({pageNumber:10,scroll:1},function(res){
+//			if (res.totalCount > 0) {
+				var list = res.items;
+				
+				list = [
+			            {title:'1111'},
+			            {title:'2222'},
+			            {title:'333'}
+			    ]
+				
+				var notice = "";
+				
+				$(list).each(function(){
+					notice += '<div class="swiper-slide">' + arguments[1].title +'</div>';
+				});
+				
+				$('#index .notice .swiper-wrapper').html(notice);
+		    	
+				new Swiper('#index .notice .swiper-container', {
+				    loop: true,
+				    autoplay:5000,
+				    direction:'vertical'
+				});
+//			}
+			
+	    	
+/*			$(".notice").smartmarquee({
+				duration:3000,
+				axis:'horizontal'
+			});*/
+			
+/*			setInterval(function(){
+				$(".notice").find(".list").animate({
+					marginTop:"-14px"
+				},500,function(){
+					$(".list").css({marginTop:"0px"}).find("li:first").appendTo(this);
+				})
+			},3000)*/
+		});
+		
+	},
+	
+	
+	
 	
 	initLogin : function(){
 		var me = this;
@@ -7175,9 +7504,14 @@ Common = {
 		    		User.name = res.user.cn;
 	    			$('.userInfo .username').html(User.name);
 	    			
+	    			$('#indexPage').show().siblings().hide();
+	    			
 		    		//获取轮播图
 					me.getSlides();
-	    			me.getOdds();
+					//获取公告
+	    			me.getAdminNotice();
+	    			//获取赔率
+					me.getOdds();
 	    			
 		    		me.pageOut({
 	    				'transform':'translate3d(0,100%,0)'
@@ -7241,17 +7575,24 @@ Common = {
 		var target = null;
 		var mask = $('#mask');
 		var tip = el.find('.tip');
-		var loading = el.find('.loading');
 		var dialog = el.find('.dialog');
 		
 		if (d.type == 'tip') {
 			target = tip;
-			mask.removeClass().addClass('tip-mask');
-			tip.html(d.content).show();
 			
-			setTimeout(function(){
-				me.closeDialog();
-			},1500);
+			if(dialog.css('display') == 'block'){
+				tip.html(d.content).show();
+				setTimeout(function(){
+					me.closeTip();
+				},1500);
+			}else{
+				mask.removeClass().addClass('tip-mask');
+				tip.html(d.content).show();
+				
+				setTimeout(function(){
+					me.closeDialog();
+				},1500);
+			}
 		}  else if (d.type == 'dialog') {
 			target = dialog;
 			mask.removeClass().addClass('dialog-mask');
@@ -7293,24 +7634,32 @@ Common = {
 		}
 		
 		if(target){
-			var h = target.height() / 2;
-			var w = target.width() / 2;
+			var h,w;
+			
+			if(d.width && d.height){
+				h = d.height;
+				w = d.width;
+			} else {
+				h = target.height();
+				w = target.width();
+			}
+			
 			target.css({
-				"margin-top":'-' + h + 'px',
-				"margin-left" : '-' + w + 'px'
+				"margin-top":'-' + h/2 + 'px',
+				"margin-left" : '-' + w/2 + 'px',
+				"width" : w + 'px',
+				"height" : h + 'px'
 			});
 		}
 	},
 	
 	showLoading : function(d){
-		$('#mask').removeClass().addClass('tip-mask');
+		$('#mask').addClass('tip-mask');
 		
-		var el = $('#dialog');
-		
-		el.show().find('.loading').show();
+		$('#loading').show();
 		
 		if(d && d.content){
-			el.find('.loading p').html(d.content);
+			$('#loading').find('p').html(d.content);
 		}
 	},
 	
@@ -7322,5 +7671,15 @@ Common = {
 		el.find('.tip').hide();
 		el.find('.dialog').hide();
 		el.find('.dialog .btnDiv').show();
+	},
+	
+	closeLoading : function(){
+		$('#mask').removeClass('tip-mask');
+		$('#loading').hide();
+	},
+	
+	closeTip : function(){
+		var el = $('#dialog');
+		el.find('.tip').hide();
 	}
 };
