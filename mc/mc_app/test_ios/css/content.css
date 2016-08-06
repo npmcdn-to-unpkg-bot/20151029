@@ -1,0 +1,86 @@
+#content{
+	width: 100%;
+	position: fixed;
+	top: 50px;
+	bottom: 55px;
+	text-align: center;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
+	-ms-touch-action: pan-y cross-slide-y;
+	-ms-scroll-chaining: none;
+	-ms-scroll-limit: 0 50 0 50;
+}
+.banner{
+	width: 100%;
+	height: auto;
+	margin: 0 auto;
+	overflow: hidden;
+	font-size:0;
+	position:realtive;
+}
+
+.banner img{
+	width:100%;
+}
+.notice{
+	padding:0px 15px;
+	height:28px;
+	line-height:28px;
+	border-bottom:1px solid #eee;
+	width:100%;
+	display:-webkit-box;
+}
+.notice i{
+	display:block;
+	width:34px;
+	height:14px;
+	background:url("../img/noticeIcon.jpg") no-repeat left center;
+	background-size:auto 100%;
+	vertical-align:top;
+	margin-top:7px;
+}
+.notice .noticeContent{
+	-webkit-box-flex:1;
+	color:#424242;
+	background-color:red;
+	text-align: left;
+}
+
+.lt-list{
+	width:100%;
+	padding:0 10px;
+}
+.lt-list>div{
+	width:50%;
+	padding:10px 0;
+	float:left;
+	text-align:center;
+	font-size:0;
+	border-bottom:1px solid #eee;
+}
+
+.lt-list img{
+	width:32%;
+	vertical-align: middle;
+}
+.lt-list span{
+	display:inline-block;
+	margin-left:3%;
+	vertical-align: middle;
+	min-width:84px;
+}
+
+.lt-list label{
+	display:block;
+	width:100%;
+}
+.lt-list .t{
+	color:#c62424;
+	font-size:1rem;
+	font-weight:bold;
+	line-height:1rem;
+}
+.lt-list .tip{
+	color:#a6a6a6;
+	font-size:0.6rem;
+}
