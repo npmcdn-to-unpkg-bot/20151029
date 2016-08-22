@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>摩臣娱乐</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="../css/mui.css">
+	<link rel="stylesheet" href="../css/app/recharge.css">
+</head>
+<body>
+<header>
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<div class="title">充提记录</div>
+</header>
+<div class="rechargeMenu">
+	<div class="rechargeRecord on">
+		充值记录<i></i>
+		<div class="record-menu">
+			<span data-value="3" class="on">待处理</span> <span data-value="1">已成功</span>
+			<span data-value="2">充值失败</span>
+		</div>
+	</div>
+	<div class="withdrawRecord">
+		提现记录<i></i>
+		<div class="record-menu">
+			<span data-value="3" class="on">处理中</span> <span data-value="1">已成功</span>
+			<span data-value="2">提现失败</span>
+		</div>
+	</div>
+</div>
+</body>
+
+<script src="../js/vendor/zepto.min.js"></script>
+<script src="../js/vendor/swiper.jquery.min.js"></script>
+
+<script src="../js/mui.js"></script>
+
+<script src="../js/app/config.js"></script>
+<script src="../js/app/q.js"></script>
+<script src="../js/app/api.js"></script>
+<script src="../js/app/user.js"></script>
+
+<script>
+mui.init({
+    subpages:[{
+      	url:'rechargelist.html',
+      	id:'rechargelist',
+     	styles:{
+        	top:"90px",
+        	bottom:"0px"
+        }
+    }]
+});
+mui.plusReady(function() {
+	window.addEventListener('initEvent',function(data){
+		var listPage = plus.webview.getWebviewById('rechargelist');
+		$('.rechargeMenu').on('tap',function(evt){
+			evt.preventDefault();
+			var obj = {
+				currPage:1,
+				pageSize:10
+			};
+		
+			var _this = evt.target;
+			if(_this.nodeName == 'I'){
+				var e = $(_this).parent();
+				if(e.hasClass('on')){
+					var menu = $(_this).next();
+					if(menu.css('display') == 'block'){
+						listPage.setStyle({top:'90px'});
+					}else{
+						listPage.setStyle({top:'142px'});
+					}
+					menu.toggle();
+				}else{
+					e.addClass('on').siblings().removeClass('on');
+		    		$(this).find('.record-menu').hide().find('.on').removeClass('on');
+					if(e.hasClass('rechargeRecord')){
+		    			mui.fire(listPage,'getRechargeList',obj);
+		    		} else if(e.hasClass('withdrawRecord')){
+		    			mui.fire(listPage,'getWithDrawList',obj);
+		    		}
+				}
+			} else if(_this.nodeName == 'SPAN') {
+				var e = $(_this).parent().parent();
+				$(_this).addClass('on').siblings().removeClass('on');
+				
+				obj.queryType = $(_this).attr('data-value');
+				
+		    	if(e.hasClass('rechargeRecord')){
+	    			mui.fire(listPage,'getRechargeList',obj);
+	    		} else if(e.hasClass('withdrawRecord')){
+	    			mui.fire(listPage,'getWithDrawList',obj);
+	    		}
+		    	$(_this).parent().hide();
+			} else if($(_this).hasClass('rechargeRecord')){
+				if(!$(_this).hasClass('on')){
+					$(_this).addClass('on').siblings().removeClass('on');
+	    			mui.fire(listPage,'getRechargeList',obj);
+					$(this).find('.record-menu').hide().find('.on').removeClass('on');
+				}
+			} else if($(_this).hasClass('withdrawRecord')){
+				if(!$(_this).hasClass('on')){
+					$(_this).addClass('on').siblings().removeClass('on');
+					mui.fire(listPage,'getWithDrawList',obj);
+					$(this).find('.record-menu').hide().find('.on').removeClass('on');
+				}
+			} 
+		});
+	});
+	
+	window.addEventListener('getRechargeList',function(data){
+		var listPage = plus.webview.getWebviewById('rechargelist');
+		var obj = {
+			currPage:1,
+			pageSize:10
+		};
+		mui.fire(listPage,'getRechargeList',obj);
+	});
+});
+</script>
+</html>

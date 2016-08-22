@@ -1,0 +1,136 @@
+.rechargeMenu {
+	position:fixed;
+	top:50px;
+	left:0;
+	width:100%;
+	height: 40px;
+	line-height: 40px;
+	background-color: #301c6b;
+	display: -webkit-box;
+	position: absolute;
+	text-align: center
+}
+
+.rechargeMenu>div {
+	-webkit-box-flex: 1;
+	color: #fff;
+	font-size: .95rem;
+	width: 50%;
+	position: relative
+}
+
+.rechargeMenu>div.on {
+	background-color: #5a37c4
+}
+
+.rechargeMenu i {
+	display: inline-block;
+	background: url('../../img/arrow.png') center no-repeat;
+	width: 28px;
+	background-size: 13px auto;
+	height: 40px;
+	margin-left: 5px;
+	vertical-align: top
+}
+
+.record-menu {
+	display: none;
+	position: absolute;
+	top: 40px;
+	background-color: #5a37c4;
+	width: 200%;
+	padding: 8px 8%;
+	z-index: 200
+}
+
+.rechargeRecord .record-menu {
+	left: 0
+}
+
+.withdrawRecord .record-menu {
+	left: -100%
+}
+
+.rechargeMenu>div.select .record-menu {
+	display: block
+}
+
+.record-menu span {
+	border-radius: 4px;
+	color: #bcbcbc;
+	background-color: #fff;
+	width: 30%;
+	display: inline-block;
+	line-height: 1rem;
+	padding: 5px 0;
+	float: left;
+	margin: 5px 1.65%
+}
+
+.record-menu span.on {
+	color: #442d7b;
+	font-weight: 700
+}
+
+
+
+.search-list .title {
+	color: #858585;
+	width: 100%;
+	border-top: 1px solid #dcdcdc;
+	border-bottom: 1px solid #dcdcdc;
+	background-color: #f4f4f4;
+	line-height: 1.6rem;
+	height: 1.7rem;
+	font-size: .75rem;
+	padding-left: 10px
+}
+
+.search-list p{
+	margin-bottom: 0;	
+}
+
+.search-list .t {
+	background-color: #fff;
+	color: #858585;
+	font-size: .75rem;
+	padding: 8px 10px 2px
+}
+
+.search-list .content {
+	padding: 0 10px 8px;
+	background-color: #fff;
+	display: -webkit-box;
+	font-size: .9rem;
+	color: #424242
+}
+
+.search-list .content>div {
+	-webkit-box-flex: 1
+}
+
+.search-list .content .num {
+	font-weight: 700;
+	color: #424242
+}
+
+.search-list .status {
+	text-align: right;
+	padding-top: 7px
+}
+
+.search-list .content.success .status {
+	color: #f13031
+}
+
+.search-list .content.fail,.search-list .content.fail .num
+	{
+	color: #bcbcbc
+}
+.search-list .no-data {
+	font-size: .9rem;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	color: #424242;
+}

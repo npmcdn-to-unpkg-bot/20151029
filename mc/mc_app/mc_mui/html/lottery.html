@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>摩臣娱乐</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="../css/mui.css">
+	<link rel="stylesheet" href="../css/app/lottery.css">
+</head>
+<body>
+<header>
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<span class="tabSelect"><label></label><i></i></span>
+	<a class="lastfive-icon mui-icon mui-icon-star"></a>
+</header>
+<div class="tabDiv"></div>
+<div class="lt-info">
+	<span class="ltName"></span> 
+	<span class="time">距<em class="issue"></em>期截止：<label class="countdown"></label></span>
+	<span class="time-mmc">即买即开&nbsp;随心所欲</span>
+	<span class="stop"></span>
+</div>
+<div class="lastfive">
+	<span class="title">最近 5 期</span>
+	<ul>	
+	</ul>
+</div>
+<div id="content">
+	<div class="number">
+	</div>
+</div>
+<footer class="count">
+	<div class="top">
+		<div class="t">模式</div>
+		<div class="mode">
+			<select>
+			<option value="2">元</option>
+			<option value="0.2">角</option>
+			<option value="0.02">分</option></select>
+		</div>
+		<div class="t">倍数</div>
+		<div class="times">
+			<input type="number" pattern="[0-9]*" value="1" min="1" max="99999" step="1" maxlength="5">
+		</div>
+	
+		<div class="t">奖金</div>
+		<div class="odds">
+			<em>0</em>
+			<select>
+			</select>
+		</div>
+	</div>
+	<div class="bottom">
+		<div class="clear">
+			<button>清空</button>
+		</div>
+		<div class="total">
+			<p class="totalMoney">
+				共<em>0</em>元
+			</p>
+			<p>
+				<em class="totalCount">0</em>注<em class="totalTimes">1</em>倍
+			</p>
+		</div>
+		<div class="confirm">
+			<button type="button disabled">确定选号</button>
+		</div>
+	</div>
+</footer>
+</body>
+
+<script src="../js/vendor/zepto.min.js"></script>
+<script src="../js/mui.js"></script>
+
+<script src="../js/app/q.js"></script>
+<script src="../js/app/api.js"></script>
+<script src="../js/app/user.js"></script>
+<script src='../js/app/config.js'></script>
+
+<script src='../js/app/lottery.js'></script>
+
+<script>
+mui.init({
+	swipeBack:true
+});
+
+mui.plusReady(function() {
+	
+	Lottery._init();
+
+	window.addEventListener('pageShow',function(data){
+		Lottery = $.extend(Lottery, data.detail);
+		Lottery.init();
+	});
+	
+	window.addEventListener('clearData',function(data){
+		Lottery.odds = {};
+	});
+	
+	window.addEventListener('addCode',function(data){
+		Lottery.addCode = true;
+	});
+	
+	window.addEventListener('restoreCode',function(data){
+		Lottery.restoreCode = true;
+		Lottery.restoreLottery(data.detail);
+	});
+	
+	window.addEventListener('_clearInterval',function(data){
+		Lottery._clearInterval();
+	});
+});
+
+</script>
+</html>

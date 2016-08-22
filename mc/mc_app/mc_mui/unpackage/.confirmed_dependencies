@@ -1,0 +1,310 @@
+{
+  "html/history_detail.html": {
+    "href": "html/history_detail.html",
+    "resources": [
+      "css/mui.css",
+      "css/app/history.css",
+      "js/vendor/zepto.min.js",
+      "js/mui.min.js",
+      "js/app/q.js",
+      "js/app/api.js",
+      "js/app/user.js",
+      "js/app/config.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/history.html": {
+    "href": "html/history.html",
+    "resources": [
+      "js/vendor/zepto.min.js",
+      "js/mui.min.js",
+      "js/app/q.js",
+      "js/app/api.js",
+      "js/app/user.js",
+      "js/app/config.js",
+      "css/mui.css",
+      "css/app/history.css"
+    ],
+    "refer": [
+      "html/history_detail.html"
+    ],
+    "priority": 0
+  },
+  "html/traceIssue.html": {
+    "href": "html/traceIssue.html",
+    "resources": [
+      "js/vendor/zepto.min.js",
+      "js/mui.min.js",
+      "js/app/api.js",
+      "js/app/user.js",
+      "js/app/config.js",
+      "js/app/q.js",
+      "css/mui.css",
+      "css/app/traceIssue.css"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/traceDetail.html": {
+    "href": "html/traceDetail.html",
+    "resources": [
+      "js/vendor/zepto.min.js",
+      "js/mui.min.js",
+      "js/app/api.js",
+      "js/app/user.js",
+      "js/app/config.js",
+      "js/app/q.js",
+      "css/mui.css",
+      "css/app/orderDetail.css"
+    ],
+    "refer": [
+      "html/traceIssue.html"
+    ],
+    "priority": 0
+  },
+  "html/orderDetail.html": {
+    "href": "html/orderDetail.html",
+    "resources": [
+      "js/vendor/zepto.min.js",
+      "js/mui.min.js",
+      "js/app/api.js",
+      "js/app/user.js",
+      "js/app/config.js",
+      "js/app/q.js",
+      "css/mui.css",
+      "css/app/orderDetail.css"
+    ],
+    "refer": [
+      "html/traceIssue.html"
+    ],
+    "priority": 0
+  },
+  "html/searchlist.html": {
+    "href": "html/searchlist.html",
+    "resources": [
+      "js/vendor/zepto.min.js",
+      "js/vendor/swiper.jquery.min.js",
+      "js/mui.min.js",
+      "js/app/config.js",
+      "js/app/q.js",
+      "js/app/api.js",
+      "js/app/user.js",
+      "js/app/search.js",
+      "css/mui.css",
+      "css/app/search.css"
+    ],
+    "refer": [
+      "html/traceDetail.html",
+      "html/orderDetail.html"
+    ],
+    "priority": 0
+  },
+  "html/search.html": {
+    "href": "html/search.html",
+    "resources": [
+      "js/vendor/zepto.min.js",
+      "js/vendor/swiper.jquery.min.js",
+      "js/mui.min.js",
+      "js/app/config.js",
+      "js/app/q.js",
+      "js/app/api.js",
+      "js/app/user.js",
+      "css/mui.css",
+      "css/app/search.css"
+    ],
+    "refer": [
+      "html/searchlist.html"
+    ],
+    "priority": 0
+  },
+  "html/recharge.html": {
+    "href": "html/recharge.html",
+    "resources": [
+      "css/mui.css",
+      "css/app/account.css",
+      "js/vendor/zepto.min.js",
+      "js/mui.min.js",
+      "js/app/q.js",
+      "js/app/api.js",
+      "js/app/user.js",
+      "js/app/config.js",
+      "img/account-logo.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/rechargelist.html": {
+    "href": "html/rechargelist.html",
+    "resources": [
+      "js/vendor/zepto.min.js",
+      "js/vendor/swiper.jquery.min.js",
+      "js/mui.min.js",
+      "js/app/config.js",
+      "js/app/q.js",
+      "js/app/api.js",
+      "js/app/user.js",
+      "js/app/rwrecord.js",
+      "css/mui.css",
+      "css/app/recharge.css"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/rechargeRecord.html": {
+    "href": "html/rechargeRecord.html",
+    "resources": [
+      "js/vendor/zepto.min.js",
+      "js/vendor/swiper.jquery.min.js",
+      "js/mui.min.js",
+      "js/app/config.js",
+      "js/app/q.js",
+      "js/app/api.js",
+      "js/app/user.js",
+      "css/mui.css",
+      "css/app/recharge.css"
+    ],
+    "refer": [
+      "html/rechargelist.html"
+    ],
+    "priority": 0
+  },
+  "html/withdraw.html": {
+    "href": "html/withdraw.html",
+    "resources": [
+      "css/mui.css",
+      "css/app/account.css",
+      "js/vendor/zepto.min.js",
+      "js/mui.min.js",
+      "js/app/q.js",
+      "js/app/api.js",
+      "js/app/user.js",
+      "js/app/config.js",
+      "img/account-logo.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/account.html": {
+    "href": "html/account.html",
+    "resources": [
+      "js/vendor/zepto.min.js",
+      "js/mui.min.js",
+      "js/app/q.js",
+      "js/app/api.js",
+      "js/app/user.js",
+      "js/app/config.js",
+      "css/mui.css",
+      "css/iconfont.css",
+      "css/app/account.css",
+      "img/account-logo.png"
+    ],
+    "refer": [
+      "html/recharge.html",
+      "html/rechargeRecord.html",
+      "html/withdraw.html"
+    ],
+    "priority": 0
+  },
+  "html/submit.html": {
+    "href": "html/submit.html",
+    "resources": [
+      "js/vendor/zepto.min.js",
+      "js/vendor/fx.js",
+      "js/vendor/flipball.js",
+      "js/mui.min.js",
+      "js/app/q.js",
+      "js/app/api.js",
+      "js/app/user.js",
+      "js/app/config.js",
+      "js/app/submit.js",
+      "css/mui.css",
+      "css/app/submit.css"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/lottery.html": {
+    "href": "html/lottery.html",
+    "resources": [
+      "js/vendor/zepto.min.js",
+      "js/mui.min.js",
+      "js/app/q.js",
+      "js/app/api.js",
+      "js/app/user.js",
+      "js/app/config.js",
+      "js/app/lottery.js",
+      "css/mui.css",
+      "css/app/lottery.css"
+    ],
+    "refer": [
+      "html/submit.html"
+    ],
+    "priority": 0
+  },
+  "html/login.html": {
+    "href": "html/login.html",
+    "resources": [
+      "css/mui.css",
+      "css/app/login.css",
+      "js/vendor/zepto.min.js",
+      "js/vendor/md5.min.js",
+      "js/mui.min.js",
+      "js/app/q.js",
+      "js/app/api.js",
+      "js/app/user.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/home.html": {
+    "href": "html/home.html",
+    "resources": [
+      "js/vendor/zepto.min.js",
+      "js/vendor/swiper.jquery.min.js",
+      "js/mui.min.js",
+      "js/app/api.js",
+      "js/app/user.js",
+      "js/app/config.js",
+      "js/app/q.js",
+      "js/app/home.js",
+      "css/mui.css",
+      "css/app/home.css",
+      "css/vendor/swiper.css",
+      "img/lt/cqssc.png",
+      "img/lt/hg1f5.png",
+      "img/lt/ffc.png",
+      "img/lt/bjpk10.png",
+      "img/lt/3dfc.png",
+      "img/lt/gd11y.png",
+      "img/lt/mmc.png",
+      "img/lt/xjssc.png",
+      "img/lt/5fc.png",
+      "img/lt/sd11y.png",
+      "img/lt/jx11y.png",
+      "img/banner/banner.jpg"
+    ],
+    "refer": [
+      "html/lottery.html",
+      "html/login.html"
+    ],
+    "priority": 0
+  },
+  "index.html": {
+    "href": "index.html",
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.css",
+      "css/iconfont.css",
+      "css/app/common.css",
+      "js/app/index.js"
+    ],
+    "refer": [
+      "html/history.html",
+      "html/search.html",
+      "html/account.html",
+      "html/home.html"
+    ],
+    "priority": 0
+  }
+}

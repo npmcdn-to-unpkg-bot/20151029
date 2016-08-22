@@ -1,0 +1,221 @@
+.searchMenu {
+	height: 40px;
+	line-height: 40px;
+	background-color: #301c6b;
+	width: 100%;
+	text-align: center;
+	display: -webkit-box;
+}
+
+.searchMenu>div {
+	-webkit-box-flex: 1;
+	color: #fff;
+	font-size: .95rem;
+	width: 50%;
+	position: relative
+}
+
+.searchMenu>div.on {
+	background-color: #5a37c4
+}
+
+.searchMenu i {
+	display: inline-block;
+	background: url('../../img/arrow.png') center no-repeat;
+	width: 28px;
+	background-size: 13px auto;
+	height: 40px;
+	margin-left: 5px;
+	vertical-align: top
+}
+
+.searchMenu .record-menu {
+	display: none;
+	position: absolute;
+	top: 40px;
+	background-color: #5a37c4;
+	width: 200%;
+	padding: 8px 8%;
+	z-index: 200
+}
+
+
+
+.searchMenu .orderRecord .record-menu {
+	left: 0
+}
+
+.searchMenu .traceRecord .record-menu {
+	right: 0
+}
+
+.searchMenu>div.select .record-menu {
+	display: block
+}
+
+.searchMenu .record-menu span {
+	border-radius: 4px;
+	color: #bcbcbc;
+	background-color: #fff;
+	width: 30%;
+	display: inline-block;
+	line-height: 1rem;
+	padding: 5px 0;
+	float: left;
+	margin: 5px 1.65%
+}
+
+.searchMenu .record-menu span.on {
+	color: #442d7b;
+	font-weight: 700
+}
+
+.showSeachMenu .wrapper {
+	top: 90px
+}
+.search-list li{
+	background-color:#fff;
+	position:relative;
+}
+.search-list li:after{
+    font-family: Muiicons;
+    font-size: inherit;
+    line-height: 1;
+    position: absolute;
+    top: 50%;
+    display: inline-block;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    text-decoration: none;
+    color: #bbb;
+    -webkit-font-smoothing: antialiased;
+    right: 15px;
+    margin-top: 12px;
+    content: '\e583';
+}
+.search-list li:active{
+	background-color:#eee;
+}
+.search-list .title {
+	color: #858585;
+	width: 100%;
+	border-top: 1px solid #dcdcdc;
+	border-bottom: 1px solid #dcdcdc;
+	background-color: #f4f4f4;
+	line-height: 1.6rem;
+	height: 1.7rem;
+	font-size: .75rem;
+	padding-left: 10px
+}
+
+.search-list .content {
+	padding: 8px 10px;
+	display: -webkit-box;
+	font-size: .9rem
+}
+
+.search-list .ltIcon {
+	width: 60px;
+	height: 60px
+}
+
+.search-list .ltIcon.CQSSC {
+	background: url('../../img/lt/cqssc.png') no-repeat;
+	background-size: 60px
+}
+
+.search-list .ltIcon.WBGFFC {
+	background: url('../../img/lt/ffc.png') no-repeat;
+	background-size: 60px
+}
+
+.search-list .ltIcon.BJPK10 {
+	background: url('../../img/lt/bjpk10.png') no-repeat;
+	background-size: 60px
+}
+
+.search-list .ltIcon.l3DFC {
+	background: url('../../img/lt/3dfc.png') no-repeat;
+	background-size: 60px
+}
+
+.search-list .ltIcon.GD11Y {
+	background: url('../../img/lt/gd11y.png') no-repeat;
+	background-size: 60px
+}
+
+.search-list .ltIcon.WBGMMC {
+	background: url('../../img/lt/mmc.png') no-repeat;
+	background-size: 60px
+}
+
+.search-list .ltIcon.XJSSC {
+	background: url('../../img/lt/xjssc.png') no-repeat;
+	background-size: 60px
+}
+
+.search-list .ltIcon.WBG5FC {
+	background: url('../../img/lt/5fc.png') no-repeat;
+	background-size: 60px
+}
+
+.search-list .ltIcon.SD11Y {
+	background: url('../../img/lt/sd11y.png') no-repeat;
+	background-size: 60px
+}
+
+.search-list .ltIcon.JX11Y {
+	background: url('../../img/lt/jx11y.png') no-repeat;
+	background-size: 60px
+}
+
+.search-list .ltIcon.HG1F5 {
+	background: url('../../img/lt/hg1f5.png') no-repeat;
+	background-size: 60px
+}
+
+.search-list .more {
+	width: 30px;
+	background: url('../../img/orderUpdate.png') center
+		no-repeat;
+	background-size: auto 20px
+}
+
+.search-list .ltInfo {
+	-webkit-box-flex: 1;
+	padding-top: 11px;
+	padding-left: 10px;
+	color: #424242
+}
+.search-list p{
+	margin-bottom: 0;
+}
+.search-list .status {
+	-webkit-box-flex: 1;
+	padding-top: 11px;
+	padding-left: 10px;
+	text-align: right;
+	color: #858585;
+	padding-right:34px;
+}
+
+.search-list .btm {
+	color: #bcbcbc;
+	padding: 0 15px 7px;
+	font-size: .8rem;
+}
+
+.search-list .btm .winstop {
+	float: right
+}
+
+.trace-list {
+	display: none
+}
+.search-list .no-data {
+	font-size: .9rem;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	color: #424242;
+}

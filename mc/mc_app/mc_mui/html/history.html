@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>摩臣娱乐</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="../css/mui.css">
+	<link rel="stylesheet" href="../css/app/history.css">
+</head>
+<style>
+#content{
+	width:100%;
+	height:100%;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
+	background-color:#fff;
+}
+.history-list li:after{
+    font-family: Muiicons;
+    font-size: inherit;
+    line-height: 1;
+    position: absolute;
+    top: 50%;
+    display: inline-block;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    text-decoration: none;
+    color: #bbb;
+    -webkit-font-smoothing: antialiased;
+    right: 15px;
+    content: '\e583';
+}
+</style>
+<body>
+<div id="content">
+	<ul class="history-list"></ul>
+</div>
+</body>
+
+<script src="../js/vendor/zepto.min.js"></script>
+<script src="../js/mui.js"></script>
+
+<script src="../js/app/q.js"></script>
+<script src="../js/app/api.js"></script>
+<script src="../js/app/user.js"></script>
+<script src='../js/app/config.js'></script>
+
+<script>
+mui.init({
+});
+mui.plusReady(function() {
+	var detail = mui.preload({
+      	url:'../html/history_detail.html',
+      	id:'history_detail',
+      	styles:{
+			scrollIndicator:'none',
+			scalable:false,
+			top: '0px',
+			bottom: '0px',
+			popGesture: 'hide'
+		}
+   	});
+	
+	mui('.history-list').on('tap','li',function(){
+		var lt = this.getAttribute('lt');
+		
+		plus.storage.setItem('history_lt',lt);
+		
+		detail.evalJS('getHistoryByLt();');
+		detail.show('slide-in-right');
+	});
+});
+function getAllHistory(){
+	Api.getAllHistory(function(res){
+		var list = res.result;
+		if(list.length > 0){
+			var h = '';
+			$(list).each(function(){
+				if(arguments[1].code){
+					h += '<li lt="' + arguments[1].lottery + '">'
+						+	'<div class="title"><span class="lt-name">' + Q.getLtName(arguments[1].lottery)
+						+ '</span><span class="issue">第<em>' + arguments[1].issueNo + '</em>期</span>' 
+						+ '</div><div class="code">';
+					var code = arguments[1].code.split(',');
+    				$(code).each(function(){
+    					h += '<i>' + arguments[1] + '</i>';
+    				});
+    				h += '</div></li>';
+				}
+			});
+			$('.history-list').html(h);
+		}
+	});
+}
+
+</script>
+</html>

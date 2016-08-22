@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>摩臣娱乐</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="../css/mui.css">
+	<link rel="stylesheet" href="../css/app/orderDetail.css">
+</head>
+<body>
+<header>
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<div class="title">投注详情</div>
+</header>
+<div class="orderdetail">
+	<div>
+		<div>注单编号</div>
+		<div class="orderId"></div>
+	</div>
+	<div>
+		<div>游戏用户</div>
+		<div class="username"></div>
+	</div>
+	<div>
+		<div>投单时间</div>
+		<div class="orderTime"></div>
+	</div>
+	<div>
+		<div>彩种</div>
+		<div class="lottery"></div>
+	</div>
+	<div>
+		<div>玩法</div>
+		<div class="method"></div>
+	</div>
+	<div>
+		<div>期号</div>
+		<div class="issue"></div>
+	</div>
+	<div>
+		<div>投注内容</div>
+		<div class="code"></div>
+	</div>
+	<div>
+		<div>奖金模式</div>
+		<div class="odds"></div>
+	</div>
+	<div>
+		<div>倍数</div>
+		<div class="count"></div>
+	</div>
+	<div>
+		<div>模式</div>
+		<div class="perAmount"></div>
+	</div>
+	<div>
+		<div>投注总金额</div>
+		<div class="amount"></div>
+	</div>
+	<div>
+		<div>奖金</div>
+		<div class="awardMoney"></div>
+	</div>
+	<div>
+		<div>开奖号码</div>
+		<div class="lotteryNumber"></div>
+	</div>
+	<div>
+		<div>状态</div>
+		<div class="status"></div>
+	</div>
+	<div>
+		<div>是否追号</div>
+		<div class="istrace"></div>
+	</div>
+	<button class="getTraceIssue">查看追号信息</button>
+	<button class="cancelOrder">撤单</button>
+</div>
+</body>
+
+<script src="../js/vendor/zepto.min.js"></script>
+<script src="../js/mui.js"></script>
+<script src="../js/app/api.js"></script>
+<script src="../js/app/user.js"></script>
+<script src="../js/app/config.js"></script>
+<script src="../js/app/q.js"></script>
+
+<script>
+mui.init();
+mui.plusReady(function() {
+	var traceIssuePage = mui.preload({
+      	url:'../html/traceIssue.html',
+      	id:'trace_issue',
+      	styles:{
+			scrollIndicator:'none',
+			scalable:false,
+			top: '0px',
+			bottom: '0px',
+			popGesture: 'hide'
+		}
+  	});
+	
+	window.addEventListener('initData',function(data){
+		var d = data.detail;
+		var el = $('.orderdetail');
+		
+		el.attr('data-orderId',d.orderId);
+		el.find('.orderId').html(d.orderId);
+		el.find('.username').html(d.username);
+		el.find('.orderTime').html(d.orderTime);
+		el.find('.count').html(d.count);
+		el.find('.lottery').html(Q.getLtName(d.lottery));
+		el.find('.method').html(Q.getMethodName(d.method,d.lottery));
+		el.find('.issue').html(d.issue);
+		el.find('.code').html(d.code);
+		el.find('.odds').html(d.odds);
+		el.find('.amount').html(d.amount);
+		el.find('.awardMoney').html(d.awardMoney);
+		
+		var mode;
+		switch(d.perAmount){
+			case 2 : mode = '元';break;
+			case 0.2 : mode = '角';break;
+			case 0.02 : mode = '分';break;
+			case 0.002 : mode = '厘';break;
+		}
+		el.find('.perAmount').html(mode);
+		if(d.lotteryNumber){
+			el.find('.lotteryNumber').html(d.lotteryNumber);
+		}else{
+			el.find('.lotteryNumber').parent().hide();
+		}
+		el.find('.status').html(d.status);
+		el.find('.istrace').html(d.istrace == 1 ? "是" : "否");
+		
+		if(d.istrace == '1' && !el.hasClass('edit')){
+			el.find('.getTraceIssue').attr('data-traceid',d.traceId).show();
+		}else{
+			el.find('.getTraceIssue').hide();
+		}
+		if (d.status == '未开奖') {
+			el.find('.cancelOrder').show();
+		}else {
+			el.find('.cancelOrder').hide();
+		}
+	});
+	
+	//撤单
+	$('.cancelOrder').on('tap',function(evt){
+		evt.preventDefault();
+		mui.confirm('确定要撤销订单吗？', '撤单', ['否', '是'], function(e) {
+			if (e.index == 1) {
+				var obj = {
+	    			orderId : $('.orderdetail').attr('data-orderId')	
+	    		};
+	    		
+	    		Api.cancelOrder(obj,function(res){
+	    			var tip = {};
+	    			if(res.code == '0'){
+	    				tip.content = '撤单成功';
+	    			}else {
+	    				tip.content = res.msg;
+					}
+					Q.showDialog(tip);
+	    		});
+			}
+		})
+	});
+	
+	//查看追号信息
+	$('.getTraceIssue').on('tap',function(evt){
+		evt.preventDefault();
+		
+		var obj = {
+			traceId	: $(this).attr("data-traceid")
+		} 
+		
+		Api.getTraceIssue(obj,function(res){
+    		if(res.code == '1'){
+    			mui.fire(traceIssuePage,'initData',res);
+    			traceIssuePage.show('slide-in-right',400);
+    		} else {
+				var tip = {content:res.msg};
+				Q.showDialog(tip);
+			}
+    	});
+	});
+});
+</script>
+</html>

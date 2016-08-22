@@ -1,0 +1,423 @@
+header .tabSelect {
+	background-color: #fff;
+	color: #333;
+	padding: 3px 10px;
+	border-radius: 5px;
+	text-align: center;
+	display: inline-block;
+	margin-top: 11px
+}
+
+header .tabSelect i {
+	display: inline-block;
+	background: url('../../img/arrow.png') no-repeat;
+	width: 16px;
+	background-size: 13px auto;
+	height: 14px;
+	margin-left: 5px;
+	vertical-align: top;
+	position: relative;
+	top: 7px
+}
+header .lastfive-icon{
+	color:#fff;
+	position: absolute;
+	top:0px;
+	right:0px;
+    line-height: 50px;
+    width: 50px;
+}
+header .lastfive-icon.mui-icon-star-filled{
+	color:#fea300
+}
+.tabDiv {
+	position:absolute;
+	top:50px;
+	bottom:0;
+	left:0;
+	right:0;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
+	z-index: 1500;
+	padding-top:10px;
+	-webkit-transform: translate3d(0, -100%, 0);
+	transform: translate3d(0, -100%, 0);
+	transition: -webkit-transform 0.4s;
+	transition: transform 0.4s;
+	transition: transform 0.4s, -webkit-transform 0.4s;
+	background-color: #eee;
+}
+
+.tabDiv.tabShow {
+	-webkit-transform: translate3d(0, 0, 0);
+	transform: translate3d(0, 0, 0)
+}
+
+.tabDiv .tab {
+	width: 100%;
+	padding: 0 20px
+}
+
+.tabDiv .tab:last-child {
+	margin-bottom: 20px
+}
+
+.tabDiv .tabName {
+	height: 1.2rem;
+	border-bottom: 1px solid #bcbcbc;
+	text-align: center;
+	margin-bottom: 17px
+}
+
+.tabDiv .tabName span {
+	display: inline-block;
+	background-color: #eee;
+	padding: 0 14px;
+	margin-top: 0.3rem;
+	font-size: 1.2rem
+}
+
+.tabDiv .subTab {
+	width: 100%;
+	padding: 0 0.5%
+}
+
+.tabDiv .subTab span {
+	display: inline-block;
+	width: 27%;
+	padding: 5px 15px;
+	color: #636363;
+	border: 1px solid #bcbcbc;
+	border-radius: 4px;
+	margin: 5px 3%;
+	vertical-align: top;
+	background-color: #fff;
+	font-size: 0.8rem;
+	text-align: center;
+}
+
+.tabDiv .subTab span.tabOn {
+	color: #7a57de;
+	border: 2px solid #7a57de
+}
+
+.lt-info {
+	height: 30px;
+	line-height: 30px;
+	position: relative;
+	z-index: 100,
+	width: 100%;
+	border-bottom: 1px solid #dadada;
+	text-align: center;
+	background-color:#fff;
+	font-size:0.8rem;
+	width:100%;
+	position:fixed;
+	top:50px;
+}
+.lt-info span{
+	vertical-align: top;
+}
+.lt-info .ltName {
+	margin-right: 5px
+}
+
+.lt-info .issue {
+	font-style: normal;
+	margin: 0 5px;
+	vertical-align: top;
+}
+
+.lt-info .countdown {
+	font-weight: 700;
+	color: #ff3232;
+	font-size: 1rem
+}
+.lt-info .stop, .lt-info .time-mmc {
+	display: none;
+}
+#content {
+	width:100%;
+	position:fixed;
+	top:80px;
+	bottom:95px;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
+	background-color: #f6f6f4;
+	z-index: 500;
+	transition: top linear 0.3s;
+}
+
+.number{
+	padding:0 10px;
+}
+
+.number dl {
+	display: -webkit-box;
+	padding: 8px 0;
+	width: 100%;
+	border-bottom: 1px solid #dadada
+}
+
+.number dt {
+	height: 30px;
+	line-height: 30px;
+	color: #858585;
+	font-size: .8rem;
+	border-radius: 4px;
+	position: relative;
+	text-align: center;
+	top: 8px;
+	min-width: 50px
+}
+
+.number dd {
+	-webkit-box-flex: 1;
+	padding-left: 5px
+}
+
+.number dd i {
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	border: 1px solid #bcbcbc;
+	border-radius: 50%;
+	font-style: normal;
+	line-height: 38px;
+	text-align: center;
+	margin: 4px;
+	background-color: #fff;
+	float: left
+}
+
+.number dd i.on {
+	font-weight: 700;
+	background: linear-gradient(to bottom, #ff3232, #cf2929);
+	color: #fff;
+	border: 1px solid transparent
+}
+
+.number dd i.ball {
+	-webkit-animation: ball .15s ease-out 0s forwards;
+	animation: ball .15s ease-out 0s forwards
+}
+
+@keyframes ball { 
+	0%{-webkit-transform: scale(.4);transform: scale(.4);opacity: .4}
+	100%{-webkit-transform:scale(1);transform:scale(1);opacity:1}
+}
+@-webkit-keyframes ball { 
+	0%{-webkit-transform: scale(.4);transform: scale(.4);opacity: .4}
+	100%{-webkit-transform:scale(1);transform:scale(1);opacity:1}
+}
+
+
+.lastfive {
+	background-color: #f5f3e7;
+	position:fixed;
+	top:80px;
+	width:100%;
+	z-index:100;
+}
+
+.lastfive .title {
+	color: #8f8d83;
+	text-align: center;
+	font-size: .8rem;
+	line-height: 1.5rem;
+	display: block;
+}
+.lastfive ul{
+	margin-bottom:5px;
+}
+.lastfive li {
+	line-height: 2rem;
+	text-align: center;
+	display: -webkit-box
+}
+
+.lastfive-mmc li {
+	text-align: center
+}
+
+.lastfive span {
+	font-size: .8rem;
+	color: #8f8d83;
+	display: block;
+	height: 100%;
+	text-align: right;
+	-webkit-box-flex: 1;
+	min-width: 130px
+}
+
+.lastfive div {
+	-webkit-box-flex: 1;
+	text-align: left;
+	padding-left: 10px
+}
+
+.lastfive-mmc li div {
+	text-align: center;
+	padding-left: 0
+}
+
+.lastfive i {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	font-style: normal;
+	line-height: 23px;
+	text-align: center;
+	margin: 3px 2px 0 2px;
+	font-size:0.9rem;
+	background-color: #c83232;
+	color: #fff;
+	border: 1px solid transparent;
+	vertical-align: top
+}
+
+.count {
+	height: 95px;
+	width: 100%;
+	display: block;
+	background-color: #432d7a;
+	z-index: 1000;
+	position: fixed;
+	bottom:0;
+	color:#fff;
+}
+
+.count .top {
+	display: -webkit-box;
+	width: 100%;
+	height: 45px;
+	line-height: 45px;
+	background-color: #7a57de;
+	font-size:0.8rem;
+	padding:0 10px;
+	text-align: center;
+}
+
+.count .top .t {
+	width: 42px;
+    text-align: center;
+}
+.count .mode{
+	-webkit-box-flex: 2;
+	min-width:42px;
+}
+.count .times {
+ 	-webkit-box-flex: 2;
+	min-width:60px;
+}
+.count .odds {
+	-webkit-box-flex: 3;
+	max-width:30%;
+}
+
+
+.count .times input{
+    padding: 0 8px;
+	border: none;
+}
+
+.count input, .count select {
+	height: 25px;
+	line-height: .8rem;
+	font-size: .8rem;
+	border-radius: 4px;
+	color: #ff3232;
+	text-align: center;
+	margin-top:10px;
+}
+.count select {
+	background-color: #fff;
+	padding: 0 10px;
+}
+.count .odds em{
+	display:none;
+}
+
+
+
+
+
+
+
+
+.count .bottom>div{
+	-webkit-box-flex: 1;
+	text-align: center;
+	height: 100%
+}
+
+.count .bottom {
+	display: -webkit-box;
+	width: 100%;
+	height: 50px
+}
+
+.count .bottom em {
+	margin: 0 3px;
+	font-size: 1rem;
+	font-weight: 400;
+}
+
+.count .clear {
+	width: 22%;
+	text-align: right
+}
+
+.count .total {
+	width: 55%
+}
+
+.count .confirm {
+	width: 35%
+}
+
+.count .clear button {
+	padding: 5px 15px;
+	background-color: #5a3ca2;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	margin-top: 12.5px
+}
+
+.count .total {
+	padding-top: 5px;
+	font-weight: 700;
+	font-size: .8rem;
+	line-height: .8rem
+}
+
+.count .totalMoney {
+	color: #ffc800;
+	font-size: .8rem;
+	margin-bottom: 4px;
+	line-height: 1.2rem
+}
+
+.count .totalMoney em {
+	font-size: 1.2rem
+}
+
+.count .totalTimes {
+	margin-left: 5px
+}
+
+.count .bottom em.totalCount {
+	margin-left: 0
+}
+
+.count .confirm button {
+	height: 100%;
+	width: 100%;
+	background-color: #fea300;
+	color: #fff;
+	font-size: 1.2rem;
+	font-weight: 700;
+	border: none
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>摩臣娱乐</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="../css/mui.css">
+	<link rel="stylesheet" href="../css/app/history.css">
+</head>
+<style>
+#content{
+	position:fixed;
+	top:50px;
+	bottom:0;
+	width:100%;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
+	background-color:#fff;
+}
+</style>
+<body>
+<header>
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<div class="title"></div>
+</header>
+<div id="content">
+	<ul class="history-list"></ul>
+</div>
+
+<script src="../js/vendor/zepto.min.js"></script>
+<script src="../js/mui.js"></script>
+
+<script src="../js/app/q.js"></script>
+<script src="../js/app/api.js"></script>
+<script src="../js/app/user.js"></script>
+<script src='../js/app/config.js'></script>
+
+<script>
+mui.init({
+	swipeBack:true
+});
+
+function getHistoryByLt(){
+	
+	$('.history-list li').remove();
+	
+	var lt = plus.storage.getItem('history_lt');
+	
+	$('.title').html(Q.getLtName(lt));
+	
+	var obj = {
+		lottery:lt
+	};
+	
+	Api.getHistoryByLt(obj,function(res){
+		var list = res.result;
+		var h = '';
+		if(list.length > 0){
+			$(list).each(function(){
+				if(arguments[1].code){
+    				h += '<li><div class="content"><div class="title"><span class="issue">第<em>' 
+    					+ arguments[1].issueNo + '</em>期</span></div><div class="code">';
+    				
+    				var code = arguments[1].code.split(',');
+    				$(code).each(function(){
+    					h += '<i>' + arguments[1] + '</i>';
+    				});
+    				h += '</div></div></li>';
+    			}
+			});
+			
+			$('.history-list').html(h);
+		}
+	});
+}
+</script>
+</body>
+</html>

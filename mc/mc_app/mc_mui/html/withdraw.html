@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>摩臣娱乐</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="../css/mui.css">
+	<link rel="stylesheet" href="../css/app/account.css">
+</head>
+<body>
+<header>
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<div class="title">提现页面</div>
+</header>
+<div id="content">
+	<div class="userInfo">
+		<img class="account-logo" src="../img/account-logo.png">
+		<p class="username"></p>
+		<p class="balance">余额：<em></em></p>
+	</div>
+	<div class="withDrawContent">
+		<span class="drawname"></span>
+		<select class="bankCardSelect"></select> 
+		<input class="withdrawInput" type="number" pattern="[0-9]*" value="" placeholder="请输入提现金额"> 
+		<input class="withdrawPwd" type="password" placeholder="请输入资金密码">
+		<input id="withDrawToken" type="hidden">
+		<div class="tip">
+			<p>单笔最低提现金额<em class="min"></em></p>
+			<p>单笔最高提现金额<em class="max"></em></p>
+		</div>
+		<a class="withdrawButton">确认提现</a>
+	</div>
+</div>
+
+<script src="../js/vendor/zepto.min.js"></script>
+<script src="../js/mui.js"></script>
+
+<script src="../js/app/q.js"></script>
+<script src="../js/app/api.js"></script>
+<script src="../js/app/user.js"></script>
+<script src='../js/app/config.js'></script>
+
+<script>
+mui.init({
+	swipeBack:true
+});
+
+mui.plusReady(function() {
+	window.addEventListener('initInfo',function(data){
+		var res = data.detail.result;
+		$('#withDrawToken').val(res.token);
+		if(res.bankCardList.length > 0){
+			var el = $('.withDrawContent');
+			
+			el.find('.withdrawInput').val('');
+			el.find('.withdrawPwd').val('');
+			el.find('.drawname').html(res.sn);
+
+			var option = '';
+			$(res.bankCardList).each(function(){
+				var d = arguments[1];
+				option += '<option id="' + d.id + '" data-bindtime="' + d.bindTime + '" cardNo="'+d.bankCardNo+'">' 
+					+ d.bankNameZH + '&nbsp;&nbsp;' + d.bankCardNo + '</option>';
+			});
+			el.find('.bankCardSelect').html(option);
+			
+			el.find('.tip .min').html(res.onceWithdrawMin);
+			el.find('.tip .max').html(res.onceWithdrawMax);
+		}
+	
+	});
+	
+	var username = plus.storage.getItem("username");
+	$('.username').html(username);
+	
+	var balance = plus.storage.getItem("balance");
+	$('.balance em').html(balance);
+	
+	//提现按钮事件
+	$('.withdrawButton').on('tap',function(evt){
+    	var el = $('.withDrawContent');
+    	
+    	var amount = parseInt(el.find('.withdrawInput').val());
+		if(isNaN(amount)){
+			Q.showDialog({content:'输入的提现金额不合法'});
+			return;
+		}
+    	
+    	var option = el.find('.bankCardSelect option:checked');
+    	var obj = {
+    		withdrawMoney:el.find('.withdrawInput').val(),
+    		user_bank_id:option.attr('id'),
+    		bindTime:option.attr('data-bindTime'),
+    		payPassword:md5(el.find('.withdrawPwd').val()),
+    		token:$('#withDrawToken').val(),
+    		cardNo:option.attr('cardNo')
+    	}
+    	
+    	var tip = {};
+    	
+    	if(!obj.withdrawMoney){
+    		tip.content = '请输入提现金额';
+    		Q.showDialog(tip);
+    		return;
+    	}
+    	
+    	if(!obj.payPassword){
+    		tip.content = '请输入资金密码';
+    		Q.showDialog(tip);
+    		return;
+    	}
+    	
+    	Api.withDrawSubmit(obj,function(res){
+    		tip.content = res.msg;
+			Q.showDialog(tip);
+			mui.fire(plus.webview.getWebviewById('account'),'refreshBalance');
+			var balance = plus.storage.getItem("balance");
+			$('.balance em').html(balance);
+    	});
+    });
+	
+});
+</script>
+</body>
+</html>

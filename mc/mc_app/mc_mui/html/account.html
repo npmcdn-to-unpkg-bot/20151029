@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>摩臣娱乐</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="../css/mui.css">
+	<link rel="stylesheet" href="../css/iconfont.css">
+	<link rel="stylesheet" href="../css/app/account.css">
+</head>
+<body>
+<div class="userInfo">
+	<img class="account-logo" src="../img/account-logo.png">
+	<p class="username"></p>
+	<p class="balance">余额：<em></em></p>
+	<div class="recharge">
+		<button class="recharge-btn">充值</button>
+		<button class="withdraw-btn">提款</button>
+	</div>
+</div>
+<ul class="feature">
+	<li class="rechargeRecord"><i class="mui-icon iconfont icon-chongzhi-copy"></i>充提记录</li>
+	<li class="bank"><i class="mui-icon iconfont icon-chongzhi-copy"></i>银行卡管理</li>
+	<li class="drawPwd"><i class="mui-icon iconfont icon-chongzhi-copy"></i>设置资金密码</li>
+</ul>
+<div class="logout">
+	<i class="mui-icon iconfont icon-tuichu"></i>安全退出登录
+</div>
+</body>
+
+<script src="../js/vendor/zepto.min.js"></script>
+<script src="../js/mui.js"></script>
+
+<script src="../js/app/q.js"></script>
+<script src="../js/app/api.js"></script>
+<script src="../js/app/user.js"></script>
+<script src='../js/app/config.js'></script>
+
+<script>
+mui.init();
+mui.plusReady(function() {
+	var pageStyle = {
+		scrollIndicator:'none',
+		scalable:false,
+		top: '0px',
+		bottom: '0px',
+		popGesture: 'hide'
+	};
+	
+	/* 充提记录 */
+	var rechargeRecordPage = mui.preload({
+      	url:'../html/rechargeRecord.html',
+      	id:'rechargeRecord',
+      	styles:pageStyle
+  	});
+	  	
+	$('.rechargeRecord').on('tap',function(){
+		rechargeRecordPage.show('slide-in-right',400);
+		mui.fire(rechargeRecordPage,'getRechargeList');
+	})
+	
+	/* 充值页面 */
+	var rechargePage = mui.preload({
+      	url:'../html/recharge.html',
+      	id:'recharge',
+      	styles:pageStyle
+  	});
+	  	
+	$('.recharge-btn').on('tap',function(){
+		rechargePage.show('slide-in-right',400);
+		mui.fire(rechargePage,'initInfo');
+	})
+	
+	/* 提现页面 */
+	var withdrawPage = mui.preload({
+      	url:'../html/withdraw.html',
+      	id:'draw',
+      	styles:pageStyle
+  	});
+	
+	//提现按钮事件-需先判断是否已绑定银行卡
+	$('.withdraw-btn').on('tap',function(){
+		Api.getWithDrawInfo(function(res){
+    		if(res.code == '1'){
+             	mui.alert('您尚未绑定银行卡', '提现', function() {
+					mui.confirm('是否要转至绑定银行卡页面？', '绑定银行卡', ['否', '是'], function(e) {
+						if (e.index == 1) {
+							alert('正在开发中')
+						}
+					})
+				});
+    		}else{
+    			mui.fire(withdrawPage,'initInfo',res);
+    			withdrawPage.show('slide-in-right',400);
+    		}
+    	});
+	})
+	
+	/*退出登陆*/
+	$('.logout').on('tap',function(){
+		mui.confirm('确定要退出登陆吗？', '退出', ['否', '是'], function(e) {
+			if (e.index == 1) {
+				User.ssoUserLogout(function(res){
+					res = JSON.parse(res);
+					if(res.code == 0){
+		    			var loginPage = plus.webview.getWebviewById('login');
+		    			loginPage.show('slide-in-bottom',400,function(){
+		    				plus.storage.setItem("balance",'');
+		    				var homePage = plus.webview.getWebviewById('home');
+		    				mui.fire(homePage,'clearData');
+		    				mui.fire(plus.webview.getWebviewById('lottery'),'clearData');
+		    				
+		    				plus.webview.currentWebview().hide();
+		    				homePage.show();
+		    			});
+					}
+				});
+			}
+		})
+	});
+	
+	window.addEventListener('refreshBalance',function(){
+		User.getBalance();
+		var username = plus.storage.getItem("username");
+		$('.username').html(username);
+		var balance = plus.storage.getItem('balance');
+		$('.balance em').html(balance);
+	});
+});
+
+</script>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>摩臣娱乐</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="../css/mui.css">
+</head>
+<body>
+<header>
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<div class="title">充值</div>
+</header>
+<script src="../js/mui.js"></script>
+<script>
+mui.init({
+	swipeBack:true
+});
+
+mui.plusReady(function() {
+	var rechargePage = plus.webview.getWebviewById('recharge');
+	//右滑事件回调函数
+	plus.webview.currentWebview().addEventListener( "popGesture", function(e){
+	  	mui.fire(rechargePage,'refreshBalance');
+	}, false);
+
+	//重写退出函数
+	var old_back = mui.back;
+	mui.back = function(){
+	  	mui.fire(rechargePage,'refreshBalance');
+	  	old_back();
+	}
+	
+	window.addEventListener('pay',function(data){
+		plus.nativeUI.showWaiting();
+		var pay = plus.webview.create(data.detail.url,'pay',{top: '50px',bottom: '0px'});
+		plus.webview.currentWebview().append(pay);
+		setTimeout(function(){
+			plus.nativeUI.closeWaiting();
+		},3000)
+	});
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+.traceIssue {
+	background-color: #eee;
+	position: fixed;
+	top:50px;
+	bottom: 68px;
+	width: 100%;
+}
+
+.traceIssue .t, .traceIssue li {
+	display: -webkit-box;
+	line-height: 40px;
+	height: 40px;
+	text-align: center
+}
+
+.traceIssue .select {
+	width: 50px
+}
+
+.traceIssue .issue {
+	width: 120px
+}
+
+.traceIssue .times {
+	width: 50px
+}
+
+.traceIssue .bonus, .traceIssue .status {
+	width: 80px
+}
+
+.traceIssue .select i {
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	border: 1px solid #dcdcdc;
+	background-color: #fff;
+	vertical-align: middle;
+	position: relative;
+	top: -2px
+}
+
+.traceIssue li .more i {
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	background: url('../../img/orderUpdate.png') center
+		no-repeat;
+	background-size: auto 20px
+}
+
+.traceIssue .on .select i {
+	background: url('../../img/winstopIcon.png') center
+		no-repeat #fff;
+	background-size: 10px
+}
+
+.traceIssue ul{
+	position: fixed;
+	top: 90px;
+	bottom: 68px;
+	width:100%;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;	
+}
+
+.traceIssue li {
+	color: #636363
+}
+
+.traceIssue li.disable {
+	color: #bcbcbc
+}
+
+.traceIssue li.on {
+	color: #ff3232
+}
+
+.stopTraceIssue {
+	width: 80%;
+	display: block;
+	line-height: 36px;
+	height: 36px;
+	margin: 1rem auto;
+	background: #fff;
+	border: none;
+	font-size: .9rem;
+	border-radius: 4px;
+	color: #ff3232;
+	position: fixed;
+	bottom: 0;
+	left: 10%;
+	padding:0;
+}

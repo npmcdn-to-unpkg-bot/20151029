@@ -1,0 +1,83 @@
+#login {
+	background: url("../../img/login-bg.jpg") center no-repeat;
+	background-size: 100% auto;
+	z-index: 3000;
+	position:relative;
+	height:100%;
+}
+
+#login .login-logo {
+	background: url("../../img/login-logo.png") center bottom
+		no-repeat;
+	height: 30%;
+	width: 100%;
+	background-size: 80% auto
+}
+#login .mui-input-row{
+	overflow: auto;
+	clear:none;
+}
+#login .mui-input-row .mui-icon-eye,#login .mui-input-row .mui-icon-clear{
+	right: 10%;
+    top: 17px;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    display: inline-block;
+}
+#login .login-form{
+	margin-top:10px;
+}
+#login .login-form.show-code .codeDiv{
+	display:block;
+}
+
+#login .codeDiv {
+	display:none;
+	width:80%;
+	margin: 0 auto;
+}
+
+#login .codeDiv img {
+	vertical-align: top;
+	margin: 5px;
+	border-radius: 5px;
+	height: 40px;
+}
+#login .codeDiv input.codeinput {
+	width: 40%;
+	display: inline-block;
+	margin: 5px 0;
+}
+
+#login input {
+	border: 1px solid #bcbcbc;
+	border-radius: 5px;
+	height: 42px;
+	line-height: 1rem;
+	font-size: 1rem;
+	display: block;
+	padding: 0 10px;
+	width: 80%;
+	margin: 5px auto;
+	-webkit-user-select:text;
+}
+
+#login input::-webkit-input-placeholder { /* WebKit browsers */
+    color:#999;
+    line-height: 20px;
+}
+    
+#login .login-btn {
+	display: block;
+	border-radius: 5px;
+	width: 80%;
+	margin: 5px auto;
+	border: none;
+	height: 42px;
+	line-height: 42px;
+	background: linear-gradient(to bottom, #ffab00, #ff8300);
+	color: #fff;
+	font-size: 1.2rem;
+	padding:0;
+}

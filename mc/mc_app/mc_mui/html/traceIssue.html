@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>摩臣娱乐</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="../css/mui.css">
+	<link rel="stylesheet" href="../css/app/traceIssue.css">
+</head>
+<body>
+<header>
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<div class="title">追号详情</div>
+</header>
+<div class="traceIssue">
+	<div class="t">
+		<div class="select">
+			<i></i>
+		</div>
+		<div class="issue">奖期</div>
+		<div class="status">状态</div>
+		<div class="bonus">奖金</div>
+	</div>
+	<ul>
+	</ul>
+</div>
+<button type="button" class="stopTraceIssue">中止所选期次追号</button>
+</body>
+
+<script src="../js/vendor/zepto.min.js"></script>
+<script src="../js/mui.js"></script>
+<script src="../js/app/api.js"></script>
+<script src="../js/app/user.js"></script>
+<script src="../js/app/config.js"></script>
+<script src="../js/app/q.js"></script>
+
+<script>
+mui.init();
+mui.plusReady(function() {
+	window.addEventListener('initData',function(data){
+		var res = data.detail;
+		res = res.result;
+		var h = '';
+		$(res).each(function(){
+			var s = '进行中';
+			var status = true;
+			if (arguments[1].status=='1') {
+				if (arguments[1].lotteryStatus=='1') {
+					s = '未中奖';
+				}else if(arguments[1].lotteryStatus=='2'){
+					s = '已中奖';
+				}else {
+					s = '未开奖';
+				}
+				status = false;
+			}else if (arguments[1].status=='2' || arguments[1].status=='3') {
+				s = '已取消';
+				status = false;
+			}
+			var issue = arguments[1].issue;
+			var i = status ? '' : 'disable';
+			h += '<li id="' + arguments[1].orderId + '" class="' + i + '">'
+				+ '<div class="select"><i></i></div><div class="issue">' 
+				+ issue + '</div>'
+				//+'<div class="times">' + arguments[1].count + '</div>
+				+ '<div class="status">'+ s +'</div>';
+			if (arguments[1].status=='1' && arguments[1].bonus!=undefined) {
+				h+='<div class="bonus">'+arguments[1].bonus+'元</div></li>';
+			}else {
+				h+='<div class="bonus"></div></li>';
+			}
+		});
+		var ul = $('.traceIssue ul');
+		console.log(h);
+		ul.attr('data-traceId',res[0].traceId).html(h);
+	});
+	
+	
+	var el= $('.traceIssue');
+    var ul = el.find('ul');
+    
+	el.find('.t .select').on('tap',function(){
+		var e = $(this).parent();
+		if(e.hasClass('on')){
+			e.removeClass('on');
+			ul.find('li').removeClass('on');
+		}else{
+			e.addClass('on');
+			ul.find('li').not('.disable').addClass('on');
+		}
+	});
+    	
+    ul.on('tap',function(evt){
+		evt.preventDefault();
+		var _this = evt.target;
+		
+		if(_this.nodeName == 'I'){
+			_this = $(_this).parent();
+		}
+		if($(_this).hasClass('select')){
+			if($(_this).parent().hasClass('disable')){
+				return;
+			}
+			$(_this).parent().toggleClass('on');
+			if(ul.find('li.on').length == 0){
+				el.find('.t').removeClass('on');
+			}
+		}
+	});
+    	
+    //中止追号
+    $('.stopTraceIssue').on('tap',function(){
+		if(ul.find('li.on').length == 0){
+			var tip = {content:'请先选择要中止的期次'};
+			Q.showDialog(tip);
+		}else{	
+			mui.confirm('确定要中止追号吗？', '中止追号', ['否', '是'], function(e) {
+				if (e.index == 1) {
+			    	var traceId = ul.attr('data-traceId');
+		    		var issues = [];
+		    		var selectId = [];
+		    		$(ul.find('li.on')).each(function(){
+		    			issues.push($(arguments[1]).find('.issue').text())
+		    			selectId.push($(arguments[1]).attr('id'));
+		    		});
+		    		
+		    		var obj = {
+		    			traceId:traceId,
+		    			issues:issues
+		    		}
+		    		console.log(JSON.stringify(obj))
+		    		if (issues.length>0) {
+		        		Api.stopTrace(obj,function(res){
+		        			console.log(JSON.stringify(res))
+		        			if(res.code == '1'){
+	        					var tip = {
+		        					content:'中止追号成功'	
+		        				};
+		        				Q.showDialog(tip);
+		        				$(selectId).each(function(){
+		        					$('#' + arguments[1]).removeClass('on').addClass('disable');
+		        					$('#' + arguments[1]).find('.status').text('已取消');
+		        				});
+		        			}else {
+								var tip = {content:res.msg};
+								Q.showDialog(tip);
+							}
+		        		});
+		    		}
+		    			
+				}
+			})
+    	}
+  	});
+});
+</script>
+</html>

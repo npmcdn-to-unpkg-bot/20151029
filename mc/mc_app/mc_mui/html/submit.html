@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>摩臣娱乐</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="../css/mui.css">
+	<link rel="stylesheet" href="../css/app/submit.css">
+</head>
+<body>
+<header>
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<div class="title">重庆时时彩</div>
+</header>
+<div class="flipball-wrap">
+	<div class="flipball-mask"></div>
+	<div id="flipball"></div>
+</div>
+<div id="content">
+	<div class="orderTop">
+		<div class="addOrder">
+			<span><i></i>添加号码</span>
+		</div>
+		<div class="time-mmc">随心所欲&nbsp;即买即开</div>
+		<div class="orderTime">
+			<p>
+				距<label class="issue"></label>期截止
+			</p>
+			<p>
+				<em class="countdown"></em>
+			</p>
+		</div>
+		<div class="clearOrder">
+			<span><i></i>清空注单</span>
+		</div>
+	</div>
+	<div class="order-t"></div>
+	<div class="order">
+		<ul class="order-list">
+		</ul>
+	</div>
+</div>
+
+<div class="orderBtmImg"></div>
+<footer class="orderTotal">
+	<div class="top">
+		<div class="trace">
+			连续投 <input type="number" pattern="[0-9]*" value="1" min="1"
+				max="99999" step="1"> 期
+		</div>
+		<div class="autoStop">
+			<span class="winstop"><i></i>追中即停</span>
+		</div>
+	</div>
+	<div class="bottom">
+		<div class="total">
+			<p class="totalMoney">
+				共<em>0</em>元
+			</p>
+			<p>
+				<em class="totalCount">0</em>注<span><em class="traceCount">1</em>期</span>
+			</p>
+		</div>
+		<div class="submit">
+			<button>立即投注</button>
+		</div>
+	</div>
+</footer>
+<div id="mmcMask"></div>
+<div id="mmcDialog">
+	<div class="title">连续开奖</div>
+	<div class="dialog_mmc_trace">
+		<div class="mmc-close">X</div>
+	    <p><span>第<em id="mmcLoopNow">0</em>次</span><label class="status">开奖中</label></p>
+		<p>
+	    	<span>已中奖<em id="mmcLoopDone">0</em>次</span>
+	    	<span>总共<em id="mmcTotalCount"></em>次</span>
+	    </p>
+	    <p class="mmc-last-prize">
+	    	<span>[第<b id="mmcLoopPrize">0</b>次中奖：<b id="mmcLoopMoney">0</b>元]</span>
+	    </p>
+	    <p class="mmc-amount"><span>共中奖：<em id="mmcLoopAmount">0</em>元</span></p>
+	    <p class="mmc-btn"><a href="javascript:;" class="btn-mmc-loop" data-type="1">停止</a></p>
+	</div>
+</div>
+</body>
+
+<script src="../js/vendor/zepto.min.js"></script>
+<script src="../js/vendor/fx.js"></script>
+<script src="../js/vendor/flipball.js"></script>
+
+<script src="../js/mui.js"></script>
+
+<script src="../js/app/q.js"></script>
+<script src="../js/app/api.js"></script>
+<script src="../js/app/user.js"></script>
+<script src='../js/app/config.js'></script>
+
+<script src='../js/app/submit.js'></script>
+
+<script>
+mui.init({
+	swipeBack:true
+});
+
+mui.plusReady(function() {
+	
+	Submit._init();
+
+	window.addEventListener('pageShow',function(data){
+		Submit = $.extend(Submit, data.detail);
+		Submit.init();
+	});
+	
+	window.addEventListener('initIssue',function(data){
+		Submit.initIssue(data.detail);
+	});
+	
+	window.addEventListener('initCountTime',function(data){
+		Submit.initCountTime(data.detail.countTime);
+	});
+});
+
+</script>
+</html>

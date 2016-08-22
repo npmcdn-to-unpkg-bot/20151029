@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>摩臣娱乐</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="../css/mui.css">
+	<link rel="stylesheet" href="../css/app/search.css">
+</head>
+<body>
+<div class="searchMenu">
+	<div class="orderRecord on">
+		投注记录<i></i>
+		<div class="record-menu">
+			<span data-value="2">已派奖</span> <span data-value="0">未开奖</span> <span
+				data-value="1">未中奖</span> <span data-value="3">等待派奖</span> <span
+				data-value="4">个人撤单</span> <span data-value="5">系统撤单</span>
+		</div>
+	</div>
+	<div class="traceRecord">
+		追号记录<i></i>
+		<div class="record-menu">
+			<span data-value="1">进行中</span> <span data-value="2">已完成</span> <span
+				data-value="3">已结束</span>
+		</div>
+	</div>
+</div>
+</body>
+
+<script src="../js/vendor/zepto.min.js"></script>
+<script src="../js/vendor/swiper.jquery.min.js"></script>
+
+<script src="../js/mui.js"></script>
+
+<script src="../js/app/config.js"></script>
+<script src="../js/app/q.js"></script>
+<script src="../js/app/api.js"></script>
+<script src="../js/app/user.js"></script>
+
+<script>
+mui.init({
+    subpages:[{
+      	url:'searchlist.html',
+      	id:'searchlist',
+     	styles:{
+        	top:"40px",
+        	bottom:"0px"
+        }
+    }]
+});
+mui.plusReady(function() {
+	window.addEventListener('initEvent',function(data){
+		var listPage = plus.webview.getWebviewById('searchlist');
+		$('.searchMenu').on('tap',function(evt){
+			evt.preventDefault();
+			var obj = {
+				currPage:1,
+				pageSize:10
+			};
+		
+			var _this = evt.target;
+			
+			if(_this.nodeName == 'I'){
+				var e = $(_this).parent();
+				if(e.hasClass('on')){
+					var menu = $(_this).next();
+					if(menu.css('display') == 'block'){
+						listPage.setStyle({top:'40px'});
+					}else{
+						var top = e.hasClass('orderRecord') ? '128px' : '92px';
+						listPage.setStyle({top:top});
+					}
+					menu.toggle();
+				}else{
+					e.addClass('on').siblings().removeClass('on');
+		    		$(this).find('.record-menu').hide().find('.on').removeClass('on');
+					if(e.hasClass('orderRecord')){
+		    			mui.fire(listPage,'getOrderList',obj);
+		    		} else if(e.hasClass('traceRecord')){
+		    			mui.fire(listPage,'getTraceList',obj);
+		    		}
+				}
+			} else if(_this.nodeName == 'SPAN') {
+				var e = $(_this).parent().parent();
+				$(_this).addClass('on').siblings().removeClass('on');
+				
+				obj.status = $(_this).attr('data-value');
+				
+		    	if(e.hasClass('orderRecord')){
+	    			mui.fire(listPage,'getOrderList',obj);
+	    		} else if(e.hasClass('traceRecord')){
+	    			mui.fire(listPage,'getTraceList',obj);
+	    		}
+		    	$(_this).parent().hide();
+			} else if($(_this).hasClass('orderRecord')){
+				if(!$(_this).hasClass('on')){
+					$(_this).addClass('on').siblings().removeClass('on');
+					mui.fire(listPage,'getOrderList',obj);
+					$(this).find('.record-menu').hide().find('.on').removeClass('on');
+				}
+			} else if($(_this).hasClass('traceRecord')){
+				if(!$(_this).hasClass('on')){
+					$(_this).addClass('on').siblings().removeClass('on');
+					mui.fire(listPage,'getTraceList',obj);
+					$(this).find('.record-menu').hide().find('.on').removeClass('on');
+				}
+			} 
+		});
+	});
+	
+	window.addEventListener('getOrderList',function(data){
+		var listPage = plus.webview.getWebviewById('searchlist');
+		var obj = {
+			currPage:1,
+			pageSize:10
+		};
+		mui.fire(listPage,'getOrderList',obj);
+	});
+});
+</script>
+</html>

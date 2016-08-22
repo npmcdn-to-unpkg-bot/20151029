@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>摩臣娱乐</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="../css/mui.css">
+	<link rel="stylesheet" href="../css/app/account.css">
+</head>
+<body>
+<header>
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<div class="title">充值</div>
+</header>
+<div id="content">
+	<div class="userInfo">
+		<img class="account-logo" src="../img/account-logo.png">
+		<p class="username"></p>
+		<p class="balance">
+			余额：<em></em>
+		</p>
+	</div>
+	<form id="rechargeForm" class="rechargeForm" action="/sobet/pay/m/recharge" target="_blank">
+		<div class="rechargeContent">
+			<select class="rechargeBank" name="channelCode" id="channelCode">
+				<!--<option value="000011">网银</option>-->
+				<option value="000010">微信</option>
+			</select>
+			<select class="rechargeBank" name="bankId" id="bankId">
+				<option value="993">微信</option>
+				<option value="980">民生银行</option>
+				<option value="989">北京银行</option>
+				<option value="982">华夏银行</option>
+				<option value="978">平安银行</option>
+				<option value="970">招商银行</option>
+				<option value="972">兴业银行</option>
+				<option value="986">光大银行</option>
+				<option value="963">中国银行</option>
+				<option value="968">浙商银行</option>
+				<option value="971">邮政储蓄</option>
+				<option value="975">上海银行</option>
+				<option value="979">南京银行</option>
+				<option value="983">杭州银行</option>
+				<option value="987">东亚银行</option>
+				<option value="988">渤海银行</option>
+				<option value="964">中国农业银行</option>
+				<option value="965">中国建设银行</option>
+				<option value="985">广东发展银行</option>
+				<option value="977">浦东发展银行</option>
+				<option value="974">深圳发展银行</option>
+			</select>
+			
+			<input class="uin" type="hidden">
+			
+			<input class="rechargeInput" name="amount" type="number" pattern="[0-9]*" value="" placeholder="请输入充值金额">
+			<input id="payWayType" type="hidden" value="0">
+			<div class="tip">
+				<p>
+					单笔最低充值金额 : <em class="min"></em>
+				</p>
+				<p>
+					单笔最高充值金额 : <em class="max"></em>
+				</p>
+				<p>
+					当天最高累计充值金额 : <em class="todaymax"></em>
+				</p>
+			</div>
+			<button type="button" class="rechargeButton">马上充值</a>
+		</div>
+	</form>
+</div>
+
+<script src="../js/vendor/zepto.min.js"></script>
+<script src="../js/mui.js"></script>
+
+<script src="../js/app/q.js"></script>
+<script src="../js/app/api.js"></script>
+<script src="../js/app/user.js"></script>
+<script src='../js/app/config.js'></script>
+
+<script>
+mui.init({
+	swipeBack:true
+});
+
+mui.plusReady(function() {
+	Api.initHost();
+	
+	window.addEventListener('initInfo',function(){
+		Api.rechargeIndex(function(res){
+			res = res.result;
+			$('.tip .min').html(res.rechargeMoneyMin);
+			$('.tip .max').html(res.rechargeMoneyMax);
+			$('.tip .todaymax').html(res.rechargeMoneyMaxDay);
+		});
+	});
+	
+	var username = plus.storage.getItem("username");
+	$('.username').html(username);
+	
+	var uin = plus.storage.getItem("userUin");
+	$('.uin').val(uin);
+	
+	var balance = plus.storage.getItem("balance");
+	$('.balance em').html(balance);
+	
+	//支付方式change事件
+	$('#channelCode').on('change',function(){
+		if($(this).val() == '000011'){
+			$("#bankId").css('display','block');
+		}else{
+			$("#bankId").hide();
+		}
+	});
+	
+	//充值按钮点击事件
+	$('.rechargeButton').on('tap',function(){
+		var amount = parseInt($('.rechargeInput').val());
+		
+		var min = parseInt($('.tip .min').html());
+		var max = parseInt($('.tip .max').html());
+		
+		if(amount < min || amount > max || isNaN(amount)){
+			Q.showDialog({content:'输入的金额不合法'});
+			return;
+		}
+
+		var sig = '';
+		var cookieArray = plus.navigator.getCookie(Api.host).split(';');
+		$(cookieArray).each(function(){
+			var str = $.trim(arguments[1]);
+			if(str.indexOf('SIG=') == 0){
+				sig = str.substring(4);
+			}
+		});
+		sig = encodeURIComponent(sig);
+		sig = encodeURIComponent(sig);
+		
+		console.log(sig);
+		var orderDate = new Date().getTime();
+		
+		var param = {
+			payWayType : $('#payWayType').val(),
+			channelCode : $('#channelCode').val(),
+			bankId : $('#bankId').val(),
+			amount : amount,
+			uin:$('.uin').val(),
+			orderDate : orderDate,
+			shopId : Api.shopId
+		};
+		
+		
+		var url = Api.host + Api.route.rechargeApp + $.param(param) + '&sig=' + sig;
+
+		console.log(url)
+		mui.confirm('请在新打开的页面中完成付款', '付款', ['取消付款', '我已完成付款'], function(e) {
+			if (e.index == 1) {
+				alert('您已成功充值XX元')
+				
+				orderDate
+			}
+		});
+		
+		plus.runtime.openURL(url);
+	});
+});
+</script>
+</body>
+</html>

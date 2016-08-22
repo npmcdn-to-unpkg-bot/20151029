@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title></title>
+	<link rel="stylesheet" href="../css/mui.css">
+	<link rel="stylesheet" href="../css/app/login.css">
+</head>
+<body>
+<div id="login">
+	<div class="login-logo"></div>
+	<div class="login-form">
+		<div class="mui-input-row">
+			<input type="text" class="username mui-input-clear" placeholder="用户名" value="">
+		</div>
+		<div class="mui-input-row">
+			<input type="password" class="password mui-input-password" placeholder="密码" value="">
+		</div>
+		<div class="codeDiv mui-input-row">
+			<input type="text" class="codeinput" placeholder="验证码">
+			<img class="verifycode">
+		</div>
+		<div class="mui-input-row">
+			<button type="button" class="login-btn">登录</button>
+		</div>
+	</div>
+</div>
+<script src="../js/vendor/zepto.min.js"></script>
+<script src="../js/vendor/md5.min.js"></script>
+
+<script src="../js/mui.js"></script>
+
+<script src="../js/app/q.js"></script>
+<script src="../js/app/api.js"></script>
+<script src="../js/app/user.js"></script>
+
+<script src="../js/app/line.js"></script>
+<script src="../js/app/login.js"></script>
+<script>
+mui.init({
+	keyEventBind: {
+		backbutton: false
+	}
+});
+
+mui.plusReady(function(){
+//	if(plus.storage.getItem('host')){
+//		Login._init();
+//	}else{
+		Line.startSpeedTest(function(){
+			Login._init();
+		});
+//	}
+});
+</script>
+</body>
+</html>

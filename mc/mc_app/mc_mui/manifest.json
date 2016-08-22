@@ -1,0 +1,581 @@
+{
+	"@platforms": [
+		"android",
+		"iPhone",
+		"iPad"
+	],
+	"id": "H5BD1FE1C",/*应用的标识，创建应用时自动生成，勿手动修改*/
+	"name": "摩臣娱乐",/*应用名称，程序桌面图标名称*/
+	"version": {
+		"name": "1.0.0",/*应用版本名称*/
+		"code": "83"
+	},
+	"description": "",/*应用描述信息*/
+	"icons": {
+		"72": "icon.png"
+	},
+	"launch_path": "index.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
+	"developer": {
+		"name": "",/*开发者名称*/
+		"email": "",/*开发者邮箱地址*/
+		"url": "http://www.dcloud.io"
+	},
+	"permissions": {
+		"Accelerometer": {
+			"description": "访问加速度感应器"
+		},
+		"Audio": {
+			"description": "访问麦克风"
+		},
+		"Cache": {
+			"description": "管理应用缓存"
+		},
+		"Camera": {
+			"description": "访问摄像头"
+		},
+		"Console": {
+			"description": "跟踪调试输出日志"
+		},
+		"Contacts": {
+			"description": "访问系统联系人信息"
+		},
+		"Device": {
+			"description": "访问设备信息"
+		},
+		"Downloader": {
+			"description": "文件下载管理"
+		},
+		"Events": {
+			"description": "应用扩展事件"
+		},
+		"File": {
+			"description": "访问本地文件系统"
+		},
+		"Gallery": {
+			"description": "访问系统相册"
+		},
+		"Geolocation": {
+			"description": "访问位置信息"
+		},
+		"Invocation": {
+			"description": "使用Native.js能力"
+		},
+		"Messaging": {
+			"description": "访问通讯能力"
+		},
+		"Orientation": {
+			"description": "访问方向感应器"
+		},
+		"Proximity": {
+			"description": "访问距离感应器"
+		},
+		"Storage": {
+			"description": "管理应用本地数据"
+		},
+
+		"Uploader": {
+			"description": "管理文件上传任务"
+		},
+		"Runtime": {
+			"description": "访问运行期环境"
+		},
+		"XMLHttpRequest": {
+			"description": "跨域网络访问"
+		},
+		"Zip": {
+			"description": "文件压缩与解压缩"
+		},
+		
+		"Maps": {
+			"description": "管理地图插件"
+		},
+		"Speech": {
+			"description": "管理语音识别插件"
+		},
+		"Webview": {
+			"description": "窗口管理"
+		},
+		"NativeUI": {
+			"description": "原生UI控件"
+		},
+		"Navigator": {
+			"description": "浏览器信息"
+		},
+		"NativeObj": {
+			"description": "原生对象"
+		}
+	},
+	"plus": {
+		"splashscreen": {
+			"autoclose": true,/*是否自动关闭程序启动界面，true表示应用加载应用入口页面后自动关闭；false则需调plus.navigator.closeSplashscreen()关闭*/
+			"waiting": true
+		},
+		"runmode": "liberate",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
+		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
+		"distribute": {
+			"apple": {
+				"appid": "",/*iOS应用标识，苹果开发网站申请的appid，如io.dcloud.HelloH5*/
+				"mobileprovision": "",/*iOS应用打包配置文件*/
+				"password": "",/*iOS应用打包个人证书导入密码*/
+				"p12": "",/*iOS应用打包个人证书，打包配置文件关联的个人证书*/
+				"devices": "universal",/*iOS应用支持的设备类型，可取值iphone/ipad/universal*/
+				"frameworks": []
+			},
+			"google": {
+				"packagename": "",/*Android应用包名，如io.dcloud.HelloH5*/
+				"keystore": "",/*Android应用打包使用的密钥库文件*/
+				"password": "",/*Android应用打包使用密钥库中证书的密码*/
+				"aliasname": "",/*Android应用打包使用密钥库中证书的别名*/
+				"permissions": ["<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>","<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>","<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>","<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>","<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>","<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>","<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.READ_LOGS\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>","<uses-feature android:name=\"android.hardware.camera\"/>","<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>","<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.CAMERA\"/>"]
+			},
+			"orientation": [
+				"portrait-primary",
+				"portrait-secondary"
+			],/*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
+			"icons": {
+				"ios": {
+					"prerendered": true, /*应用图标是否已经高亮处理，在iOS6及以下设备上有效*/
+					"auto": "", /*应用图标，分辨率：512x512，用于自动生成各种尺寸程序图标*/
+					"iphone": {
+						"normal": "unpackage/res/icons/57x57.png",/*iPhone普通屏幕程序图标，分辨率：57x57*/
+						"retina": "unpackage/res/icons/114x114.png",/*iPhone高分屏程序图标，分辨率：114x114*/
+						"retina7": "unpackage/res/icons/120x120.png",/*iPhone iOS7高分屏程序图标，分辨率：120x120*/
+						"spotlight-normal": "unpackage/res/icons/29x29.png", /*iPhone Spotlight搜索程序图标，分辨率：29x29*/
+						"spotlight-retina": "unpackage/res/icons/58x58.png", /*iPhone高分屏Spotlight搜索程序图标，分辨率：58x58*/
+						"spotlight-retina7": "unpackage/res/icons/80x80.png",/*iPhone iOS7高分屏Spotlight搜索程序图标，分辨率：80x80*/
+						"settings-normal": "unpackage/res/icons/29x29.png", /*iPhone设置页面程序图标，分辨率：29x29*/
+						"settings-retina": "unpackage/res/icons/58x58.png",
+						"retina8": "unpackage/res/icons/180x180.png",
+						"settings-retina8": "unpackage/res/icons/87x87.png"
+					},
+					"ipad": {
+						"normal": "unpackage/res/icons/72x72.png", /*iPad普通屏幕程序图标，分辨率：72x72*/
+						"retina": "unpackage/res/icons/144x144.png", /*iPad高分屏程序图标，分辨率：144x144*/
+						"normal7": "unpackage/res/icons/76x76.png", /*iPad iOS7程序图标，分辨率：76x76*/
+						"retina7": "unpackage/res/icons/152x152.png", /*iPad iOS7高分屏程序图标，分辨率：152x152*/
+						"spotlight-normal": "unpackage/res/icons/50x50.png", /*iPad Spotlight搜索程序图标，分辨率：50x50*/
+						"spotlight-retina": "unpackage/res/icons/100x100.png", /*iPad高分屏Spotlight搜索程序图标，分辨率：100x100*/
+						"spotlight-normal7": "unpackage/res/icons/40x40.png",/*iPad iOS7 Spotlight搜索程序图标，分辨率：40x40*/
+						"spotlight-retina7": "unpackage/res/icons/80x80.png",/*iPad iOS7高分屏Spotlight搜索程序图标，分辨率：80x80*/
+						"settings-normal": "unpackage/res/icons/29x29.png",/*iPad设置页面程序图标，分辨率：29x29*/
+						"settings-retina": "unpackage/res/icons/58x58.png"
+					}
+				},
+				"android": {
+					"mdpi": "unpackage/res/icons/48x48.png", /*普通屏程序图标，分辨率：48x48*/
+					"ldpi": "unpackage/res/icons/48x48.png", /*大屏程序图标，分辨率：48x48*/
+					"hdpi": "unpackage/res/icons/72x72.png", /*高分屏程序图标，分辨率：72x72*/
+					"xhdpi": "unpackage/res/icons/96x96.png",/*720P高分屏程序图标，分辨率：96x96*/
+					"xxhdpi": "unpackage/res/icons/144x144.png"
+				}
+			},
+			"splashscreen": {
+				"ios": {
+					"iphone": {
+						"default": "", /*iPhone3启动图片选，分辨率：320x480*/
+						"retina35": "",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
+						"retina40": ""
+					},
+					"ipad": {
+						"portrait": "", /*iPad竖屏启动图片，分辨率：768x1004*/
+						"portrait-retina": "",/*iPad高分屏竖屏图片，分辨率：1536x2008*/
+						"landscape": "", /*iPad横屏启动图片，分辨率：1024x748*/
+						"landscape-retina": "", /*iPad高分屏横屏启动图片，分辨率：2048x1496*/
+						"portrait7": "", /*iPad iOS7竖屏启动图片，分辨率：768x1024*/
+						"portrait-retina7": "",/*iPad iOS7高分屏竖屏图片，分辨率：1536x2048*/
+						"landscape7": "", /*iPad iOS7横屏启动图片，分辨率：1024x768*/
+						"landscape-retina7": ""
+					}
+				},
+				"android": {
+					"mdpi": "", /*普通屏启动图片，分辨率：240x282*/
+					"ldpi": "", /*大屏启动图片，分辨率：320x442*/
+					"hdpi": "", /*高分屏启动图片，分辨率：480x762*/
+					"xhdpi": "", /*720P高分屏启动图片，分辨率：720x1242*/
+					"xxhdpi": ""
+				}
+			}
+		}
+	},
+	"dependencies": {
+		"pages": {
+			"html/history_detail.html": {
+				"href": "html/history_detail.html",
+				"resources": [
+					"css/mui.css",
+					"fonts/mui.ttf",
+					"css/app/history.css",
+					"js/vendor/zepto.min.js",
+					"js/mui.min.js",
+					"js/app/q.js",
+					"js/app/api.js",
+					"js/app/user.js",
+					"js/app/config.js"
+				],
+				"priority": 0
+			},
+			"html/history.html": {
+				"href": "html/history.html",
+				"resources": [
+					"js/vendor/zepto.min.js",
+					"js/mui.min.js",
+					"js/app/q.js",
+					"js/app/api.js",
+					"js/app/user.js",
+					"js/app/config.js",
+					"css/mui.css",
+					"fonts/mui.ttf",
+					"css/app/history.css"
+				],
+				"refer": [
+					"html/history_detail.html"
+				],
+				"priority": 0
+			},
+			"html/traceIssue.html": {
+				"href": "html/traceIssue.html",
+				"resources": [
+					"js/vendor/zepto.min.js",
+					"js/mui.min.js",
+					"js/app/api.js",
+					"js/app/user.js",
+					"js/app/config.js",
+					"js/app/q.js",
+					"css/mui.css",
+					"fonts/mui.ttf",
+					"css/app/traceIssue.css",
+					"img/orderUpdate.png",
+					"img/winstopIcon.png"
+				],
+				"priority": 1
+			},
+			"html/traceDetail.html": {
+				"href": "html/traceDetail.html",
+				"resources": [
+					"js/vendor/zepto.min.js",
+					"js/mui.min.js",
+					"js/app/api.js",
+					"js/app/user.js",
+					"js/app/config.js",
+					"js/app/q.js",
+					"css/mui.css",
+					"fonts/mui.ttf",
+					"css/app/orderDetail.css"
+				],
+				"refer": [
+					"html/traceIssue.html"
+				],
+				"priority": 1
+			},
+			"html/orderDetail.html": {
+				"href": "html/orderDetail.html",
+				"resources": [
+					"js/vendor/zepto.min.js",
+					"js/mui.min.js",
+					"js/app/api.js",
+					"js/app/user.js",
+					"js/app/config.js",
+					"js/app/q.js",
+					"css/mui.css",
+					"fonts/mui.ttf",
+					"css/app/orderDetail.css"
+				],
+				"refer": [
+					"html/traceIssue.html"
+				],
+				"priority": 2
+			},
+			"html/searchlist.html": {
+				"href": "html/searchlist.html",
+				"resources": [
+					"js/vendor/zepto.min.js",
+					"js/vendor/swiper.jquery.min.js",
+					"js/mui.min.js",
+					"js/app/config.js",
+					"js/app/q.js",
+					"js/app/api.js",
+					"js/app/user.js",
+					"js/app/search.js",
+					"css/mui.css",
+					"fonts/mui.ttf",
+					"css/app/search.css",
+					"img/arrow.png",
+					"img/lt/cqssc.png",
+					"img/lt/ffc.png",
+					"img/lt/bjpk10.png",
+					"img/lt/3dfc.png",
+					"img/lt/gd11y.png",
+					"img/lt/mmc.png",
+					"img/lt/xjssc.png",
+					"img/lt/5fc.png",
+					"img/lt/sd11y.png",
+					"img/lt/jx11y.png",
+					"img/lt/hg1f5.png",
+					"img/orderUpdate.png"
+				],
+				"refer": [
+					"html/traceDetail.html",
+					"html/orderDetail.html"
+				],
+				"priority": 1
+			},
+			"html/search.html": {
+				"href": "html/search.html",
+				"resources": [
+					"js/vendor/zepto.min.js",
+					"js/vendor/swiper.jquery.min.js",
+					"js/mui.min.js",
+					"js/app/config.js",
+					"js/app/q.js",
+					"js/app/api.js",
+					"js/app/user.js",
+					"css/mui.css",
+					"fonts/mui.ttf",
+					"css/app/search.css",
+					"img/arrow.png",
+					"img/lt/cqssc.png",
+					"img/lt/ffc.png",
+					"img/lt/bjpk10.png",
+					"img/lt/3dfc.png",
+					"img/lt/gd11y.png",
+					"img/lt/mmc.png",
+					"img/lt/xjssc.png",
+					"img/lt/5fc.png",
+					"img/lt/sd11y.png",
+					"img/lt/jx11y.png",
+					"img/lt/hg1f5.png",
+					"img/orderUpdate.png"
+				],
+				"refer": [
+					"html/searchlist.html"
+				],
+				"priority": 1
+			},
+			"html/recharge.html": {
+				"href": "html/recharge.html",
+				"resources": [
+					"css/mui.css",
+					"fonts/mui.ttf",
+					"css/app/account.css",
+					"js/vendor/zepto.min.js",
+					"js/mui.min.js",
+					"js/app/q.js",
+					"js/app/api.js",
+					"js/app/user.js",
+					"js/app/config.js",
+					"img/account-logo.png"
+				],
+				"priority": 2
+			},
+			"html/rechargelist.html": {
+				"href": "html/rechargelist.html",
+				"resources": [
+					"js/vendor/zepto.min.js",
+					"js/vendor/swiper.jquery.min.js",
+					"js/mui.min.js",
+					"js/app/config.js",
+					"js/app/q.js",
+					"js/app/api.js",
+					"js/app/user.js",
+					"js/app/rwrecord.js",
+					"css/mui.css",
+					"fonts/mui.ttf",
+					"css/app/recharge.css",
+					"img/arrow.png"
+				],
+				"priority": 3
+			},
+			"html/rechargeRecord.html": {
+				"href": "html/rechargeRecord.html",
+				"resources": [
+					"js/vendor/zepto.min.js",
+					"js/vendor/swiper.jquery.min.js",
+					"js/mui.min.js",
+					"js/app/config.js",
+					"js/app/q.js",
+					"js/app/api.js",
+					"js/app/user.js",
+					"css/mui.css",
+					"fonts/mui.ttf",
+					"css/app/recharge.css",
+					"img/arrow.png"
+				],
+				"refer": [
+					"html/rechargelist.html"
+				],
+				"priority": 3
+			},
+			"html/withdraw.html": {
+				"href": "html/withdraw.html",
+				"resources": [
+					"css/mui.css",
+					"fonts/mui.ttf",
+					"css/app/account.css",
+					"js/vendor/zepto.min.js",
+					"js/mui.min.js",
+					"js/app/q.js",
+					"js/app/api.js",
+					"js/app/user.js",
+					"js/app/config.js",
+					"img/account-logo.png"
+				],
+				"priority": 4
+			},
+			"html/account.html": {
+				"href": "html/account.html",
+				"resources": [
+					"js/vendor/zepto.min.js",
+					"js/mui.min.js",
+					"js/app/q.js",
+					"js/app/api.js",
+					"js/app/user.js",
+					"js/app/config.js",
+					"css/mui.css",
+					"fonts/mui.ttf",
+					"css/iconfont.css",
+					"fonts/iconfont.ttf",
+					"css/app/account.css",
+					"img/account-logo.png"
+				],
+				"refer": [
+					"html/recharge.html",
+					"html/rechargeRecord.html",
+					"html/withdraw.html"
+				],
+				"priority": 2
+			},
+			"html/submit.html": {
+				"href": "html/submit.html",
+				"resources": [
+					"js/vendor/zepto.min.js",
+					"js/vendor/fx.js",
+					"js/vendor/flipball.js",
+					"js/mui.min.js",
+					"js/app/q.js",
+					"js/app/api.js",
+					"js/app/user.js",
+					"js/app/config.js",
+					"js/app/submit.js",
+					"css/mui.css",
+					"fonts/mui.ttf",
+					"css/app/submit.css",
+					"img/addOrder.png",
+					"img/clearOrder.png",
+					"img/orderDel.png",
+					"img/orderUpdate.png",
+					"img/orderBtm.png",
+					"img/winstopIcon.png",
+					"img/flipball_mask300.png",
+					"img/balls.png"
+				],
+				"priority": 3
+			},
+			"html/lottery.html": {
+				"href": "html/lottery.html",
+				"resources": [
+					"js/vendor/zepto.min.js",
+					"js/mui.min.js",
+					"js/app/q.js",
+					"js/app/api.js",
+					"js/app/user.js",
+					"js/app/config.js",
+					"js/app/lottery.js",
+					"css/mui.css",
+					"fonts/mui.ttf",
+					"css/app/lottery.css",
+					"img/arrow.png"
+				],
+				"refer": [
+					"html/submit.html"
+				],
+				"priority": 3
+			},
+			"html/login.html": {
+				"href": "html/login.html",
+				"resources": [
+					"css/mui.css",
+					"fonts/mui.ttf",
+					"css/app/login.css",
+					"img/login-bg.jpg",
+					"img/login-logo.png",
+					"js/vendor/zepto.min.js",
+					"js/vendor/md5.min.js",
+					"js/mui.min.js",
+					"js/app/q.js",
+					"js/app/api.js",
+					"js/app/user.js"
+				],
+				"priority": 4
+			},
+			"html/home.html": {
+				"href": "html/home.html",
+				"resources": [
+					"js/vendor/zepto.min.js",
+					"js/vendor/swiper.jquery.min.js",
+					"js/mui.min.js",
+					"js/app/api.js",
+					"js/app/user.js",
+					"js/app/config.js",
+					"js/app/q.js",
+					"js/app/home.js",
+					"css/mui.css",
+					"fonts/mui.ttf",
+					"css/app/home.css",
+					"img/noticeIcon.jpg",
+					"css/vendor/swiper.css",
+					"img/lt/cqssc.png",
+					"img/lt/hg1f5.png",
+					"img/lt/ffc.png",
+					"img/lt/bjpk10.png",
+					"img/lt/3dfc.png",
+					"img/lt/gd11y.png",
+					"img/lt/mmc.png",
+					"img/lt/xjssc.png",
+					"img/lt/5fc.png",
+					"img/lt/sd11y.png",
+					"img/lt/jx11y.png",
+					"img/banner/banner.jpg"
+				],
+				"refer": [
+					"html/lottery.html",
+					"html/login.html"
+				],
+				"priority": 3
+			},
+			"index.html": {
+				"href": "index.html",
+				"resources": [
+					"js/mui.min.js",
+					"css/mui.css",
+					"fonts/mui.ttf",
+					"css/iconfont.css",
+					"fonts/iconfont.ttf",
+					"css/app/common.css",
+					"img/logo.png",
+					"img/cService.png",
+					"js/app/index.js"
+				],
+				"refer": [
+					"html/history.html",
+					"html/search.html",
+					"html/account.html",
+					"html/home.html"
+				],
+				"priority": 0
+			}
+		},
+		"idle": {
+			"resources": [
+				"img/pageback.png",
+				"html/tracelist.html",
+				"css/mui.min.css",
+				"img/accountIcon.png",
+				"img/historyIcon.png",
+				"img/homeIcon.png",
+				"js/mui.js",
+				"html/pay.html"
+			]
+		}
+	},
+	"fullscreen": false
+}

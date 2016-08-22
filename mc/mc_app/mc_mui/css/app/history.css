@@ -1,0 +1,43 @@
+.history-list li {
+	padding: 10px 20px;
+	border-bottom: 1px solid #bcbcbc;
+	position:relative;
+}
+
+.history-list li:active {
+	background:#eee;
+}
+.history-list .title{
+	text-align: left;
+}
+.history-list .lt-name {
+	color: #424242;
+	font-size: 1.2rem;
+	font-weight: 700;
+	margin-right: 12px
+}
+
+.history-list .issue {
+	font-size: .9rem;
+	color: #333
+}
+
+.history-list .code {
+	margin-top: 5px;
+	text-align: left;
+}
+
+.history-list li i {
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	line-height: 38px;
+	text-align: center;
+	margin: 4px 8px 4px 0;
+	font-weight: 700;
+	background: linear-gradient(to bottom, #ff3232, #cf2929);
+	color: #fff;
+	border: 1px solid transparent;
+	font-size: 1.2rem;
+}
