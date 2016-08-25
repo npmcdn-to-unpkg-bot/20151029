@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>摩臣娱乐</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="../css/mui.css">
+	<link rel="stylesheet" href="../css/app/account.css">
+</head>
+<style>
+#content{
+	bottom: 130px;
+}
+</style>
+<body>
+<header>
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<div class="title">绑定银行卡</div>
+</header>
+<div id="content" class="bankContent">
+	<div class="banklist">
+		<img id="addNew" class="setPwdSuccess" src="../img/addBankCard.png">
+	</div>
+</div>
+<div class="tip bankTip">
+	<p>1、每个账户最多可绑定5张银行卡</p>
+	<p>2、如需解绑请联系在线客服</p>
+	<p>3、在首次新增银行卡<em class="x"></em>小时之后，非首次新增银行卡<em class="y"></em>小时之后，新卡才可以发起提现</p>
+</div>
+<script src="../js/vendor/zepto.min.js"></script>
+<script src="../js/mui.js"></script>
+<script src="../js/app/api.js"></script>
+<script src="../js/app/q.js"></script>
+<script>
+mui.init({
+	swipeBack:true
+});
+
+mui.plusReady(function() {
+	var addBankPage = mui.preload({
+      	url:'../html/addbank.html',
+      	id:'addbank',
+      	styles:{
+			scrollIndicator:'none',
+			scalable:false,
+			top: '0px',
+			bottom: '0px',
+			popGesture: 'hide'
+		}
+	});
+	
+	window.addEventListener('initList',function(){
+		Api.queryBankList(function(res){
+			var x = res.configMap.firstDrawingsAging.value;
+			var y = res.configMap.nonFirstDrawingsAging.value;
+			
+			$('.tip em.x').html(x);
+			$('.tip em.y').html(y);
+			
+			if(res.retCode == '0'){
+				if(res.message == '1'){
+					var array = res.retData;
+					var h = '';
+					$(array).each(function(){
+						h += '<div class="card"><div class="banklogo"><div class="' + arguments[1].bankAllas + '"></div></div>' +
+							'<div class="bankinfo"><p>' + arguments[1].bankNameZH + '</p><p><span>' + arguments[1].sn +
+							'</span></p><p><label>' + arguments[1].bankCardNo + '</label></p></div></div>';
+					});
+					$('.banklist .card').remove();
+					$('.banklist').prepend(h);
+					if(array.length == 5){
+						$('#addNew').hide();				
+					}
+				}
+			}else{
+				var tip = {content:res.message};
+				Q.showDialog(tip);
+			}
+		})
+	},false);
+	
+	$('#addNew').on('tap',function(){
+		if($('.banklist .card').length == 5){
+			return;
+		}
+		
+		addBankPage.show('slide-in-right',400)
+	});
+});
+</script>
+</body>
+</html>

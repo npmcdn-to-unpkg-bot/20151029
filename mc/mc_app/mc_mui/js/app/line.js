@@ -11,7 +11,7 @@ Line = {
 //				"http://www.mc188.cc", "http://www.moochen.cc", "http://www.moochen.com", 
 //				"http://www.moochen.net", "http://www.moochen.org", "http://mcplay888.com", 
 //				"http://mcgame8.net", "http://mcgame88.net", "http://mochen8.net"],
-	shopId : 'tk',
+	
 	lineArray : ["http://www.sobet.tk"],
 	
 	startSpeedTest : function(){

@@ -70,13 +70,12 @@ mui.plusReady(function() {
 			el.find('.tip .max').html(res.onceWithdrawMax);
 		}
 	
+		var username = plus.storage.getItem("username");
+		$('.username').html(username);
+	
+		var balance = plus.storage.getItem("balance");
+		$('.balance em').html(balance);
 	});
-	
-	var username = plus.storage.getItem("username");
-	$('.username').html(username);
-	
-	var balance = plus.storage.getItem("balance");
-	$('.balance em').html(balance);
 	
 	//提现按钮事件
 	$('.withdrawButton').on('tap',function(evt){

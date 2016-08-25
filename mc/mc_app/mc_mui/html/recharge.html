@@ -95,16 +95,17 @@ mui.plusReady(function() {
 			$('.tip .max').html(res.rechargeMoneyMax);
 			$('.tip .todaymax').html(res.rechargeMoneyMaxDay);
 		});
+		
+		
+		var username = plus.storage.getItem("username");
+		$('.username').html(username);
+		
+		var uin = plus.storage.getItem("userUin");
+		$('.uin').val(uin);
+		
+		var balance = plus.storage.getItem("balance");
+		$('.balance em').html(balance);
 	});
-	
-	var username = plus.storage.getItem("username");
-	$('.username').html(username);
-	
-	var uin = plus.storage.getItem("userUin");
-	$('.uin').val(uin);
-	
-	var balance = plus.storage.getItem("balance");
-	$('.balance em').html(balance);
 	
 	//支付方式change事件
 	$('#channelCode').on('change',function(){
@@ -138,7 +139,6 @@ mui.plusReady(function() {
 		sig = encodeURIComponent(sig);
 		sig = encodeURIComponent(sig);
 		
-		console.log(sig);
 		var orderDate = new Date().getTime();
 		
 		var param = {
@@ -147,19 +147,40 @@ mui.plusReady(function() {
 			bankId : $('#bankId').val(),
 			amount : amount,
 			uin:$('.uin').val(),
-			orderDate : orderDate,
-			shopId : Api.shopId
+			orderDate : orderDate
 		};
 		
-		
 		var url = Api.host + Api.route.rechargeApp + $.param(param) + '&sig=' + sig;
-
 		console.log(url)
+		
 		mui.confirm('请在新打开的页面中完成付款', '付款', ['取消付款', '我已完成付款'], function(e) {
 			if (e.index == 1) {
-				alert('您已成功充值XX元')
+				param = {
+					orderDate : orderDate,
+					channelCode : $('#channelCode').val(),
+				};
 				
-				orderDate
+				Api.payResult(param,function(data){
+					var tip = {};
+					
+					if(data.retCode == '0'){
+						if(data.message == '0'){
+							tip.content = '充值不成功';
+							Q.showDialog(tip);
+						}else if(data.message == '1'){
+							mui.alert('充值成功', '充值', function() {
+								User.getBalance();
+								var balance = plus.storage.getItem("balance");
+								$('.balance em').html(balance);
+								var accountPage = plus.getWebviewById('account');
+								mui.fire(accountPage,'refreshBalance');
+							});
+						}
+					}else {
+						tip.content = data.message;
+						Q.showDialog(tip);
+					}
+				})
 			}
 		});
 		

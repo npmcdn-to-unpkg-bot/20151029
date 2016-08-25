@@ -3,6 +3,7 @@ var RWRecord = RWRecord || {};
 RWRecord = {
 	listType : 'rechargelist', // rechargelist-充值记录     withdrawlist-提现记录
 	pullStatus :　'down', // down-下拉刷新   up-上拉加载更多
+	
 	loading :　false,  //是否正在加载数据
 	
 	_init : function(){
@@ -31,6 +32,9 @@ RWRecord = {
 		var param = RWRecord.listType == 'rechargelist' ? RWRecord.rechargeParam : RWRecord.withdrawParam;
 		var fn = RWRecord.listType == 'rechargelist' ? RWRecord.getRechargeList : RWRecord.getWithDrawList;
 		
+		if(!param){
+			return;
+		}
 		param.currPage = param.currPage + 1;
 				    	
 		if(param.currPage > 10){

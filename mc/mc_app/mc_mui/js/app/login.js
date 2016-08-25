@@ -17,6 +17,7 @@ Login = {
 		if(lastloginName){
 			username.val(lastloginName);
 		}
+		username.val('boyd1100');
 		password.val('boyd1100');
 		
 		var codeinput = form.find('.codeinput');
@@ -62,21 +63,22 @@ Login = {
 		    	res = eval(res.substring(1));
 		    	if (res.code == 0) {
 					plus.nativeUI.showWaiting();
+					
 		    		$(document.body).append('<iframe id="login-iframe" style="display: none;"></iframe>');
 					$("iframe#login-iframe").attr('src', Api.host + '/lottery/u/login?backType=0&t=' + (new Date()).getTime());
 					$("iframe#login-iframe").on('load',function() {
-						
+						User.getBalance();
 		    			plus.storage.setItem("username",res.user.cn);
 		    			plus.storage.setItem("userUin",String(res.user.uin));
 	
-						plus.webview.currentWebview().hide('slide-out-bottom',400);
-					    
 					    mui.fire(me.homePage,'initHomeSlide');
 					    
 						plus.nativeUI.closeWaiting();
-					    setTimeout(function() {
-					      	$("iframe#login-iframe").remove();
-					    }, 1000);
+						plus.webview.currentWebview().hide('slide-out-bottom',400);
+						
+						setTimeout(function(){
+							$("iframe#login-iframe").remove();
+						},1000);
 					});
 		    	} else {
 		    		tip.content = res.msg;

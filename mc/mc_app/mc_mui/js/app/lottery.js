@@ -227,6 +227,7 @@ Lottery = {
 			me.initTab(LotteryClass[me.lt]);
 		}else{
 			Api.getOddsByLt({lottery:me.lt},function(d) {
+				console.log(d);
 				me.odds[me.lt] = d.result[me.lt];
 				me.updateIssue();
 				me.initTab(LotteryClass[me.lt]);

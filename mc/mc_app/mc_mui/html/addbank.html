@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>摩臣娱乐</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="../css/mui.css">
+	<link rel="stylesheet" href="../css/mui.picker.all.css">
+	<link rel="stylesheet" href="../css/app/account.css">
+</head>
+<style>
+#content{
+	bottom: 130px;
+}
+</style>
+<body>
+<header>
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<div class="title">添加银行卡</div>
+</header>
+<div id="addBank">
+	<input id="sn" class="name" type="text" value="" placeholder="收款人姓名" maxlength="6"> 
+	<input id="bankCardNo" type="number" pattern="[0-9]*" value="" placeholder="请输入卡号"> 
+	<select id="bankAllas" class="mui-btn mui-btn-block">
+		<option value="CCB">中国建设银行</option>
+		<option value="ICBC">中国工商银行</option>
+		<option value="ABC">中国农业银行</option>
+		<option value="BOC">中国银行</option>
+		<option value="COMM">交通银行</option>
+		<option value="CMB">招商银行</option>
+		<option value="CMBC">民生银行</option>
+		<option value="CEB">光大银行</option>
+		<option value="HB">华夏银行</option>
+		<option value="CIB">兴业银行</option>
+		<option value="SPDB">上海浦发银行</option>
+		<option value="CITIC">中信银行</option>
+		<option value="GOB">广东发展银行</option>
+		<option value="BOB">北京银行</option>
+		<option value="HZCB">杭州银行</option>
+		<option value="NBBANK">宁波银行</option>
+		<option value="PSBC">中国邮政储蓄银行</option>
+	</select>
+	<input id='cityPicker' type='text' placeholder="请选择开户城市" readonly="readonly" value="">
+	<input type="hidden" id="city">
+	<input type="hidden" id="province">
+	<input id="place" type="text" value="" placeholder="请输入开户网点">
+	<button id="addNewBtn" type="button">添加银行卡</button>
+</div>
+<script src="../js/vendor/zepto.min.js"></script>
+<script src="../js/mui.js"></script>
+<script src="../js/app/api.js"></script>
+<script src="../js/app/q.js"></script>
+
+<script src="../js/app/city.data.js"></script>
+<script src="../js/mui.picker.min.js"></script>
+<script>
+mui.init({
+	swipeBack:true
+});
+
+mui.plusReady(function() {
+	//级联示例
+	var cityPicker = new mui.PopPicker({
+		layer: 2
+	});
+	cityPicker.setData(cityData);
+	$('#cityPicker').on('touchend', function(event) {
+		cityPicker.show(function(items) {
+			var city = items[0].text + " " + items[1].text;
+			$('#province').val(items[0].text);
+			$('#city').val(items[1].text);
+			$('#cityPicker').val(city);
+		});
+	});
+	$('#addNewBtn').on('tap',function(){
+		var obj = {
+			sn : $('#sn').val(),
+			bankCardNo : $('#bankCardNo').val(),
+			bankAllas : $('#bankAllas').val(),
+			city : $('#city').val(),
+			province : $('#province').val(),
+			place : $('#place').val(),
+			country:'',
+			county:''
+		}
+		
+		
+		var tip = {};
+		if(obj.sn == ''){
+			tip.content = '请输入收款人姓名';
+			Q.showDialog(tip);
+			return;
+		}
+		if(obj.bankCardNo == ''){
+			tip.content = '请输入卡号';
+			Q.showDialog(tip);
+			return;
+		}
+		if(obj.place == ''){
+			tip.content = '请输入开户网点';
+			Q.showDialog(tip);
+			return;
+		}
+		
+		Api.addBankCard(obj,function(res){
+			if(res.retCode == '0'){
+				if(res.message == '1'){
+					tip.content = '绑定银行卡成功';
+					Q.showDialog(tip);
+					mui.fire(plus.webview.getWebviewById('banklist'),'initList');
+				}
+			}else{
+				tip.content = res.message;
+				Q.showDialog(tip);
+			}
+		})
+	})
+});
+</script>
+</body>
+</html>

@@ -1,6 +1,8 @@
 var Api = Api || {};
 
 Api = {
+	shopId : 0,
+	useShopId : false,
 	showLoading : true,
     route: {
     	getSlides: '/m/sobet/api/i/anon/activity/queryCurrentActivity',
@@ -28,6 +30,13 @@ Api = {
         getWithDrawInfo : '/m/sobet/pay/m/drawCashIndexView',
         withDrawSubmit : '/m/sobet/pay/m/withdrawCash',
         rechargeApp : '/m/sobet/pay/app/recharge?',
+        payResult : '/m/sobet/api/payCheck/finalResult',
+        payPwdExist : '/m/sobet/api/payPwdCheck/existResult',
+        setPayPwd : '/m/sobet/api/payPwdCheck/setResult',
+        updatePayPwd : '/m/sobet/api/payPwdCheck/updateResult',
+        checkPayPwd : '/m/sobet/api/payPwdCheck/authResult',
+        queryBankList : '/m/sobet/api/userBankCheck/queryResult',
+        addBankCard : '/m/sobet/api/userBankCheck/addResult'
     },
     
     checkOnline : function(){
@@ -51,22 +60,25 @@ Api = {
     	Api.initHost();
     	url = Api.host + url;
     	console.log(url)
-    	
+
     	if(Api.showLoading){
     		plus.nativeUI.showWaiting();
     	}
+    	
     	var setting = {
 			dataType:'json',//服务器返回json格式数据
 			type:'get',//HTTP请求类型
 			timeout:10000,//超时时间设置为10秒；
-			headers:{'Content-Type':'application/json'},	              
+			headers:{
+				'Content-Type':'application/json'
+			},
 			success:function(data){
 				plus.nativeUI.closeWaiting();
 				if(data == '-1'){
-					var tip = {content:'您需要重新登陆'};
-					Q.showDialog(tip);
 					var loginPage = plus.webview.getWebviewById('login');
-					loginPage.show('slide-in-bottom',400);
+					loginPage.show('slide-in-bottom',400,function(){
+						mui.fire(loginPage,'loginAgain');
+					});
 				}else{
 					fn(data);
 				}
@@ -83,7 +95,6 @@ Api = {
     		setting.data = arguments[2];
     	}
     	
-    	
     	mui.ajax(url,setting);
     },
     
@@ -92,7 +103,11 @@ Api = {
     		return;
     	}
     	Api.initHost();
+    	
+    	url = Api.host + url;
+    	console.log(url)
     	plus.nativeUI.showWaiting();
+    	
     	var setting = {
 			dataType:'jsonp',//服务器返回json格式数据
 			type:'get',//HTTP请求类型
@@ -101,10 +116,10 @@ Api = {
 			success:function(data){
 				plus.nativeUI.closeWaiting();
 				if(data == '-1'){
-					var tip = {content:'您需要重新登陆'};
-					Q.showDialog(tip);
-					var loginPage = plus.webview.getWebviewById('login');
-					loginPage.show('slide-in-bottom',400);
+    				var loginPage = plus.webview.getWebviewById('login');
+					loginPage.show('slide-in-bottom',400,function(){
+						mui.fire(loginPage,'loginAgain');
+					});
 				}else{
 					fn(data);
 				}
@@ -119,8 +134,6 @@ Api = {
     	if(arguments[2]){
     		setting.data = arguments[2];
     	}
-    	url = Api.host + url;
-    	console.log(url)
     	mui.ajax(url,setting);
     },
     
@@ -129,6 +142,9 @@ Api = {
     		return;
     	}
     	Api.initHost();
+    	url = Api.host + url;
+    	console.log(url)
+    	
     	plus.nativeUI.showWaiting();
     	var setting = {
     		data:JSON.stringify(param),
@@ -139,10 +155,10 @@ Api = {
 			success:function(data){
 				plus.nativeUI.closeWaiting();
 				if(data == '-1'){
-					var tip = {content:'您需要重新登陆'};
-					Q.showDialog(tip);
 					var loginPage = plus.webview.getWebviewById('login');
-					loginPage.show('slide-in-bottom',400);
+					loginPage.show('slide-in-bottom',400,function(){
+						mui.fire(loginPage,'loginAgain');
+					});
 				}else{
 					fn(data);
 				}
@@ -153,8 +169,6 @@ Api = {
 				Q.showDialog(tip);
 			}
 		}
-    	url = Api.host + url;
-    	console.log(url)
     	mui.ajax(url,setting);
     },
     
@@ -221,5 +235,26 @@ Api = {
     },
     withDrawSubmit:function(obj,fn){
     	Api.getData(Api.route.withDrawSubmit,fn,obj);
-    }
+    },
+    payResult : function(obj,fn){
+    	Api.getData(Api.route.payResult,fn,obj);
+    },
+    payPwdExist : function(fn){
+    	Api.getData(Api.route.payPwdExist,fn);
+    },
+    setPayPwd : function(obj,fn){
+    	Api.getData(Api.route.setPayPwd,fn,obj);
+    },
+    updatePayPwd : function(obj,fn){
+    	Api.getData(Api.route.updatePayPwd,fn,obj);
+    },
+    checkPayPwd : function(obj,fn){
+    	Api.getData(Api.route.checkPayPwd,fn,obj);
+    },
+    queryBankList : function(fn){
+    	Api.getData(Api.route.queryBankList,fn);
+    },
+    addBankCard : function(obj,fn){
+    	Api.getData(Api.route.addBankCard,fn,obj);
+    },
 }

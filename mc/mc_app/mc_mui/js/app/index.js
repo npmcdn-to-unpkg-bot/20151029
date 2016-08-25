@@ -44,13 +44,13 @@ Index = {
 			
 			//显示目标选项卡
 			//若为iOS平台或非首次显示，则直接显示
-			if(mui.os.ios||aniShow[targetTab]){
+			if(mui.os.ios||me.aniShow[targetTab]){
 				plus.webview.show(targetTab);
 			}else{
 				//否则，使用fade-in动画，且保存变量
 				var temp = {};
 				temp[targetTab] = "true";
-				mui.extend(aniShow,temp);
+				mui.extend(me.aniShow,temp);
 				plus.webview.show(targetTab,"fade-in",300);
 			}
 			//隐藏当前;

@@ -54,6 +54,11 @@ mui.plusReady(function(){
 			Login._init();
 		});
 //	}
+
+	window.addEventListener('loginAgain',function(){
+		var tip = {content:'您需要重新登陆'};
+		Q.showDialog(tip);
+	},false)
 });
 </script>
 </body>

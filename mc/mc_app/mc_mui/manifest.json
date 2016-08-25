@@ -212,7 +212,8 @@
 					"js/app/user.js",
 					"js/app/config.js"
 				],
-				"priority": 0
+				"priority": 0,
+				"refer": []
 			},
 			"html/history.html": {
 				"href": "html/history.html",
@@ -247,7 +248,8 @@
 					"img/orderUpdate.png",
 					"img/winstopIcon.png"
 				],
-				"priority": 1
+				"priority": 1,
+				"refer": []
 			},
 			"html/traceDetail.html": {
 				"href": "html/traceDetail.html",
@@ -260,7 +262,8 @@
 					"js/app/q.js",
 					"css/mui.css",
 					"fonts/mui.ttf",
-					"css/app/orderDetail.css"
+					"css/app/orderDetail.css",
+					"js/mui.js"
 				],
 				"refer": [
 					"html/traceIssue.html"
@@ -344,11 +347,11 @@
 					"img/lt/sd11y.png",
 					"img/lt/jx11y.png",
 					"img/lt/hg1f5.png",
-					"img/orderUpdate.png"
+					"img/orderUpdate.png",
+					"html/searchlist.html",
+					"js/mui.js"
 				],
-				"refer": [
-					"html/searchlist.html"
-				],
+				"refer": [],
 				"priority": 1
 			},
 			"html/recharge.html": {
@@ -365,7 +368,8 @@
 					"js/app/config.js",
 					"img/account-logo.png"
 				],
-				"priority": 2
+				"priority": 2,
+				"refer": []
 			},
 			"html/rechargelist.html": {
 				"href": "html/rechargelist.html",
@@ -383,7 +387,8 @@
 					"css/app/recharge.css",
 					"img/arrow.png"
 				],
-				"priority": 3
+				"priority": 3,
+				"refer": []
 			},
 			"html/rechargeRecord.html": {
 				"href": "html/rechargeRecord.html",
@@ -398,11 +403,10 @@
 					"css/mui.css",
 					"fonts/mui.ttf",
 					"css/app/recharge.css",
-					"img/arrow.png"
-				],
-				"refer": [
+					"img/arrow.png",
 					"html/rechargelist.html"
 				],
+				"refer": [],
 				"priority": 3
 			},
 			"html/withdraw.html": {
@@ -419,7 +423,8 @@
 					"js/app/config.js",
 					"img/account-logo.png"
 				],
-				"priority": 4
+				"priority": 4,
+				"refer": []
 			},
 			"html/account.html": {
 				"href": "html/account.html",
@@ -435,7 +440,8 @@
 					"css/iconfont.css",
 					"fonts/iconfont.ttf",
 					"css/app/account.css",
-					"img/account-logo.png"
+					"img/account-logo.png",
+					"js/mui.js"
 				],
 				"refer": [
 					"html/recharge.html",
@@ -468,7 +474,8 @@
 					"img/flipball_mask300.png",
 					"img/balls.png"
 				],
-				"priority": 3
+				"priority": 3,
+				"refer": []
 			},
 			"html/lottery.html": {
 				"href": "html/lottery.html",
@@ -483,7 +490,8 @@
 					"css/mui.css",
 					"fonts/mui.ttf",
 					"css/app/lottery.css",
-					"img/arrow.png"
+					"img/arrow.png",
+					"js/mui.js"
 				],
 				"refer": [
 					"html/submit.html"
@@ -503,9 +511,13 @@
 					"js/mui.min.js",
 					"js/app/q.js",
 					"js/app/api.js",
-					"js/app/user.js"
+					"js/app/user.js",
+					"js/app/line.js",
+					"js/app/login.js",
+					"js/mui.js"
 				],
-				"priority": 4
+				"priority": 4,
+				"refer": []
 			},
 			"html/home.html": {
 				"href": "html/home.html",
@@ -534,7 +546,8 @@
 					"img/lt/5fc.png",
 					"img/lt/sd11y.png",
 					"img/lt/jx11y.png",
-					"img/banner/banner.jpg"
+					"img/banner/banner.jpg",
+					"js/mui.js"
 				],
 				"refer": [
 					"html/lottery.html",
@@ -553,13 +566,14 @@
 					"css/app/common.css",
 					"img/logo.png",
 					"img/cService.png",
-					"js/app/index.js"
+					"js/app/index.js",
+					"html/home.html",
+					"js/vendor/zepto.min.js"
 				],
 				"refer": [
 					"html/history.html",
 					"html/search.html",
-					"html/account.html",
-					"html/home.html"
+					"html/account.html"
 				],
 				"priority": 0
 			}
@@ -572,7 +586,6 @@
 				"img/accountIcon.png",
 				"img/historyIcon.png",
 				"img/homeIcon.png",
-				"js/mui.js",
 				"html/pay.html"
 			]
 		}

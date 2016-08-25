@@ -96,7 +96,7 @@ mui.plusReady(function() {
 	
 	window.addEventListener('clearData',function(data){
 		Home.orderList = {};
-		
+		mui.fire(Home.cw.parent(),'recoverPage');
 	});
 });
 </script>
