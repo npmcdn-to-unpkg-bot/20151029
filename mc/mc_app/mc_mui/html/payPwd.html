@@ -28,19 +28,17 @@
 		<input id="newPayPwdAgain" type="password" value="" placeholder="请再次输入新资金密码">
 		<button type="button">提交</button>
 	</div>
-	
-	<div class="tip">
-		<p>1、资金密码是您提现的重要凭证，一旦设定请谨慎保管</p>
-		<p>2、通过设定资金密码，能够有效的保护您的资金安全</p>
-		<p>3、资金密码长度为8-16位，包括数字及字母</p>
-	</div>
-	
-	<div class="success">
-		<img class="setPwdSuccess" src="../img/setPwdSuccess.png">
-		<p>您已成功设置资金密码</p>
-	</div>
 </div>
-
+<div class="tip payPwdTip">
+	<p>1、资金密码是您提现的重要凭证，一旦设定请谨慎保管</p>
+	<p>2、通过设定资金密码，能够有效的保护您的资金安全</p>
+	<p>3、资金密码长度为8-16位，包括数字及字母</p>
+</div>
+	
+<div class="payPwdSuccess">
+	<img class="setPwdSuccess" src="../img/setPwdSuccess.png">
+	<p>您已成功设置资金密码</p>
+</div>
 <script src="../js/vendor/zepto.min.js"></script>
 <script src="../js/mui.js"></script>
 <script src="../js/vendor/md5.min.js"></script>
@@ -53,15 +51,17 @@ mui.init({
 
 mui.plusReady(function() {
 	window.addEventListener('setPayPwd',function(){
+		$('input').val('');
 		$('#setPwd').show();
 		$('#updatePwd').hide();
-		$('.success').hide();
+		$('.payPwdSuccess').hide();
 	});
 	
 	window.addEventListener('updatePayPwd',function(){
+		$('input').val('');
 		$('#setPwd').hide();
 		$('#updatePwd').show();
-		$('.success').hide();
+		$('.payPwdSuccess').hide();
 	});
 	
 	$('#setPwd button').on('tap',function(){
@@ -89,7 +89,7 @@ mui.plusReady(function() {
 		Api.setPayPwd(obj,function(res){
 			if(res.retCode == '0'){
 				if(res.message == '1'){
-					$('.success').show();
+					$('.payPwdSuccess').show();
 				}else{
 					tip.content = '设置资金密码失败';
 					Q.showDialog(tip);
@@ -127,7 +127,7 @@ mui.plusReady(function() {
 		Api.updatePayPwd(obj,function(res){
 			if(res.retCode == '0'){
 				if(res.message == '1'){
-					$('.success').show();
+					$('.payPwdSuccess').show();
 				}else{
 					tip.content = '修改资金密码失败';
 					Q.showDialog(tip);

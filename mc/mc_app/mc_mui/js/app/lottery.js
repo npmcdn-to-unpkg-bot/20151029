@@ -10,7 +10,7 @@ Lottery = {
     
     countTime : null, //彩种倒计时  00:00:00
     interval : null, //定时器
-    countOver : true, //倒计时
+    countOver : true, //倒计时是否结束
     skipTime : 0,
     
     submitStatus : false, //是否准备提交
@@ -58,6 +58,7 @@ Lottery = {
     },
     
     _clearInterval : function(){
+    	var me = this;
 		var interval = plus.storage.getItem('interval');
         if(interval){
         	clearInterval(interval);
@@ -68,9 +69,12 @@ Lottery = {
    		var me = this;
    		var tabDiv = $(".tabDiv");
    		
+    	//下方count区域
+    	var count = $('.count');
+    	
    		//显示/隐藏 最近五期
    		$('.lastfive-icon').on('tap',function(){
-   			var t = (me.cls == 'pk10' ? 430 : 269) + 'px';
+   			var t = '280px';
    			if($(this).hasClass('mui-icon-star')){
    				$('#content').css('top',t);
    				$(this).removeClass('mui-icon-star').addClass('mui-icon-star-filled');
@@ -82,11 +86,15 @@ Lottery = {
    		
    		//玩法列表
    		$('.tabSelect').on('tap',function(){
+   			var pointEvent = tabDiv.hasClass('tabShow') ? 'auto' : 'none';
+			//防止事件穿透
+			count.find('input,select').css('pointer-events',pointEvent);
 			tabDiv.toggleClass('tabShow');
         });
         
         //玩法列表点击事件
-        tabDiv.on("tap", 'span', function() {
+        tabDiv.on("tap", 'span', function(evt) {
+        	evt.preventDefault();
 	   		$('.tabOn').removeClass('tabOn');
 	    	$(this).addClass('tabOn');
 	    	
@@ -113,6 +121,10 @@ Lottery = {
 	    	
 	    	//初始化赔率
 	    	me.updateOdds();
+	    	
+	    	setTimeout(function(){
+	    		count.find('input,select').css('pointer-events','auto');
+	    	},350);
         });
         
         //选号盘点击事件
@@ -135,8 +147,6 @@ Lottery = {
 	        me.calcMoney();
     	});
     	
-    	//下方count区域
-    	var count = $('.count');
     	
     	//倍数输入框change事件
 		count.on('change','.times input',function(evt){
@@ -189,7 +199,7 @@ Lottery = {
     			lt : me.lt,
     			cls : me.cls,
     			ltName : me.ltName,
-    			orderHtml : me.getOrder(),
+    			orderlist : me.getOrder(),
     			restore : me.restoreCode
     		}
     		
@@ -216,6 +226,9 @@ Lottery = {
     	me._clearInterval();
 		me.submitStatus = false;
 		
+		if(!$('.lastfive-icon').hasClass('mui-icon-star')){
+			$('.lastfive-icon').trigger('tap');
+		}
     	me.getOddsByLt();
     },
     
@@ -227,7 +240,6 @@ Lottery = {
 			me.initTab(LotteryClass[me.lt]);
 		}else{
 			Api.getOddsByLt({lottery:me.lt},function(d) {
-				console.log(d);
 				me.odds[me.lt] = d.result[me.lt];
 				me.updateIssue();
 				me.initTab(LotteryClass[me.lt]);
@@ -835,9 +847,7 @@ Lottery = {
 					};
 					mui.fire(me.submitPage, 'initIssue', data);
 					
-					if(me.countOver){//只有当倒计时结束时候才会重新渲染最近5期
-						me.updateLastFive(res);
-					}
+					me.updateLastFive(res);
 					
 					me.updateTime(res.second);
 				}
@@ -858,16 +868,17 @@ Lottery = {
     		if(me.lt != "WBGMMC"){
     			li += '<span>第<em>' + arguments[1].issue + '</em>期</span>';
     		}
-    		
-    		li += '<div>';
+    		li += '<label>';
     		var code = arguments[1].code.split(',');
     		$(code).each(function(){
     			li += '<i>' + arguments[1] + '</i>';
     		})
     		
-    		li += '</div></li>';
+    		li += '</label></li>';
     	});
     	el.html(li);
+    	var height = me.cls == 'pk10' ? 325 : 170;
+    	el.height(height);
     },
     
     updateTime : function(second){
@@ -1041,7 +1052,8 @@ Lottery = {
                 var obj = me.odds[me.lt][hz_method];
                 
                 if (obj.point !== undefined) {
-                    var p = $("#lottery .count .odds option").not(function(){ return !this.selected }).attr("data-point");
+                    var p = $(".count .odds option").not(function(){ return !this.selected }).attr("data-point");
+                    
                     if (p == 0) {
                         var val = (obj.odds + obj.x * obj.point).toFixed(3);
                         count[3] = val.substr(0, val.length - 1);
@@ -1183,7 +1195,7 @@ Lottery = {
     			wintime = Math.combination(code.length, m[0].charAt(m[0].length - 1));
     			win = win * wintime;
     		} else {
-    			wintime = Math.combination($("#lottery .number .dl-pos i.on").length, m[0].charAt(m[0].length - 1));
+    			wintime = Math.combination($(".number .dl-pos i.on").length, m[0].charAt(m[0].length - 1));
     			win = win * wintime;
     		}
     		win = win - total * times * mode;

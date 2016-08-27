@@ -14,6 +14,8 @@ Account = {
 	payPwdPage : null,
 	bankListPage : null,
 	
+	indexPage　: null,
+	
 	_init : function(){
 		var me = this;
 		
@@ -61,6 +63,8 @@ Account = {
 	      	id:'banklist',
 	      	styles:me.pageStyle
 	 	});
+	 	
+	 	me.indexPage = plus.webview.currentWebview().parent();
 	},
 	
 	init : function(){
@@ -166,18 +170,17 @@ Account = {
 	    	});
 		})
 		
-		
 		/*退出登陆*/
 		$('.logout').on('tap',function(){
-			mui.confirm('确定要退出登陆吗？', '退出', ['否', '是'], function(e) {
+			mui.confirm('确定要退出登录吗？', '退出', ['否', '是'], function(e) {
 				if (e.index == 1) {
 					User.ssoUserLogout(function(res){
 						res = JSON.parse(res);
 						if(res.code == 0){
 			    			me.loginPage.show('slide-in-bottom',400,function(){
 			    				plus.storage.setItem("balance",'');
-			    				var homePage = plus.webview.getWebviewById('home');
-			    				mui.fire(homePage,'clearData');
+			    				mui.fire(me.rechargeRecordPage,'clearData')
+			    				mui.fire(me.indexPage,'clearData');
 			    			});
 						}
 					});

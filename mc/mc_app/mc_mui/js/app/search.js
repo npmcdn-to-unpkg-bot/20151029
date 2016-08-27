@@ -2,6 +2,14 @@ var Search = Search || {};
 
 Search = {
 	listType : 'orderlist', // orderlist-投注查询   tracelist-追号查询
+	orderParam : {
+		currPage:1,
+		pageSize:10
+	},
+	traceParam : {
+		currPage:1,
+		pageSize:10
+	},
 	pullStatus :　'down', // down-下拉刷新   up-上拉加载更多
 	loading :　false,  //是否正在加载数据
 
@@ -31,14 +39,14 @@ Search = {
 			}
 	  	});
 	  	
-		$('.order-list').on('tap','li',function(){
+		$('.order-list').on('tap','li:not(.no-data)',function(){
 			var obj = {
 				orderId	: $(this).attr('id')
 			}
 			me.getOrderDetail(obj);
 		});
 		
-		$('.trace-list').on('tap','li',function(){
+		$('.trace-list').on('tap','li:not(.no-data)',function(){
 			var obj = {
 				traceId	: $(this).attr('id')
 			}
@@ -52,6 +60,9 @@ Search = {
 		}
 		Search.loading = true;
 		Search.pullStatus = 'down';
+		
+		Search.listType == 'orderlist' ? Search.orderParam.currPage = 1 : Search.traceParam.currPage = 1;
+	
 		setTimeout(function(){
 			Search.listType == 'orderlist' ? Search.getOrderList() : Search.getTraceList();
 		},1000);
@@ -74,10 +85,14 @@ Search = {
 			var tip = {content : '更多数据请到PC端查询'};
 			Q.showDialog(tip);
 			mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
+			Search.loading = false;
 			return;
 		}
 		
-		fn.call(Search,param,true);
+		setTimeout(function(){
+			fn.call(Search);
+		},1000);
+		
 	},
 	
 	getOrderLi : function(){
@@ -122,124 +137,105 @@ Search = {
 	
 	getOrderList : function(){
     	var me = this;
-    	
     	me.listType = 'orderlist';
-    	
-    	var obj = {
-    		currPage:1,
-    		pageSize:10
-    	};
-    	
-    	var append = false;
-    	
-    	arguments[0] && (obj = arguments[0]);
-    	arguments[1] && (append = arguments[1]);
-    	
     	var ul =  $('.order-list');
-    	Api.getOrderList(obj,function(res){
-    		var list = res.result.his_orders;
-    		if(list.length > 0){
-    			var h = '';
-    			$(list).each(function(){
-					h += me.getOrderLi(arguments[1]);
-    			});
-    			if(append){
-        			ul.append(h);
-    			}else{
-    				ul.html(h);
-    			}
+    	Api.getOrderList(me.orderParam,function(res){
+    		console.log(JSON.stringify(res))
+    		if(res.code == '1'){
+    			var list = res.result.his_orders;
+	    		if(list.length > 0){
+	    			var h = '';
+	    			$(list).each(function(){
+						h += me.getOrderLi(arguments[1]);
+	    			});
+	    			
+	    			if(me.pullStatus == 'down'){
+	    				ul.html(h);
+		    			mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+		    			mui('#pullrefresh').pullRefresh().disablePullupToRefresh();
+		    			if(list.length == 10){
+		    				mui('#pullrefresh').pullRefresh().enablePullupToRefresh();
+		    			}
+		    		}else if(me.pullStatus == 'up'){
+		    			mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
+	        			ul.append(h);
+		    		}
+	    		}else{
+	    			var tip = {content : "暂无更多数据"}
+	    			Q.showDialog(tip);
+	    			
+	    			if(me.pullStatus == 'down'){
+	    				ul.html('<li class="no-data">暂无数据</li>');
+	    				mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+	    				mui('#pullrefresh').pullRefresh().disablePullupToRefresh();
+	    			}else{
+	    				mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
+	    			}
+	    		}
     		}else{
-    			var tip = {content : "暂无更多数据"}
-    			Q.showDialog(tip);
-    			me.loading = false;
-    			
-    			if(append){
-    				mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
-    			}else{
-    				ul.html('<li class="no-data">暂无数据</li>');
+    			var tip = {content : res.msg};
+	    		Q.showDialog(tip);
+	    		ul.html('<li class="no-data">暂无数据</li>');
+	    		if(me.pullStatus == 'down'){
     				mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
     				mui('#pullrefresh').pullRefresh().disablePullupToRefresh();
+    			}else{
+    				mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
     			}
-    			return;
     		}
     		
-    		if(!append){
-    			me.orderParam = obj;
-    		}
-    		
-    		if(me.pullStatus == 'down'){
-    			mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
-    			mui('#pullrefresh').pullRefresh().disablePullupToRefresh();
-    			if(list.length == 10){
-    				mui('#pullrefresh').pullRefresh().enablePullupToRefresh();
-    			}
-    		}else if(me.pullStatus == 'up'){
-    			mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
-    		}
-    		
-    		
-    		me.loading = false;
+	    	me.loading = false;
     	});
 	},
 	
     getTraceList : function(){
     	var me = this;
-    	
     	me.listType = 'tracelist';
-    	
-    	var obj = {
-    		currPage:1,
-    		pageSize:10
-    	};
-
-    	var append = false;
-    	
-    	arguments[0] && (obj = arguments[0]);
-    	arguments[1] && (append = arguments[1]);
-    	
     	var ul = $('.trace-list');
-    	
-    	Api.getTraceList(obj,function(res){
-    		var list = res.result.list;
-    		var h = '';
-    		if(list.length > 0){
-    			$(list).each(function(){
-    				h += me.getTraceLi(arguments[1]);
-    			});
-    			
-    			if(append){
-        			ul.append(h);
-    			}else{
-    				ul.html(h);
-    			}
-    		}else{
-    			var tip = {content : "暂无更多数据"}
-    			Q.showDialog(tip);
-    			me.loading = false;
-    			
-    			if(append){
-    				mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
-    			}else{
-    				ul.html('<li class="no-data">暂无数据</li>');
+    	Api.getTraceList(me.traceParam,function(res){
+    		if(res.code == '1'){
+	    		var list = res.result.list;
+	    		if(list.length > 0){
+	    			var h = '';
+	    			$(list).each(function(){
+	    				h += me.getTraceLi(arguments[1]);
+	    			});
+	    			
+	    			if(me.pullStatus == 'down'){
+	    				ul.html(h);
+		    			mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+		    			mui('#pullrefresh').pullRefresh().disablePullupToRefresh();
+		    			if(list.length == 10){
+		    				mui('#pullrefresh').pullRefresh().enablePullupToRefresh();
+		    			}
+		    		}else if(me.pullStatus == 'up'){
+		    			mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
+	        			ul.append(h);
+		    		}
+	    		}else{
+	    			var tip = {content : "暂无更多数据"}
+	    			Q.showDialog(tip);
+	    			
+	    			if(me.pullStatus == 'down'){
+	    				ul.html('<li class="no-data">暂无数据</li>');
+	    				mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+	    				mui('#pullrefresh').pullRefresh().disablePullupToRefresh();
+	    			}else{
+	    				mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
+	    			}
+	    		}
+			}else{
+    			var tip = {content : res.msg};
+	    		Q.showDialog(tip);
+	    		ul.html('<li class="no-data">暂无数据</li>');
+	    		if(me.pullStatus == 'down'){
     				mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
     				mui('#pullrefresh').pullRefresh().disablePullupToRefresh();
+    			}else{
+    				mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
     			}
-    			return;
-    		}
-
-			if(!append){
-    			me.traceParam = obj;
     		}
     		
-    		if(me.pullStatus == 'down'){
-    			mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
-    			mui('#pullrefresh').pullRefresh().disablePullupToRefresh();
-    			if(list.length == 10){
-    				mui('#pullrefresh').pullRefresh().enablePullupToRefresh();
-    			}
-    		}else if(me.pullStatus == 'up'){
-    			mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
-    		}
     		me.loading = false;
     	});
     },

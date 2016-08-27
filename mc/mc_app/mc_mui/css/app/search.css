@@ -93,6 +93,9 @@
     margin-top: 12px;
     content: '\e583';
 }
+.search-list li.no-data:after{
+	display: none;
+}
 .search-list li:active{
 	background-color:#eee;
 }
@@ -171,6 +174,16 @@
 
 .search-list .ltIcon.HG1F5 {
 	background: url('../../img/lt/hg1f5.png') no-repeat;
+	background-size: 60px
+}
+
+.search-list .ltIcon.TJSSC {
+	background: url('../../img/lt/tjssc.png') no-repeat;
+	background-size: 60px
+}
+
+.search-list .ltIcon.SHSSL {
+	background: url('../../img/lt/shssl.png') no-repeat;
 	background-size: 60px
 }
 

@@ -37,7 +37,7 @@ Index = {
 			if(targetTab == 'history'){
 				me.subPageObj[0].evalJS('getAllHistory();');
 			}else if(targetTab == 'search'){
-				mui.fire(me.subPageObj[1],'getOrderList');
+				mui.fire(me.subPageObj[1],'initOrderList');
 			}else if(targetTab == 'account'){
 				mui.fire(me.subPageObj[2],'refreshBalance');
 			}

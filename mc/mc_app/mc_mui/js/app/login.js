@@ -17,8 +17,8 @@ Login = {
 		if(lastloginName){
 			username.val(lastloginName);
 		}
-		username.val('boyd1100');
-		password.val('boyd1100');
+		username.val('hiro1100');
+		password.val('hiro1100');
 		
 		var codeinput = form.find('.codeinput');
 		var verifycode = form.find('img.verifycode');

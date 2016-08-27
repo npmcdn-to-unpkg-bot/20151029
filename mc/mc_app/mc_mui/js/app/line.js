@@ -7,12 +7,12 @@ Line = {
 	startTimeArray : [],
 	endTimeArray : [],
 	
-//	lineArray : ["http://www.mc188.com", "http://www.mc188.info", "http://www.mc188.org", 
-//				"http://www.mc188.cc", "http://www.moochen.cc", "http://www.moochen.com", 
-//				"http://www.moochen.net", "http://www.moochen.org", "http://mcplay888.com", 
-//				"http://mcgame8.net", "http://mcgame88.net", "http://mochen8.net"],
+	lineArray : ["http://www.mc188.com", "http://www.mc188.info", "http://www.mc188.org", 
+				"http://www.mc188.cc", "http://www.moochen.cc", "http://www.moochen.com", 
+				"http://www.moochen.net", "http://www.moochen.org", "http://mcplay888.com", 
+				"http://mcgame8.net", "http://mcgame88.net", "http://mochen8.net"],
 	
-	lineArray : ["http://www.sobet.tk"],
+//	lineArray : ["http://www.sobet.tk"],
 	
 	startSpeedTest : function(){
 		var tip = {content:"摩臣正在为您选取最佳线路",autoClose:false,width:180};

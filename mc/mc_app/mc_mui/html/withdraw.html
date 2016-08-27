@@ -35,6 +35,7 @@
 </div>
 
 <script src="../js/vendor/zepto.min.js"></script>
+<script src="../js/vendor/md5.min.js"></script>
 <script src="../js/mui.js"></script>
 
 <script src="../js/app/q.js"></script>
@@ -112,11 +113,16 @@ mui.plusReady(function() {
     	}
     	
     	Api.withDrawSubmit(obj,function(res){
-    		tip.content = res.msg;
-			Q.showDialog(tip);
-			mui.fire(plus.webview.getWebviewById('account'),'refreshBalance');
-			var balance = plus.storage.getItem("balance");
-			$('.balance em').html(balance);
+    		if(res.code == '0'){
+    			mui.alert(res.msg, '提现', function() {
+    				mui.fire(plus.webview.getWebviewById('account'),'refreshBalance');
+					var balance = plus.storage.getItem("balance");
+					$('.balance em').html(balance);
+    			});
+    		}else {
+    			tip.content = res.msg;
+				Q.showDialog(tip);
+    		}
     	});
     });
 	

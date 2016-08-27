@@ -61,15 +61,32 @@ mui.plusReady(function() {
 	window.addEventListener('getOrderList',function(data){
 		mui('#pullrefresh').pullRefresh().scrollTo(0,0,0);
 		Search.cw.setStyle({top:'40px'});
+		$.extend(Search.orderParam,data.detail);
+		if(Search.orderParam.status == 'all'){
+			Search.orderParam = {
+				currPage:1,
+				pageSize:10
+			};
+		}
 		$('.order-list').show().siblings().hide();
-		Search.getOrderList(data.detail);
+		Search.pullStatus = 'down';
+		Search.getOrderList();
 	});
 	
 	window.addEventListener('getTraceList',function(data){
 		mui('#pullrefresh').pullRefresh().scrollTo(0,0,0);
 		Search.cw.setStyle({top:'40px'});
+		$.extend(Search.traceParam,data.detail);
+		
+		if(Search.traceParam.status == 'all'){
+			Search.traceParam = {
+				currPage:1,
+				pageSize:10
+			};
+		}
 		$('.trace-list').show().siblings().hide();
-		Search.getTraceList(data.detail);
+		Search.pullStatus = 'down';
+		Search.getTraceList();
 	});
 });
 </script>

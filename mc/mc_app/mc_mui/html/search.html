@@ -53,12 +53,10 @@ mui.init({
 mui.plusReady(function() {
 	window.addEventListener('initEvent',function(data){
 		var listPage = plus.webview.getWebviewById('searchlist');
+		
 		$('.searchMenu').on('tap',function(evt){
 			evt.preventDefault();
-			var obj = {
-				currPage:1,
-				pageSize:10
-			};
+			var obj = {};
 		
 			var _this = evt.target;
 			
@@ -73,14 +71,6 @@ mui.plusReady(function() {
 						listPage.setStyle({top:top});
 					}
 					menu.toggle();
-				}else{
-					e.addClass('on').siblings().removeClass('on');
-		    		$(this).find('.record-menu').hide().find('.on').removeClass('on');
-					if(e.hasClass('orderRecord')){
-		    			mui.fire(listPage,'getOrderList',obj);
-		    		} else if(e.hasClass('traceRecord')){
-		    			mui.fire(listPage,'getTraceList',obj);
-		    		}
 				}
 			} else if(_this.nodeName == 'SPAN') {
 				var e = $(_this).parent().parent();
@@ -97,26 +87,31 @@ mui.plusReady(function() {
 			} else if($(_this).hasClass('orderRecord')){
 				if(!$(_this).hasClass('on')){
 					$(_this).addClass('on').siblings().removeClass('on');
-					mui.fire(listPage,'getOrderList',obj);
 					$(this).find('.record-menu').hide().find('.on').removeClass('on');
 				}
+				obj.status = 'all';
+				mui.fire(listPage,'getOrderList',obj);
 			} else if($(_this).hasClass('traceRecord')){
 				if(!$(_this).hasClass('on')){
 					$(_this).addClass('on').siblings().removeClass('on');
-					mui.fire(listPage,'getTraceList',obj);
 					$(this).find('.record-menu').hide().find('.on').removeClass('on');
 				}
+				obj.status = 'all';
+				mui.fire(listPage,'getTraceList',obj);
 			} 
 		});
 	});
 	
-	window.addEventListener('getOrderList',function(data){
-		var listPage = plus.webview.getWebviewById('searchlist');
-		var obj = {
-			currPage:1,
-			pageSize:10
-		};
-		mui.fire(listPage,'getOrderList',obj);
+	window.addEventListener('initOrderList',function(data){
+		if(!$('body').hasClass('loaded')){
+			$('body').addClass('loaded');
+			var listPage = plus.webview.getWebviewById('searchlist');
+			mui.fire(listPage,'getOrderList',{});
+		}
+	});
+	
+	window.addEventListener('clearData',function(data){
+		$('body').removeClass('loaded');
 	});
 });
 </script>

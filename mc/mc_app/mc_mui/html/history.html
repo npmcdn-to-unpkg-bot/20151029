@@ -78,7 +78,7 @@ function getAllHistory(){
 		if(list.length > 0){
 			var h = '';
 			$(list).each(function(){
-				if(arguments[1].code){
+				if(arguments[1].code && LotteryClass.names[arguments[1].lottery]){
 					h += '<li lt="' + arguments[1].lottery + '">'
 						+	'<div class="title"><span class="lt-name">' + Q.getLtName(arguments[1].lottery)
 						+ '</span><span class="issue">第<em>' + arguments[1].issueNo + '</em>期</span>' 

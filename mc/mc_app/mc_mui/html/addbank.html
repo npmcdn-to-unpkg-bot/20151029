@@ -67,6 +67,7 @@ mui.plusReady(function() {
 	});
 	cityPicker.setData(cityData);
 	$('#cityPicker').on('touchend', function(event) {
+		$('select').blur();
 		cityPicker.show(function(items) {
 			var city = items[0].text + " " + items[1].text;
 			$('#province').val(items[0].text);

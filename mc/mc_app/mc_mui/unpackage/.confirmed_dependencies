@@ -212,12 +212,15 @@
 			"css/app/account.css",
 			"img/account-logo.png",
 			"fonts/iconfont.ttf",
-			"js/mui.js"
+			"js/mui.js",
+			"js/app/account.js"
 		],
 		"refer": [
 			"html/recharge.html",
 			"html/rechargeRecord.html",
-			"html/withdraw.html"
+			"html/withdraw.html",
+			"html/payPwd.html",
+			"html/banklist.html"
 		],
 		"priority": 0
 	},
@@ -237,7 +240,10 @@
 			"css/app/submit.css",
 			"img/addOrder.png",
 			"img/clearOrder.png",
-			"img/orderBtm.png"
+			"img/orderBtm.png",
+			"img/orderDel.png",
+			"img/orderUpdate.png",
+			"img/winstopIcon.png"
 		],
 		"refer": [],
 		"priority": 0
@@ -341,5 +347,25 @@
 			"html/home.html"
 		],
 		"priority": 0
+	},
+	"html/addbank.html": {
+		"resources": [
+			"js/mui.picker.min.js",
+			"css/mui.picker.all.css",
+			"js/app/city.data.js"
+		]
+	},
+	"html/banklist.html": {
+		"resources": [
+			"img/addBankCard.png"
+		],
+		"refer": [
+			"html/addbank.html"
+		]
+	},
+	"html/payPwd.html": {
+		"resources": [
+			"img/setPwdSuccess.png"
+		]
 	}
 }

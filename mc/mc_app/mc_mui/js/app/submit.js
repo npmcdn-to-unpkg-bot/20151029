@@ -7,7 +7,7 @@ Submit = {
 	restore: false,
 	restoreIndex : null, //修改注单的li索引值
     orderObj: null, //提交注单时提交的注单数据
-    orderlist : {}, //提交注单页返回购彩大厅时保存的数据
+    orderlist : null, //提交注单页返回购彩大厅时保存的数据
     isContinue : true, //秒秒彩是否连续开奖
     mmcLoading : false, //秒秒彩是否正在开奖
     
@@ -21,7 +21,7 @@ Submit = {
     		var data = {
     			lt : me.lt
     		}
-			if(me.saveData){
+			if(me.saveData && $('.order-list li').length > 0){
 				data.list = $('.order-list').html();
 			}else{
 				data.list = undefined;
@@ -47,24 +47,29 @@ Submit = {
     	var old_back = mui.back;
     	
 		mui.back = function(){
-			plus.nativeUI.actionSheet( {
-				title:"退出",
-				cancel:"取消",
-				buttons:[{title:"保留注单数据"},{title:"清除注单数据"}]
-			}, function(e){
-				var index = e.index;
-				switch (index){
-					case 0:break;
-					case 1:
-						me.saveData = true;
-						me.cw.hide('slide-out-right',500);
-						break;
-					case 2:
-						me.saveData = false;
-						me.cw.hide('slide-out-right',500);
-						break;
-				}
-			});
+			if($('.order-list li').length > 0){
+				plus.nativeUI.actionSheet( {
+					title:"退出",
+					cancel:"取消",
+					buttons:[{title:"保留注单数据"},{title:"清除注单数据"}]
+				}, function(e){
+					var index = e.index;
+					switch (index){
+						case 0:break;
+						case 1:
+							me.saveData = true;
+							me.cw.hide('slide-out-right',500);
+							break;
+						case 2:
+							me.saveData = false;
+							me.cw.hide('slide-out-right',500);
+							break;
+					}
+				});
+			}else{
+				me.saveData = false;
+				me.cw.hide('slide-out-right',500);
+			}
 		}
     },
     
@@ -76,12 +81,17 @@ Submit = {
     	$('.clearOrder span').on('tap',function(evt){
     		evt.preventDefault();
     		
-			mui.confirm('确定要清空注单吗？', '清空', ['否', '是'], function(e) {
-				if (e.index == 1) {
-					list.find('li').remove();
-			    	me.setSubmitData();
-				}
-			})
+    		if(list.find('li').length > 0){
+    			mui.confirm('确定要清空注单吗？', '清空', ['否', '是'], function(e) {
+					if (e.index == 1) {
+						list.find('li').remove();
+				    	me.setSubmitData();
+					}
+				})
+    		}else{
+    			var tip = {content:'已清空全部注单'};
+    			Q.showDialog(tip);
+    		}
     	});
     	
     	//添加号码
@@ -285,7 +295,7 @@ Submit = {
     	}
     	var list = $('.order-list');
     	
-    	var order = me.orderlist[me.lt] ? me.orderlist[me.lt] : me.orderHtml;
+    	var order = me.orderlist;
     	
     	if(me.restore){
     		me.restore = false;

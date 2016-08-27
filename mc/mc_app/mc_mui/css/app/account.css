@@ -214,7 +214,9 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 #rechargeForm  #bankId{
 	display:none;
 }
-
+#content.payPwd{
+	bottom:150px;
+}
 .payPwd{
 	padding-top:20px;
 }
@@ -248,9 +250,16 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 #setPwd{
 	display: none;
 }
-.payPwd .success{
+.payPwdTip{
+	position:fixed;
+	bottom:20px;
+	width:80%;
+	left:10%;
+	text-align: left;
+}
+.payPwdSuccess{
 	position: absolute;
-	top:0;
+	top:50px;
 	bottom: 0;
 	width:100%;
 	background-color:#fff;
@@ -262,7 +271,7 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 	margin: 0 auto;
 	margin-top:30px;
 }
-.payPwd .success p{
+.payPwdSuccess p{
 	color:#333;
 	font-size:20px;
 	font-weight: bold;

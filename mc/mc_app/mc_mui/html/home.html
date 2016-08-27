@@ -43,17 +43,25 @@
 				<img src="../img/lt/3dfc.png"> <span><label
 					class="t">福彩3D</label><label class="tip">让彩票融入生活</label></span>
 			</div>
+			<div data-lt="SHSSL" data-lt-cls="3d">
+				<img src="../img/lt/shssl.png"> <span><label
+					class="t">上海时时乐</label><label class="tip">让彩票融入生活</label></span>
+			</div>
 			<div data-lt="GD11Y" data-lt-cls="11y">
 				<img src="../img/lt/gd11y.png"> <span><label
 					class="t">广东11选5</label><label class="tip">让彩票融入生活</label></span>
 			</div>
 			<div data-lt="WBGMMC" data-lt-cls="ssc">
 				<img src="../img/lt/mmc.png"> <span><label
-					class="t">WBG秒秒彩</label><label class="tip">随心所欲&nbsp;即买即开</label></span>
+					class="t">WBG秒秒彩</label><label class="tip">即买即开&nbsp;随心所欲</label></span>
 			</div>
 			<div data-lt="XJSSC" data-lt-cls="ssc">
 				<img src="../img/lt/xjssc.png"> <span><label
 					class="t">新疆时时彩</label><label class="tip">让彩票融入生活</label></span>
+			</div>
+			<div data-lt="TJSSC" data-lt-cls="ssc">
+				<img src="../img/lt/tjssc.png"> <span><label
+					class="t">天津时时彩</label><label class="tip">让彩票融入生活</label></span>
 			</div>
 			<div data-lt="WBG5FC" data-lt-cls="ssc">
 				<img src="../img/lt/5fc.png"> <span><label
@@ -96,7 +104,9 @@ mui.plusReady(function() {
 	
 	window.addEventListener('clearData',function(data){
 		Home.orderList = {};
-		mui.fire(Home.cw.parent(),'recoverPage');
+		
+		var lotteryPage = plus.webview.getWebviewById('lottery');
+		mui.fire(lotteryPage,'clearData');
 	});
 });
 </script>

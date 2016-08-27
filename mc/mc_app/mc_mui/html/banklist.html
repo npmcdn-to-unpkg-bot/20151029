@@ -52,6 +52,7 @@ mui.plusReady(function() {
 	});
 	
 	window.addEventListener('initList',function(){
+		$('.banklist .card').remove();
 		Api.queryBankList(function(res){
 			var x = res.configMap.firstDrawingsAging.value;
 			var y = res.configMap.nonFirstDrawingsAging.value;
@@ -68,7 +69,6 @@ mui.plusReady(function() {
 							'<div class="bankinfo"><p>' + arguments[1].bankNameZH + '</p><p><span>' + arguments[1].sn +
 							'</span></p><p><label>' + arguments[1].bankCardNo + '</label></p></div></div>';
 					});
-					$('.banklist .card').remove();
 					$('.banklist').prepend(h);
 					if(array.length == 5){
 						$('#addNew').hide();				

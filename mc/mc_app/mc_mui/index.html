@@ -46,9 +46,15 @@ mui.plusReady(function() {
 	window.addEventListener('initSubPage',function(){
 		Index.initSubPage();
 	});
-	window.addEventListener('recoverPage',function(){
+	window.addEventListener('clearData',function(){
 		$('#defaultTab').trigger('tap');
 		$('#defaultTab').addClass('mui-active').siblings().removeClass('mui-active');
+		
+		var HomePage = plus.webview.getWebviewById('home');
+		mui.fire(HomePage,'clearData');
+		
+		var searchPage = plus.webview.getWebviewById('seach');
+		mui.fire(searchPage,'clearData');
 	});
 });
 </script>

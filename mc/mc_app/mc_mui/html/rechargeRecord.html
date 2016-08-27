@@ -56,12 +56,9 @@ mui.init({
 mui.plusReady(function() {
 	window.addEventListener('initEvent',function(data){
 		var listPage = plus.webview.getWebviewById('rechargelist');
-		$('.rechargeMenu').on('tap',function(evt){
+		$('.rechargeMenu').off('tap').on('tap',function(evt){
 			evt.preventDefault();
-			var obj = {
-				currPage:1,
-				pageSize:10
-			};
+			var obj = {};
 		
 			var _this = evt.target;
 			if(_this.nodeName == 'I'){
@@ -74,14 +71,6 @@ mui.plusReady(function() {
 						listPage.setStyle({top:'142px'});
 					}
 					menu.toggle();
-				}else{
-					e.addClass('on').siblings().removeClass('on');
-		    		$(this).find('.record-menu').hide().find('.on').removeClass('on');
-					if(e.hasClass('rechargeRecord')){
-		    			mui.fire(listPage,'getRechargeList',obj);
-		    		} else if(e.hasClass('withdrawRecord')){
-		    			mui.fire(listPage,'getWithDrawList',obj);
-		    		}
 				}
 			} else if(_this.nodeName == 'SPAN') {
 				var e = $(_this).parent().parent();
@@ -98,27 +87,33 @@ mui.plusReady(function() {
 			} else if($(_this).hasClass('rechargeRecord')){
 				if(!$(_this).hasClass('on')){
 					$(_this).addClass('on').siblings().removeClass('on');
-	    			mui.fire(listPage,'getRechargeList',obj);
 					$(this).find('.record-menu').hide().find('.on').removeClass('on');
 				}
+				obj.queryType = 'all';
+				mui.fire(listPage,'getRechargeList',obj);
 			} else if($(_this).hasClass('withdrawRecord')){
 				if(!$(_this).hasClass('on')){
 					$(_this).addClass('on').siblings().removeClass('on');
-					mui.fire(listPage,'getWithDrawList',obj);
 					$(this).find('.record-menu').hide().find('.on').removeClass('on');
 				}
+				obj.queryType = 'all';
+				mui.fire(listPage,'getWithDrawList',obj);
 			} 
 		});
 	});
 	
 	window.addEventListener('getRechargeList',function(data){
-		var listPage = plus.webview.getWebviewById('rechargelist');
-		var obj = {
-			currPage:1,
-			pageSize:10
-		};
-		mui.fire(listPage,'getRechargeList',obj);
+		if(!$('body').hasClass('loaded')){
+			$('body').addClass('loaded');
+			var listPage = plus.webview.getWebviewById('rechargelist');
+			mui.fire(listPage,'getRechargeList',{});
+		}
 	});
+	
+	window.addEventListener('clearData',function(data){
+		$('body').removeClass('loaded');
+	});
+	
 });
 </script>
 </html>

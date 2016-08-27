@@ -43,7 +43,7 @@ mui.init({
 	    },
 	    up : {
       		height:50,
-      		auto:true,
+      		auto:false,
       		contentinit: "上拉可以刷新",
 	      	contentover : "释放立即刷新",
       		contentrefresh: '',
@@ -60,15 +60,32 @@ mui.plusReady(function() {
 	window.addEventListener('getRechargeList',function(data){
 		mui('#pullrefresh').pullRefresh().scrollTo(0,0,0);
 		RWRecord.cw.setStyle({top:'90px'});
+		
+		$.extend(RWRecord.rechargeParam,data.detail);
+		if(RWRecord.rechargeParam.queryType == 'all'){
+			RWRecord.rechargeParam = {
+				currPage:1,
+				pageSize:10
+			};
+		}
 		$('.recharge-list').show().siblings().hide();
-		RWRecord.getRechargeList(data.detail);
+		RWRecord.pullStatus = 'down';
+		RWRecord.getRechargeList();
 	});
 	
 	window.addEventListener('getWithDrawList',function(data){
 		mui('#pullrefresh').pullRefresh().scrollTo(0,0,0);
 		RWRecord.cw.setStyle({top:'90px'});
+		$.extend(RWRecord.withdrawParam,data.detail);
+		if(RWRecord.withdrawParam.queryType == 'all'){
+			RWRecord.withdrawParam = {
+				currPage:1,
+				pageSize:10
+			};
+		}
 		$('.withdraw-list').show().siblings().hide();
-		RWRecord.getWithDrawList(data.detail);
+		RWRecord.pullStatus = 'down';
+		RWRecord.getWithDrawList();
 	});
 });
 </script>

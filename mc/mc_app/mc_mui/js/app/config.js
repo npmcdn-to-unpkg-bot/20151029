@@ -11,7 +11,9 @@ LotteryClass = {
         "JX11Y" : "江西11选5",
         "BJPK10" : "北京PK10",
         "3DFC" : "3D福彩",
-        "HG1F5" : "韩国1.5分彩"
+        "HG1F5" : "韩国1.5分彩",
+        "TJSSC" : "天津时时彩",
+       	"SHSSL" : "上海时时乐"
     },
     WBG5FC: {
         ltTab: {
@@ -24,7 +26,6 @@ LotteryClass = {
             dwd: "定位胆",
             bdd: "不定胆",
             dxds: "大小单双",
-            rx: "任选玩法",
             rx2: "任选二",
             rx3: "任选三",
             rx4: "任选四"
@@ -210,6 +211,11 @@ LotteryClass = {
                     desc: "后二组选(复式)",
                     num: "组选|0-9|all",
                     name: "后二组选复式"
+                },
+                zux_hhz: {
+                    desc: "后二组选(和值)",
+                    num: "和值|1-17|",
+                    name: "后二组选和值"
                 },
                 zux_qfs: {
                     desc: "前二组选(复式)",
@@ -1508,6 +1514,339 @@ LotteryClass = {
             }
         }
     },
+    TJSSC : {
+    	
+        ltTab: {
+            wx: "五星",
+            sx: "四星",
+            hsm: "后三码",
+            qsm: "前三码",
+            zsm: "中三码",
+            em: "二码",
+            dwd: "定位胆",
+            bdd: "不定胆",
+            dxds: "大小单双",
+            rx2: "任选二",
+            rx3: "任选三",
+            rx4: "任选四"
+        },
+        ltMethod: {
+            wx: {
+                zx_fs: {
+                    desc: "复式",
+                    num: "万位,千位,百位,十位,个位|0-9|all",
+                    name: "五星直选复式"
+                },
+                zx_zh: {
+                    desc: "组合",
+                    num: "万位,千位,百位,十位,个位|0-9|all",
+                    name: "五星直选组合"
+                },
+                zux_z120: {
+                    desc: "组选120",
+                    num: "组选120|0-9|all",
+                    name: "五星组选120"
+                },
+                zux_z60: {
+                    desc: "组选60",
+                    num: "二重号,单号|0-9|all",
+                    name: "五星组选60"
+                },
+                zux_z30: {
+                    desc: "组选30",
+                    num: "二重号,单号|0-9|all",
+                    name: "五星组选30"
+                },
+                zux_z20: {
+                    desc: "组选20",
+                    num: "三重号,单号|0-9|all",
+                    name: "五星组选20"
+                },
+                zux_z10: {
+                    desc: "组选10",
+                    num: "三重号,二重号|0-9|all",
+                    name: "五星组选10"
+                },
+                zux_z5: {
+                    desc: "组选5",
+                    num: "四重号,单号|0-9|all",
+                    name: "五星组选5"
+                }
+            },
+            sx: {
+                zx_fs: {
+                    desc: "复式",
+                    num: "千位,百位,十位,个位|0-9|all",
+                    name: "四星直选复式"
+                },
+                zx_zh: {
+                    desc: "组合",
+                    num: "千位,百位,十位,个位|0-9|all",
+                    name: "四星直选组合"
+                },
+                zux_z24: {
+                    desc: "组选24",
+                    num: "组24|0-9|all",
+                    name: "四星组选24"
+                },
+                zux_z12: {
+                    desc: "组选12",
+                    num: "二重号,单号|0-9|all",
+                    name: "四星组选12"
+                },
+                zux_z6: {
+                    desc: "组选6",
+                    num: "二重号|0-9|all",
+                    name: "四星组选6"
+                },
+                zux_z4: {
+                    desc: "组选4",
+                    num: "三重号,单号|0-9|all",
+                    name: "四星组选4"
+                }
+            },
+            hsm: {
+                zx_fs: {
+                    desc: "复式",
+                    num: "百位,十位,个位|0-9|all",
+                    name: "后三码直选复式"
+                },
+                zx_hz: {
+                    desc: "和值",
+                    num: "直选和值|0-27|",
+                    name: "后三码直选和值"
+                },
+                zux_z3: {
+                    desc: "组三",
+                    num: "组三|0-9|all",
+                    name: "后三码组选三"
+                },
+                zux_z6: {
+                    desc: "组六",
+                    num: "组六|0-9|all",
+                    name: "后三码组选六"
+                },
+                zux_hz: {
+                    desc: "和值",
+                    num: "组选和值|1-26|",
+                    name: "后三码组选和值"
+                }
+            },
+            qsm: {
+                zx_fs: {
+                    desc: "复式",
+                    num: "万位,千位,百位|0-9|all",
+                    name: "前三码直选复式"
+                },
+                zx_hz: {
+                    desc: "和值",
+                    num: "直选和值|0-27|",
+                    name: "前三码直选和值"
+                },
+                zux_z3: {
+                    desc: "组三",
+                    num: "组三|0-9|all",
+                    name: "前三码组选三"
+                },
+                zux_z6: {
+                    desc: "组六",
+                    num: "组六|0-9|all",
+                    name: "前三码组选六"
+                },
+                zux_hz: {
+                    desc: "和值",
+                    num: "组选和值|1-26|",
+                    name: "前三码组选和值"
+                }
+            },
+            zsm: {
+                zx_fs: {
+                    desc: "复式",
+                    num: "千位,百位,十位|0-9|all",
+                    name: "中三码直选复式"
+                },
+                zx_hz: {
+                    desc: "和值",
+                    num: "直选和值|0-27|",
+                    name: "中三码直选和值"
+                },
+                zux_z3: {
+                    desc: "组三",
+                    num: "组三|0-9|all",
+                    name: "中三码组选三"
+                },
+                zux_z6: {
+                    desc: "组六",
+                    num: "组六|0-9|all",
+                    name: "中三码组选六"
+                },
+                zux_hz: {
+                    desc: "和值",
+                    num: "组选和值|1-26|",
+                    name: "中三码组选和值"
+                }
+            },
+            em: {
+                zx_hfs: {
+                    desc: "后二直选(复式)",
+                    num: "十位,个位|0-9|all",
+                    name: "后二直选复式"
+                },
+                zx_hhz: {
+                    desc: "后二直选(和值)",
+                    num: "和值|0-18|",
+                    name: "后二直选和值"
+                },
+                zx_qfs: {
+                    desc: "前二直选(复式)",
+                    num: "万位,千位|0-9|all",
+                    name: "前二直选复式"
+                },
+                zx_qhz: {
+                    desc: "前二直选(和值)",
+                    num: "和值|0-18|",
+                    name: "前二直选和值"
+                },
+                zux_hfs: {
+                    desc: "后二组选(复式)",
+                    num: "组选|0-9|all",
+                    name: "后二组选复式"
+                },
+                zux_hhz: {
+                    desc: "后二组选(和值)",
+                    num: "和值|1-17|",
+                    name: "后二组选和值"
+                },
+                zux_qfs: {
+                    desc: "前二组选(复式)",
+                    num: "组选|0-9|all",
+                    name: "前二组选复式"
+                },
+                zux_qhz: {
+                    desc: "前二组选(和值)",
+                    num: "和值|1-17|",
+                    name: "前二组选和值"
+                }
+            },
+            dwd: {
+                dwd_dwd: {
+                    desc: "定位胆",
+                    num: "万位,千位,百位,十位,个位|0-9|all",
+                    name: "定位胆"
+                }
+            },
+            bdd: {
+                bdd_hs1: {
+                    desc: "后三一码",
+                    num: "不定胆|0-9|all",
+                    name: "后三一码不定胆"
+                },
+                bdd_hs2: {
+                    desc: "后三二码",
+                    num: "不定胆|0-9|all",
+                    name: "后三二码不定胆"
+                },
+                bdd_qs1: {
+                    desc: "前三一码",
+                    num: "不定胆|0-9|all",
+                    name: "前三一码不定胆"
+                },
+                bdd_qs2: {
+                    desc: "前三二码",
+                    num: "不定胆|0-9|all",
+                    name: "前三二码不定胆"
+                }
+            },
+            dxds: {
+                dxds_h2: {
+                    desc: "后二大小单双",
+                    num: "十位,个位|0-3|two",
+                    name: "后二大小单双"
+                },
+                dxds_q2: {
+                    desc: "前二大小单双",
+                    num: "万位,千位|0-3|two",
+                    name: "前二大小单双"
+                }
+            },
+            rx2: {
+                zx_fs: {
+                    desc: "直选复式",
+                    num: "万位,千位,百位,十位,个位|0-9|all",
+                    name: "任二直选复式"
+                },
+                zx_hz: {
+                    desc: "直选和值",
+                    num: "直选和值|0-18|",
+                    name: "任二直选和值"
+                },
+                zux_fs: {
+                    desc: "组选复式",
+                    num: "组选复式|0-9|all",
+                    name: "任二组选复式"
+                },
+                zux_hz: {
+                    desc: "组选和值",
+                    num: "组选和值|1-17|",
+                    name: "任二组选和值"
+                }
+            },
+            rx3: {
+                zx_fs: {
+                    desc: "复式",
+                    num: "万位,千位,百位,十位,个位|0-9|all",
+                    name: "任三直选复式"
+                },
+                zx_hz: {
+                    desc: "和值",
+                    num: "直选和值|0-27|",
+                    name: "任三直选和值"
+                },
+                zux_z3: {
+                    desc: "组三",
+                    num: "组三|0-9|all",
+                    name: "任三组选三"
+                },
+                zux_z6: {
+                    desc: "组六",
+                    num: "组六|0-9|all",
+                    name: "任三组选六"
+                },
+                zux_hz: {
+                    desc: "组选和值",
+                    num: "组选和值|1-26|",
+                    name: "任三组选和值"
+                }
+            },
+            rx4: {
+                zx_fs: {
+                    desc: "复式",
+                    num: "万位,千位,百位,十位,个位|0-9|all",
+                    name: "任四直选复式"
+                },
+                zux_z24: {
+                    desc: "组选24",
+                    num: "组24|0-9|all",
+                    name: "任四组选24"
+                },
+                zux_z12: {
+                    desc: "组选12",
+                    num: "二重号,单号|0-9|all",
+                    name: "任四组选12"
+                },
+                zux_z6: {
+                    desc: "组选6",
+                    num: "二重号|0-9|all",
+                    name: "任四组选6"
+                },
+                zux_z4: {
+                    desc: "组选4",
+                    num: "三重号,单号|0-9|all",
+                    name: "任四组选4"
+                }
+            }
+        }
+    },
     XJSSC: {
         ltTab: {
             wx: "五星",
@@ -2191,6 +2530,85 @@ LotteryClass = {
             }
         }
     },
+    SHSSL : {
+    	
+        ltTab: {
+            sm: "三码",
+            em: "二码",
+            dwd: "定位胆",
+            bdd: "不定胆"
+        },
+        ltMethod: {
+            sm: {
+                zx_fs: {
+                    desc: "复式",
+                    num: "百位,十位,个位|0-9|all",
+                    name: "三码直选复式"
+                },
+                zx_hz: {
+                    desc: "和值",
+                    num: "直选和值|0-27|",
+                    name: "三码直选和值"
+                },
+                zux_z3: {
+                    desc: "组三",
+                    num: "组三|0-9|all",
+                    name: "三码组选三"
+                },
+                zux_z6: {
+                    desc: "组六",
+                    num: "组六|0-9|all",
+                    name: "三码组选六"
+                },
+                zux_hz: {
+                    desc: "和值",
+                    num: "组选和值|1-26|",
+                    name: "三码组选和值"
+                }
+            },
+            em: {
+                zx_hfs: {
+                    desc: "后二直选复式",
+                    num: "十位,个位|0-9|all",
+                    name: "后二直选复式"
+                },
+                zx_qfs: {
+                    desc: "前二直选复式",
+                    num: "百位,十位|0-9|all",
+                    name: "前二直选复式"
+                },
+                zux_hfs: {
+                    desc: "后二组选复式",
+                    num: "组选|0-9|all",
+                    name: "后二组选复式"
+                },
+                zux_qfs: {
+                    desc: "前二组选复式",
+                    num: "组选|0-9|all",
+                    name: "前二组选复式"
+                }
+            },
+            dwd: {
+                dwd_dwd: {
+                    desc: "定位胆",
+                    num: "百位,十位,个位|0-9|all",
+                    name: "定位胆"
+                }
+            },
+            bdd: {
+                bdd_bdd1: {
+                    desc: "一码",
+                    num: "不定胆|0-9|all",
+                    name: "一码不定胆"
+                },
+                bdd_bdd2: {
+                    desc: "二码",
+                    num: "不定胆|0-9|all",
+                    name: "二码不定胆"
+                }
+            }
+        }
+    },
     BJPK10: {
         ltTab: {
             cq1: "猜冠军",
@@ -2217,11 +2635,6 @@ LotteryClass = {
                     desc: "猜前二",
                     num: "冠军,第二名|1-10|all",
                     name: "猜前二"
-                },
-                cq2_ds: {
-                    desc: "猜前二(单式)",
-                    num: "冠军,第二名|1-10|all",
-                    name: "猜前二(单式)"
                 }
             },
             cq3: {
@@ -2229,11 +2642,6 @@ LotteryClass = {
                     desc: "猜前三",
                     num: "冠军,第二名,第三名|1-10|all",
                     name: "猜前三"
-                },
-                cq3_ds: {
-                    desc: "猜前三(单式)",
-                    num: "冠军,第二名,第三名|1-10|all",
-                    name: "猜前三(单式)"
                 }
             },
             cq4: {
@@ -2241,11 +2649,6 @@ LotteryClass = {
                     desc: "猜前四",
                     num: "冠军,第二名,第三名,第四名|1-10|all",
                     name: "猜前四"
-                },
-                cq4_ds: {
-                    desc: "猜前四(单式)",
-                    num: "冠军,第二名,第三名,第四名|1-10|all",
-                    name: "猜前四(单式)"
                 }
             },
             cq5: {
@@ -2253,11 +2656,6 @@ LotteryClass = {
                     desc: "猜前五",
                     num: "冠军,第二名,第三名,第四名,第五名|1-10|all",
                     name: "猜前五"
-                },
-                cq5_ds: {
-                    desc: "猜前五(单式)",
-                    num: "冠军,第二名,第三名,第四名,第五名|1-10|all",
-                    name: "猜前五(单式)"
                 }
             },
             dwd: {
