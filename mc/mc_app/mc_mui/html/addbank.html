@@ -117,7 +117,12 @@ mui.plusReady(function() {
 				Q.showDialog(tip);
 			}
 		})
-	})
+	});
+	
+	window.addEventListener('clearData',function(){
+		$('#bankAllas').val('CCB');
+		$('input').val('');
+	},false);
 });
 </script>
 </body>

@@ -49,6 +49,17 @@ mui.init({
 });
 
 mui.plusReady(function() {
+	//右滑事件回调函数
+	plus.webview.currentWebview().addEventListener( "popGesture", function(e){
+	  	document.activeElement.blur();
+	}, false);
+	//重写退出函数
+	var old_back = mui.back;
+	mui.back = function(){
+	  	document.activeElement.blur();
+	  	old_back();
+	}
+	
 	window.addEventListener('initInfo',function(data){
 		var res = data.detail.result;
 		$('#withDrawToken').val(res.token);
@@ -115,9 +126,11 @@ mui.plusReady(function() {
     	Api.withDrawSubmit(obj,function(res){
     		if(res.code == '0'){
     			mui.alert(res.msg, '提现', function() {
-    				mui.fire(plus.webview.getWebviewById('account'),'refreshBalance');
-					var balance = plus.storage.getItem("balance");
-					$('.balance em').html(balance);
+					User.getBalance(function(res){
+	    				mui.fire(plus.webview.getWebviewById('account'),'refreshBalance',{refresh:false});
+						var balance = plus.storage.getItem("balance");
+						$('.balance em').html(balance);
+					});
     			});
     		}else {
     			tip.content = res.msg;
@@ -125,7 +138,10 @@ mui.plusReady(function() {
     		}
     	});
     });
-	
+    
+    window.addEventListener('clearData',function(data){
+		$('.balance em').html('');
+	});
 });
 </script>
 </body>

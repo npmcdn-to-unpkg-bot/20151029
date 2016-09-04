@@ -4,7 +4,6 @@ Home = {
 	orderList : {}, //用于保存提交页面的注单数据
 	
 	_init : function(){
-		Api.initHost();
 		var me = this;
 		$('.banner').height($('.banner').height());
 		
@@ -30,10 +29,7 @@ Home = {
 			},
 		});
 		
-		me.loginPage.show('slide-in-bottom',400,function(){
-			me.initEvent();
-		});
-		
+		me.initEvent();
 	},
 	
 	initEvent : function(){
@@ -66,7 +62,6 @@ Home = {
 			}
 		});
 		
-		mui.fire(me.cw.parent(),'initSubPage');
 	},
 	
 	initSlide : function(){

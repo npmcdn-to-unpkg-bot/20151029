@@ -1,11 +1,13 @@
 var Login = Login || {};
 
 Login = {
+	host : null,
 	loginStatus : 0,  // 0-打开应用时从首页转到登陆页面      1-退出后转到登陆页面    2-请求数据过程中返回-1
+	
 	_init : function(){
-		Api.initHost();
 		var me = this;
 		me.homePage = plus.webview.getWebviewById('home');
+		me.cw = plus.webview.currentWebview();
 		
 		var form = $('.login-form');
 	
@@ -17,8 +19,6 @@ Login = {
 		if(lastloginName){
 			username.val(lastloginName);
 		}
-		username.val('hiro1100');
-		password.val('hiro1100');
 		
 		var codeinput = form.find('.codeinput');
 		var verifycode = form.find('img.verifycode');
@@ -28,7 +28,8 @@ Login = {
 		    codeinput.val('');
 		}).trigger('tap');
 		
-		$('.login-btn').on('tap',function() {
+		var loginFunction = function(){
+			Api.initHost();
 			var tip = {content:''};
 			if(username.val() == ''){
 				tip.content = "请输入用户名";
@@ -67,12 +68,13 @@ Login = {
 		    		$(document.body).append('<iframe id="login-iframe" style="display: none;"></iframe>');
 					$("iframe#login-iframe").attr('src', Api.host + '/lottery/u/login?backType=0&t=' + (new Date()).getTime());
 					$("iframe#login-iframe").on('load',function() {
-						User.getBalance();
 		    			plus.storage.setItem("username",res.user.cn);
 		    			plus.storage.setItem("userUin",String(res.user.uin));
-	
-					    mui.fire(me.homePage,'initHomeSlide');
-					    
+
+						var homePage = plus.webview.getWebviewById('home');
+						
+						mui.fire(homePage.parent(),'initSubPage');
+						
 						plus.nativeUI.closeWaiting();
 						plus.webview.currentWebview().hide('slide-out-bottom',400);
 						
@@ -90,6 +92,16 @@ Login = {
 		    		}
 		    	}
 		    });
+		};
+		
+		$('.login-btn').on('tap',function() {
+			if(me.host){
+				loginFunction();
+			}else{
+				Line.startSpeedTest(function(){
+					loginFunction();
+				});
+			}
 		});
 	},
 }

@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title>摩臣娱乐</title>
-    <script src="js/mui.min.js"></script>
     <link href="css/mui.css" rel="stylesheet"/>
     <link href="css/iconfont.css" rel="stylesheet"/>
     <link href="css/app/common.css" rel="stylesheet"/>
@@ -21,7 +20,7 @@
 		<span class="mui-tab-label">开奖中心</span>
 	</a>
 	<a class="mui-tab-item" href="search">
-		<span class="mui-icon iconfont icon-dingdanchaxun"></span>
+		<span class="mui-icon iconfont icon-order"></span>
 		<span class="mui-tab-label">投注查询</span>
 	</a>
 	<a class="mui-tab-item" href="account">
@@ -30,6 +29,7 @@
 	</a>
 </nav>
 <script src="js/vendor/zepto.min.js"></script>
+<script src="js/mui.js"></script>
 <script src="js/app/index.js"></script>
 <script>
 mui.init({
@@ -43,9 +43,28 @@ mui.init({
     }]
 });
 mui.plusReady(function() {
-	window.addEventListener('initSubPage',function(){
-		Index.initSubPage();
+	mui.openWindow({
+	    url:'html/login.html',
+	    id:'login',
+	    styles:{
+        	top:"0px",
+        	bottom:"0px"
+	    },
+	    show:{
+      		autoShow:true,
+      		aniShow:'none',
+      		duration:0
+    	},
 	});
+	
+	window.addEventListener('initSubPage',function(){
+		if(Index.subPageObj.length == 0){
+			Index.initSubPage();
+		}
+		var homePage = plus.webview.getWebviewById('home');
+		mui.fire(homePage,'initSlide');
+	});
+	
 	window.addEventListener('clearData',function(){
 		$('#defaultTab').trigger('tap');
 		$('#defaultTab').addClass('mui-active').siblings().removeClass('mui-active');
@@ -53,8 +72,11 @@ mui.plusReady(function() {
 		var HomePage = plus.webview.getWebviewById('home');
 		mui.fire(HomePage,'clearData');
 		
-		var searchPage = plus.webview.getWebviewById('seach');
+		var searchPage = plus.webview.getWebviewById('search');
 		mui.fire(searchPage,'clearData');
+		
+		var accountPage = plus.webview.getWebviewById('account');
+		mui.fire(accountPage,'clearData');
 	});
 });
 </script>

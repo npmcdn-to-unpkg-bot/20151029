@@ -108,7 +108,7 @@
 	"plus": {
 		"splashscreen": {
 			"autoclose": true,/*是否自动关闭程序启动界面，true表示应用加载应用入口页面后自动关闭；false则需调plus.navigator.closeSplashscreen()关闭*/
-			"waiting": true
+			"waiting": true,"delay":"1000"
 		},
 		"runmode": "liberate",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
@@ -172,27 +172,27 @@
 			"splashscreen": {
 				"ios": {
 					"iphone": {
-						"default": "", /*iPhone3启动图片选，分辨率：320x480*/
-						"retina35": "",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
-						"retina40": ""
+						"default": "E:/备份/app启动页/启动液/苹果/640x960.png", /*iPhone3启动图片选，分辨率：320x480*/
+						"retina35": "E:/备份/app启动页/启动液/苹果/640x960.png",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
+						"retina40": "E:/备份/app启动页/启动液/苹果/640x1136.png","retina55":"E:/备份/app启动页/启动液/苹果/1242x2008.png","retina47":"E:/备份/app启动页/启动液/苹果/750x1334.png","retina55l":"E:/备份/app启动页/启动液/苹果/1242x2008.png"
 					},
 					"ipad": {
-						"portrait": "", /*iPad竖屏启动图片，分辨率：768x1004*/
-						"portrait-retina": "",/*iPad高分屏竖屏图片，分辨率：1536x2008*/
-						"landscape": "", /*iPad横屏启动图片，分辨率：1024x748*/
-						"landscape-retina": "", /*iPad高分屏横屏启动图片，分辨率：2048x1496*/
-						"portrait7": "", /*iPad iOS7竖屏启动图片，分辨率：768x1024*/
-						"portrait-retina7": "",/*iPad iOS7高分屏竖屏图片，分辨率：1536x2048*/
-						"landscape7": "", /*iPad iOS7横屏启动图片，分辨率：1024x768*/
-						"landscape-retina7": ""
+						"portrait": "E:/备份/app启动页/启动液/苹果/750x1334.png", /*iPad竖屏启动图片，分辨率：768x1004*/
+						"portrait-retina": "E:/备份/app启动页/启动液/苹果/1536x2048.png",/*iPad高分屏竖屏图片，分辨率：1536x2008*/
+						"landscape": "E:/备份/app启动页/启动液/苹果/750x1334.png", /*iPad横屏启动图片，分辨率：1024x748*/
+						"landscape-retina": "E:/备份/app启动页/启动液/苹果/1536x2048.png", /*iPad高分屏横屏启动图片，分辨率：2048x1496*/
+						"portrait7": "E:/备份/app启动页/启动液/苹果/750x1334.png", /*iPad iOS7竖屏启动图片，分辨率：768x1024*/
+						"portrait-retina7": "E:/备份/app启动页/启动液/苹果/1536x2048.png",/*iPad iOS7高分屏竖屏图片，分辨率：1536x2048*/
+						"landscape7": "E:/备份/app启动页/启动液/苹果/750x1334.png", /*iPad iOS7横屏启动图片，分辨率：1024x768*/
+						"landscape-retina7": "E:/备份/app启动页/启动液/苹果/1536x2048.png"
 					}
 				},
 				"android": {
-					"mdpi": "", /*普通屏启动图片，分辨率：240x282*/
-					"ldpi": "", /*大屏启动图片，分辨率：320x442*/
-					"hdpi": "", /*高分屏启动图片，分辨率：480x762*/
-					"xhdpi": "", /*720P高分屏启动图片，分辨率：720x1242*/
-					"xxhdpi": ""
+					"mdpi": "E:/备份/app启动页/启动液/安卓/240x282.png", /*普通屏启动图片，分辨率：240x282*/
+					"ldpi": "E:/备份/app启动页/启动液/安卓/320x442.png", /*大屏启动图片，分辨率：320x442*/
+					"hdpi": "E:/备份/app启动页/启动液/安卓/480x762.png", /*高分屏启动图片，分辨率：480x762*/
+					"xhdpi": "E:/备份/app启动页/启动液/安卓/720x1242.png", /*720P高分屏启动图片，分辨率：720x1242*/
+					"xxhdpi": "E:/备份/app启动页/启动液/安卓/1080x1882.png"
 				}
 			}
 		}
@@ -246,7 +246,8 @@
 					"fonts/mui.ttf",
 					"css/app/traceIssue.css",
 					"img/orderUpdate.png",
-					"img/winstopIcon.png"
+					"img/winstopIcon.png",
+					"js/mui.js"
 				],
 				"priority": 1,
 				"refer": []
@@ -314,7 +315,9 @@
 					"img/lt/sd11y.png",
 					"img/lt/jx11y.png",
 					"img/lt/hg1f5.png",
-					"img/orderUpdate.png"
+					"img/orderUpdate.png",
+					"js/mui.js",
+					"css/mui.min.css"
 				],
 				"refer": [
 					"html/traceDetail.html",
@@ -349,7 +352,9 @@
 					"img/lt/hg1f5.png",
 					"img/orderUpdate.png",
 					"html/searchlist.html",
-					"js/mui.js"
+					"js/mui.js",
+					"css/mui.min.css",
+					"html/searchRefresh.html"
 				],
 				"refer": [],
 				"priority": 1
@@ -366,7 +371,8 @@
 					"js/app/api.js",
 					"js/app/user.js",
 					"js/app/config.js",
-					"img/account-logo.png"
+					"img/account-logo.png",
+					"js/mui.js"
 				],
 				"priority": 2,
 				"refer": []
@@ -385,7 +391,8 @@
 					"css/mui.css",
 					"fonts/mui.ttf",
 					"css/app/recharge.css",
-					"img/arrow.png"
+					"img/arrow.png",
+					"js/mui.js"
 				],
 				"priority": 3,
 				"refer": []
@@ -404,7 +411,8 @@
 					"fonts/mui.ttf",
 					"css/app/recharge.css",
 					"img/arrow.png",
-					"html/rechargelist.html"
+					"html/rechargelist.html",
+					"html/rechargeRefresh.html"
 				],
 				"refer": [],
 				"priority": 3
@@ -421,7 +429,9 @@
 					"js/app/api.js",
 					"js/app/user.js",
 					"js/app/config.js",
-					"img/account-logo.png"
+					"img/account-logo.png",
+					"js/vendor/md5.min.js",
+					"js/mui.js"
 				],
 				"priority": 4,
 				"refer": []
@@ -442,7 +452,8 @@
 					"css/app/account.css",
 					"img/account-logo.png",
 					"js/mui.js",
-					"js/app/account.js"
+					"js/app/account.js",
+					"js/vendor/md5.min.js"
 				],
 				"refer": [
 					"html/recharge.html",
@@ -475,7 +486,8 @@
 					"img/orderBtm.png",
 					"img/winstopIcon.png",
 					"img/flipball_mask300.png",
-					"img/balls.png"
+					"img/balls.png",
+					"js/mui.js"
 				],
 				"priority": 3,
 				"refer": []
@@ -550,7 +562,9 @@
 					"img/lt/sd11y.png",
 					"img/lt/jx11y.png",
 					"img/banner/banner.jpg",
-					"js/mui.js"
+					"js/mui.js",
+					"img/lt/tjssc.png",
+					"img/lt/shssl.png"
 				],
 				"refer": [
 					"html/lottery.html",
@@ -571,7 +585,9 @@
 					"img/cService.png",
 					"js/app/index.js",
 					"html/home.html",
-					"js/vendor/zepto.min.js"
+					"js/vendor/zepto.min.js",
+					"html/login.html",
+					"js/mui.js"
 				],
 				"refer": [
 					"html/history.html",
@@ -584,14 +600,23 @@
 				"resources": [
 					"js/mui.picker.min.js",
 					"css/mui.picker.all.css",
-					"js/app/city.data.js"
+					"js/app/city.data.js",
+					"css/app/account.css"
 				],
 				"refer": [],
 				"priority": 0
 			},
 			"html/banklist.html": {
 				"resources": [
-					"img/addBankCard.png"
+					"img/addBankCard.png",
+					"img/bank_logo.png",
+					"fonts/mui.ttf",
+					"js/app/q.js",
+					"js/app/api.js",
+					"css/app/account.css",
+					"js/mui.js",
+					"js/vendor/zepto.min.js",
+					"css/mui.css"
 				],
 				"refer": [
 					"html/addbank.html"
@@ -600,7 +625,31 @@
 			},
 			"html/payPwd.html": {
 				"resources": [
-					"img/setPwdSuccess.png"
+					"img/setPwdSuccess.png",
+					"js/vendor/md5.min.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/searchRefresh.html": {
+				"resources": [
+					"js/vendor/swiper.jquery.min.js",
+					"css/app/search.css",
+					"js/app/q.js",
+					"js/app/api.js",
+					"js/app/config.js",
+					"js/mui.js",
+					"js/vendor/zepto.min.js",
+					"css/mui.css",
+					"js/app/user.js",
+					"html/searchlist.html"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/rechargeRefresh.html": {
+				"resources": [
+					"html/rechargelist.html"
 				],
 				"refer": [],
 				"priority": 0
@@ -610,7 +659,6 @@
 			"resources": [
 				"img/pageback.png",
 				"html/tracelist.html",
-				"css/mui.min.css",
 				"img/accountIcon.png",
 				"img/historyIcon.png",
 				"img/homeIcon.png",

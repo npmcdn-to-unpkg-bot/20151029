@@ -21,12 +21,12 @@
 	</div>
 </div>
 <ul class="feature">
-	<li class="rechargeRecord"><i class="mui-icon iconfont icon-chongzhi-copy"></i>充提记录</li>
-	<li class="bankLi"><i class="mui-icon iconfont icon-chongzhi-copy"></i>银行卡管理</li>
-	<li class="payPwdLi"><i class="mui-icon iconfont icon-chongzhi-copy"></i>资金密码</li>
+	<li class="rechargeRecord"><i class="mui-icon iconfont icon-chongtijilu"></i>充提记录</li>
+	<li class="bankLi"><i class="mui-icon iconfont icon-yinxingqia"></i>银行卡管理</li>
+	<li class="payPwdLi"><i class="mui-icon iconfont icon-0805zijinmima"></i>资金密码</li>
 </ul>
 <div class="logout">
-	<i class="mui-icon iconfont icon-tuichu"></i>安全退出登录
+	<i class="mui-icon iconfont icon-tuichudenglu"></i>安全退出登录
 </div>
 </body>
 
@@ -45,6 +45,32 @@ mui.init();
 mui.plusReady(function() {
 	Account._init();
 	Account.init();
+	
+	window.addEventListener('clearData',function(data){
+		plus.storage.setItem("balance",'');
+		$('.balance em').html('');
+		
+		mui.fire(Account.rechargeRecordPage,'clearData');
+		mui.fire(Account.rechargePage,'clearData');
+		mui.fire(Account.withdrawPage,'clearData');
+	});
+	
+	window.addEventListener('refreshBalance',function(data){
+		console.log('是否刷新余额：：：：：'+data.detail.refresh)
+		if(data.detail.refresh){
+			User.getBalance(function(){
+				var username = plus.storage.getItem("username");
+				$('.username').html(username);
+				var balance = plus.storage.getItem('balance');
+				$('.balance em').html(balance);
+			});
+		}else{
+			var username = plus.storage.getItem("username");
+			$('.username').html(username);
+			var balance = plus.storage.getItem('balance');
+			$('.balance em').html(balance);
+		}
+	});
 });
 
 </script>

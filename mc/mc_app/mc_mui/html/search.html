@@ -42,8 +42,8 @@
 <script>
 mui.init({
     subpages:[{
-      	url:'searchlist.html',
-      	id:'searchlist',
+      	url:'searchRefresh.html',
+      	id:'searchRefresh',
      	styles:{
         	top:"40px",
         	bottom:"0px"
@@ -52,6 +52,7 @@ mui.init({
 });
 mui.plusReady(function() {
 	window.addEventListener('initEvent',function(data){
+		var refreshPage = plus.webview.getWebviewById('searchRefresh');
 		var listPage = plus.webview.getWebviewById('searchlist');
 		
 		$('.searchMenu').on('tap',function(evt){
@@ -65,10 +66,10 @@ mui.plusReady(function() {
 				if(e.hasClass('on')){
 					var menu = $(_this).next();
 					if(menu.css('display') == 'block'){
-						listPage.setStyle({top:'40px'});
+						refreshPage.setStyle({top:'40px'});
 					}else{
 						var top = e.hasClass('orderRecord') ? '128px' : '92px';
-						listPage.setStyle({top:top});
+						refreshPage.setStyle({top:top});
 					}
 					menu.toggle();
 				}
@@ -85,17 +86,13 @@ mui.plusReady(function() {
 	    		}
 		    	$(_this).parent().hide();
 			} else if($(_this).hasClass('orderRecord')){
-				if(!$(_this).hasClass('on')){
-					$(_this).addClass('on').siblings().removeClass('on');
-					$(this).find('.record-menu').hide().find('.on').removeClass('on');
-				}
+				$(_this).addClass('on').siblings().removeClass('on');
+				$(this).find('.record-menu').hide().find('.on').removeClass('on');
 				obj.status = 'all';
 				mui.fire(listPage,'getOrderList',obj);
 			} else if($(_this).hasClass('traceRecord')){
-				if(!$(_this).hasClass('on')){
-					$(_this).addClass('on').siblings().removeClass('on');
-					$(this).find('.record-menu').hide().find('.on').removeClass('on');
-				}
+				$(_this).addClass('on').siblings().removeClass('on');
+				$(this).find('.record-menu').hide().find('.on').removeClass('on');
 				obj.status = 'all';
 				mui.fire(listPage,'getTraceList',obj);
 			} 
@@ -104,9 +101,9 @@ mui.plusReady(function() {
 	
 	window.addEventListener('initOrderList',function(data){
 		if(!$('body').hasClass('loaded')){
-			$('body').addClass('loaded');
 			var listPage = plus.webview.getWebviewById('searchlist');
-			mui.fire(listPage,'getOrderList',{});
+			$('body').addClass('loaded');
+			mui.fire(listPage,'getOrderList',{status:'all'});
 		}
 	});
 	

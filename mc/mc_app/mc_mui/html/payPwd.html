@@ -28,11 +28,11 @@
 		<input id="newPayPwdAgain" type="password" value="" placeholder="请再次输入新资金密码">
 		<button type="button">提交</button>
 	</div>
-</div>
-<div class="tip payPwdTip">
-	<p>1、资金密码是您提现的重要凭证，一旦设定请谨慎保管</p>
-	<p>2、通过设定资金密码，能够有效的保护您的资金安全</p>
-	<p>3、资金密码长度为8-16位，包括数字及字母</p>
+	<div class="tip payPwdTip">
+		<p>1、资金密码是您提现的重要凭证，一旦设定请谨慎保管</p>
+		<p>2、通过设定资金密码，能够有效的保护您的资金安全</p>
+		<p>3、资金密码长度为8-16位，包括数字及字母</p>
+	</div>
 </div>
 	
 <div class="payPwdSuccess">
@@ -50,6 +50,17 @@ mui.init({
 });
 
 mui.plusReady(function() {
+	//右滑事件回调函数
+	plus.webview.currentWebview().addEventListener( "popGesture", function(e){
+	  	document.activeElement.blur();
+	}, false);
+	//重写退出函数
+	var old_back = mui.back;
+	mui.back = function(){
+	  	document.activeElement.blur();
+	  	old_back();
+	}
+	
 	window.addEventListener('setPayPwd',function(){
 		$('input').val('');
 		$('#setPwd').show();
@@ -65,6 +76,7 @@ mui.plusReady(function() {
 	});
 	
 	$('#setPwd button').on('tap',function(){
+		document.activeElement.blur();
 		var pwd = $('#payPwd').val();
 		var pwdAgain = $('#payPwdAgain').val();
 		

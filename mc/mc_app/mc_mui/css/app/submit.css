@@ -222,14 +222,35 @@ body{
 	font-weight: 700
 }
 
-.orderTotal .top>div {
+
+.orderTotal .trace,.orderTotal .traceTimes{
 	-webkit-box-flex: 1;
-	padding-left: 30px;
 	height: 100%
+}
+.orderTotal .hideTraceTime .trace{
+	padding-left:30px;
+}
+.orderTotal .hideTraceTime .autoStop{
+	text-align: right;
+	-webkit-box-flex: 1;
+	padding-right:30px;
+}
+.orderTotal .hideTraceTime .traceTimes{
+	display: none;
+}
+
+.orderTotal .showTraceTime .trace{
+	text-align: center;
+}
+.orderTotal .showTraceTime .autoStop{
+	-webkit-box-flex: 1;
+}
+.orderTotal .showTraceTime .traceTimes{
+	display: block;
 }
 
 .orderTotal input {
-	margin: 0 5px;
+	margin:0 3px;
 	line-height: .8rem;
 	border-radius: 4px;
 	color: #ff3232;
@@ -237,18 +258,16 @@ body{
 	border: 1px solid #bcbcbc;
 	font-size: .9rem
 }
-
-.orderTotal .trace input {
-	width: 70px;
+.orderTotal .trace input,.orderTotal .traceTimes input {
+	width: 60px;
 	height: 25px;
 	vertical-align: top;
 	margin-top: 9px;
-    padding: 0 8px;
+    padding: 0 4px;
 }
 .orderTotal .winstop{
 	display: inline-block;
 	height:100%;
-	padding: 0 10px;
 }
 .orderTotal .winstop i {
 	display: inline-block;

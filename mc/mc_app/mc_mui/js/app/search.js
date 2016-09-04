@@ -146,7 +146,9 @@ Search = {
 	    		if(list.length > 0){
 	    			var h = '';
 	    			$(list).each(function(){
-						h += me.getOrderLi(arguments[1]);
+	    				if(LotteryClass.names[arguments[1].lottery]){
+	    					h += me.getOrderLi(arguments[1]);
+	    				}
 	    			});
 	    			
 	    			if(me.pullStatus == 'down'){
@@ -198,7 +200,9 @@ Search = {
 	    		if(list.length > 0){
 	    			var h = '';
 	    			$(list).each(function(){
-	    				h += me.getTraceLi(arguments[1]);
+	    				if(LotteryClass.names[arguments[1].lottery]){
+	    					h += me.getTraceLi(arguments[1]);
+	    				}
 	    			});
 	    			
 	    			if(me.pullStatus == 'down'){

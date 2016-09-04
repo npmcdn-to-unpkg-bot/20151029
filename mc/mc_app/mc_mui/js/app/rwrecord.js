@@ -102,7 +102,7 @@ RWRecord = {
     	var ul =  $('.recharge-list');
 
     	Api.getRechargeList(me.rechargeParam,function(res){
-    		if(res.code == '1'){
+    		if(res.data && res.data.length > 0){
 	    		var list = res.data;
 	    		if(list && list.length > 0){
 	    			var h = '';
@@ -134,7 +134,7 @@ RWRecord = {
 	    			}
 	    		}
     		}else{
-    			var tip = {content : res.msg};
+    			var tip = {content : "暂无更多数据"};
 	    		Q.showDialog(tip);
 	    		ul.html('<li class="no-data">暂无数据</li>');
 	    		if(me.pullStatus == 'down'){
@@ -154,8 +154,7 @@ RWRecord = {
     	var ul = $('.withdraw-list');
     	
     	Api.getDrawList(me.withdrawParam,function(res){
-    		console.log(JSON.stringify(res));
-    		if(res.code == '1'){
+    		if(res.data && res.data.length > 0){
 	    		var list = res.data;
 	    		if(list && list.length > 0){
 	    			var h = '';
@@ -175,10 +174,8 @@ RWRecord = {
 	        			ul.append(h);
 		    		}
 	    		}else{
-	    			var tip = {content : "暂无更多数据"}
+	    			var tip = {content : "暂无更多数据"};
 	    			Q.showDialog(tip);
-	    			
-	    			console.log('status:'+me.pullStatus)
 	    			if(me.pullStatus == 'down'){
 	    				ul.html('<li class="no-data">暂无数据</li>');
 	    				mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
@@ -188,7 +185,7 @@ RWRecord = {
 	    			}
 	    		}
     		}else{
-    			var tip = {content : res.msg};
+    			var tip = {content : "暂无更多数据"};
 	    		Q.showDialog(tip);
 	    		ul.html('<li class="no-data">暂无数据</li>');
 	    		if(me.pullStatus == 'down'){

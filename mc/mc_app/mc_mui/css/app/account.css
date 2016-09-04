@@ -215,7 +215,7 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 	display:none;
 }
 #content.payPwd{
-	bottom:150px;
+	bottom:0px;
 }
 .payPwd{
 	padding-top:20px;
@@ -237,7 +237,7 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 	background: linear-gradient(to bottom, #ffab00, #ff8300);
 	padding: 0;
 }
-.payPwd .tip,.bankTip{
+.bankTip{
 	position: fixed;
 	left: 10%;
 	bottom: 20px;
@@ -251,10 +251,8 @@ input::-webkit-input-placeholder { /* WebKit browsers */
 	display: none;
 }
 .payPwdTip{
-	position:fixed;
-	bottom:20px;
 	width:80%;
-	left:10%;
+	margin: 0 auto;
 	text-align: left;
 }
 .payPwdSuccess{

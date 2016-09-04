@@ -27,8 +27,15 @@ User = {
   	getBalance: function(fn){
   		var url = User.ssoapi['balance'] + '?appId=5';
   		Api.getData(url,function(res){
+  			console.log('yue::::::::::::::' + JSON.stringify(res));
   			if(res.code == '0'){
           		plus.storage.setItem("balance",res.result.userMoney.avail);
+  				fn(res);
+          	}else if(res.code == '-1'){
+          		var loginPage = plus.webview.getWebviewById('login');
+				loginPage.show('slide-in-bottom',400,function(){
+					mui.fire(loginPage,'loginAgain');
+				});
           	}else{
           		var tip = {content:'获取余额失败'};
           		Q.showDialog(tip);

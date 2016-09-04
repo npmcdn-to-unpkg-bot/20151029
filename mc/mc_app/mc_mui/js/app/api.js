@@ -69,9 +69,6 @@ Api = {
 			dataType:'json',//服务器返回json格式数据
 			type:'get',//HTTP请求类型
 			timeout:10000,//超时时间设置为10秒；
-			headers:{
-				'Content-Type':'application/json'
-			},
 			success:function(data){
 				plus.nativeUI.closeWaiting();
 				if(data == '-1'){
@@ -84,7 +81,7 @@ Api = {
 				}
 			},
 			error:function(xhr,type,errorThrown){
-				console.log(url)
+				console.log('出错的url:' + url)
 				plus.nativeUI.closeWaiting();
 				var tip = {content:'请求数据出错'};
 				Q.showDialog(tip);
@@ -111,8 +108,7 @@ Api = {
     	var setting = {
 			dataType:'jsonp',//服务器返回json格式数据
 			type:'get',//HTTP请求类型
-			timeout:10000,//超时时间设置为10秒；
-			headers:{'Content-Type':'application/json'},	              
+			timeout:10000,//超时时间设置为10秒；	              
 			success:function(data){
 				plus.nativeUI.closeWaiting();
 				if(data == '-1'){
@@ -125,6 +121,7 @@ Api = {
 				}
 			},
 			error:function(xhr,type,errorThrown){
+				console.log('出错url：' + url);
 				plus.nativeUI.closeWaiting();
 				var tip = {content:'请求数据出错'};
 				Q.showDialog(tip);
@@ -150,8 +147,7 @@ Api = {
     		data:JSON.stringify(param),
 			dataType:'json',//服务器返回json格式数据
 			type:'post',//HTTP请求类型
-			timeout:10000,//超时时间设置为10秒；
-			headers:{'Content-Type':'application/json'},	              
+			timeout:10000,//超时时间设置为10秒；              
 			success:function(data){
 				plus.nativeUI.closeWaiting();
 				if(data == '-1'){
@@ -164,6 +160,7 @@ Api = {
 				}
 			},
 			error:function(xhr,type,errorThrown){
+				console.log('出错url：' + url);
 				plus.nativeUI.closeWaiting();
 				var tip = {content:'请求数据出错'};
 				Q.showDialog(tip);
@@ -182,7 +179,7 @@ Api = {
     	Api.getData(Api.route.getOdds,fn);
     },
     getOddsByLt: function(obj,fn) {
-    	Api.getData(Api.route.getOddsByLt,fn,obj);
+  		Api.getData(Api.route.getOddsByLt,fn,obj);
     },
     getIssueInfo: function(p, fn) {
     	Api.getData(Api.route.getIssueInfo,fn,p);

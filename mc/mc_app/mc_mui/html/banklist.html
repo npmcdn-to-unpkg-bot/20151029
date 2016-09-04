@@ -54,12 +54,6 @@ mui.plusReady(function() {
 	window.addEventListener('initList',function(){
 		$('.banklist .card').remove();
 		Api.queryBankList(function(res){
-			var x = res.configMap.firstDrawingsAging.value;
-			var y = res.configMap.nonFirstDrawingsAging.value;
-			
-			$('.tip em.x').html(x);
-			$('.tip em.y').html(y);
-			
 			if(res.retCode == '0'){
 				if(res.message == '1'){
 					var array = res.retData;
@@ -70,10 +64,17 @@ mui.plusReady(function() {
 							'</span></p><p><label>' + arguments[1].bankCardNo + '</label></p></div></div>';
 					});
 					$('.banklist').prepend(h);
-					if(array.length == 5){
+					if(array.length >= 5){
 						$('#addNew').hide();				
+					}else if(array.length < 5){
+						$('#addNew').show();				
 					}
 				}
+				var x = res.configMap.firstDrawingsAging.value;
+				var y = res.configMap.nonFirstDrawingsAging.value;
+				
+				$('.tip em.x').html(x);
+				$('.tip em.y').html(y);
 			}else{
 				var tip = {content:res.message};
 				Q.showDialog(tip);
@@ -85,8 +86,8 @@ mui.plusReady(function() {
 		if($('.banklist .card').length == 5){
 			return;
 		}
-		
-		addBankPage.show('slide-in-right',400)
+		mui.fire(addBankPage,'clearData');
+		addBankPage.show('slide-in-right',400);
 	});
 });
 </script>

@@ -14,18 +14,10 @@ Account = {
 	payPwdPage : null,
 	bankListPage : null,
 	
-	indexPage　: null,
+	indexPage : null,
 	
 	_init : function(){
 		var me = this;
-		
-		window.addEventListener('refreshBalance',function(){
-			User.getBalance();
-			var username = plus.storage.getItem("username");
-			$('.username').html(username);
-			var balance = plus.storage.getItem('balance');
-			$('.balance em').html(balance);
-		});
 		
 		/*充提记录*/
 		me.rechargeRecordPage = mui.preload({
@@ -178,8 +170,6 @@ Account = {
 						res = JSON.parse(res);
 						if(res.code == 0){
 			    			me.loginPage.show('slide-in-bottom',400,function(){
-			    				plus.storage.setItem("balance",'');
-			    				mui.fire(me.rechargeRecordPage,'clearData')
 			    				mui.fire(me.indexPage,'clearData');
 			    			});
 						}

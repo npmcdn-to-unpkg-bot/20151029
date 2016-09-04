@@ -45,10 +45,14 @@
 
 <div class="orderBtmImg"></div>
 <footer class="orderTotal">
-	<div class="top">
+	<div class="top hideTraceTime">
 		<div class="trace">
-			连续投 <input type="number" pattern="[0-9]*" value="1" min="1"
-				max="99999" step="1"> 期
+			追<input type="number" pattern="[0-9]*" value="1" min="1"
+				max="99999" step="1">期
+		</div>
+		<div class="traceTimes">
+			追号倍数<input type="number" pattern="[0-9]*" value="1" min="1"
+				max="1000" step="1">
 		</div>
 		<div class="autoStop">
 			<span class="winstop"><i></i>追中即停</span>

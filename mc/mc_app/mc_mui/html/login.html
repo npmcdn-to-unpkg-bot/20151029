@@ -47,13 +47,8 @@ mui.init({
 });
 
 mui.plusReady(function(){
-//	if(plus.storage.getItem('host')){
-//		Login._init();
-//	}else{
-		Line.startSpeedTest(function(){
-			Login._init();
-		});
-//	}
+	
+	Login._init();
 
 	window.addEventListener('loginAgain',function(){
 		var tip = {content:'您需要重新登陆'};

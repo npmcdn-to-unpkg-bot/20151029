@@ -45,8 +45,8 @@
 <script>
 mui.init({
     subpages:[{
-      	url:'rechargelist.html',
-      	id:'rechargelist',
+      	url:'rechargeRefresh.html',
+      	id:'rechargeRefresh',
      	styles:{
         	top:"90px",
         	bottom:"0px"
@@ -55,7 +55,9 @@ mui.init({
 });
 mui.plusReady(function() {
 	window.addEventListener('initEvent',function(data){
+		var refreshPage = plus.webview.getWebviewById('rechargeRefresh');
 		var listPage = plus.webview.getWebviewById('rechargelist');
+		
 		$('.rechargeMenu').off('tap').on('tap',function(evt){
 			evt.preventDefault();
 			var obj = {};
@@ -66,9 +68,9 @@ mui.plusReady(function() {
 				if(e.hasClass('on')){
 					var menu = $(_this).next();
 					if(menu.css('display') == 'block'){
-						listPage.setStyle({top:'90px'});
+						refreshPage.setStyle({top:'90px'});
 					}else{
-						listPage.setStyle({top:'142px'});
+						refreshPage.setStyle({top:'142px'});
 					}
 					menu.toggle();
 				}
@@ -85,17 +87,13 @@ mui.plusReady(function() {
 	    		}
 		    	$(_this).parent().hide();
 			} else if($(_this).hasClass('rechargeRecord')){
-				if(!$(_this).hasClass('on')){
-					$(_this).addClass('on').siblings().removeClass('on');
-					$(this).find('.record-menu').hide().find('.on').removeClass('on');
-				}
+				$(_this).addClass('on').siblings().removeClass('on');
+				$(this).find('.record-menu').hide().find('.on').removeClass('on');
 				obj.queryType = 'all';
 				mui.fire(listPage,'getRechargeList',obj);
 			} else if($(_this).hasClass('withdrawRecord')){
-				if(!$(_this).hasClass('on')){
-					$(_this).addClass('on').siblings().removeClass('on');
-					$(this).find('.record-menu').hide().find('.on').removeClass('on');
-				}
+				$(_this).addClass('on').siblings().removeClass('on');
+				$(this).find('.record-menu').hide().find('.on').removeClass('on');
 				obj.queryType = 'all';
 				mui.fire(listPage,'getWithDrawList',obj);
 			} 

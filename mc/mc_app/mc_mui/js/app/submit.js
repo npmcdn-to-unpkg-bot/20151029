@@ -17,7 +17,7 @@ Submit = {
 		me.lotteryPage = plus.webview.getWebviewById('lottery');
     	me.homePage = plus.webview.getWebviewById('home');
     	
-    	me.cw.addEventListener( "hide", function(e){
+    	me.cw.addEventListener("hide", function(e){
     		var data = {
     			lt : me.lt
     		}
@@ -129,7 +129,7 @@ Submit = {
     		me.lotteryPage.show('slide-in-bottom',500);
     	});
     	
-    	//追号输入框change事件
+    	//追号期数输入框change事件
     	$('.trace input').on('change',function(evt){
     		evt.preventDefault();
     		var val = $(this).val();
@@ -143,6 +143,35 @@ Submit = {
     		}else if (parseInt(val) < parseInt(min)) {
     			$(this).val(min);
 			}
+    		
+    		$(this).val(parseInt($(this).val()));
+    		
+    		if(parseInt($(this).val()) > 1 && me.lt != 'WBGMMC'){
+    			$('.orderTotal .top').addClass('showTraceTime').removeClass('hideTraceTime');
+    		}else{
+    			$('.orderTotal .top').removeClass('showTraceTime').addClass('hideTraceTime');
+    			$('.traceTimes input').val('1');
+    		}
+    		me.setSubmitData();
+    	});
+    	
+    	//追号倍数输入框change事件
+    	$('.traceTimes input').on('change',function(evt){
+    		evt.preventDefault();
+    		var val = $(this).val();
+    		var min = 1;
+    		var max = 1000;
+    		
+    		if(val === ''){
+    			$(this).val(min);
+    		}else if(parseInt(val) > parseInt(max)){
+    			$(this).val(max);
+    		}else if (parseInt(val) < parseInt(min)) {
+    			$(this).val(min);
+			}
+    		
+    		$(this).val(parseInt($(this).val()));
+    		
     		me.setSubmitData();
     	});
     	
@@ -256,6 +285,7 @@ Submit = {
     
     init : function(){
     	var me = this;
+    	$('.trace input').change();
     	me.renderOrder();
     },
     
@@ -290,6 +320,8 @@ Submit = {
     				offset: [54, 56] // 球的宽高
     			});
     		}
+    		$('.orderTotal .top').removeClass('showTraceTime').addClass('hideTraceTime');
+    		$('.traceTimes input').val('1');
     	}else{
     		$('body').removeClass('show-mmc');
     	}
@@ -313,9 +345,11 @@ Submit = {
     	var list = $('.order-list li');
     	
     	var traceCount = parseInt($('.trace input').val());
+    	var traceTimes = parseInt($('.traceTimes input').val());
     	
     	var totalCount = 0;
     	var totalMoney = 0;
+    	var traceMoney = 0;
     	
     	if(list.length == 0){
     		me.orderObj = null;
@@ -329,6 +363,8 @@ Submit = {
         		var method = $(this).attr('data-method');
         		totalCount += parseInt(data[0],10);
         		totalMoney += parseFloat(data[5],10);
+        		traceMoney += parseFloat((parseInt(data[0],10) * parseFloat(data[2],10)).toFixed(4));
+        		
         		var tmpOrder = {
     				//"method" : me.method,
         			"method" : method,
@@ -346,7 +382,11 @@ Submit = {
         		orders.push(tmpOrder);
         	});
         	
-        	totalMoney = totalMoney * traceCount;
+        	if(traceCount > 1 && me.lt != 'WBGMMC'){
+        		totalMoney = traceMoney * traceCount * traceTimes;
+        	}else if(me.lt == 'WBGMMC'){
+        		totalMoney = totalMoney + totalMoney  * (traceCount-1);
+        	}
 
     		me.traceCount = traceCount;
     		
@@ -355,6 +395,7 @@ Submit = {
     			"start":me.issue,
     			"totalMoney":totalMoney,
     			"totalCount":traceCount,
+    			"count":traceTimes,
     			"mode":2,//同倍追号
     			"winStop" : $('.winstop').hasClass('on')
     		};

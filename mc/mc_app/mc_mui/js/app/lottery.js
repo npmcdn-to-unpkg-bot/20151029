@@ -40,6 +40,8 @@ Lottery = {
     	
     	//右滑事件回调函数
 		cw.addEventListener( "popGesture", function(e){
+		  	me.addCode = false;
+		  	me.restoreCode = false;
 		  	$('.tabDiv').removeClass('tabShow');
     		if(!me.submitStatus){
 				me._clearInterval();
@@ -49,6 +51,8 @@ Lottery = {
 		//重写退出函数
     	var old_back = mui.back;
 		mui.back = function(){
+			me.addCode = false;
+		  	me.restoreCode = false;
 		  	$('.tabDiv').removeClass('tabShow');
 		  	if(!me.submitStatus){
 				me._clearInterval();
@@ -93,7 +97,7 @@ Lottery = {
         });
         
         //玩法列表点击事件
-        tabDiv.on("tap", 'span', function(evt) {
+        tabDiv.on("tap", '.subTab span', function(evt) {
         	evt.preventDefault();
 	   		$('.tabOn').removeClass('tabOn');
 	    	$(this).addClass('tabOn');
@@ -162,6 +166,9 @@ Lottery = {
     		}else if (parseInt(val) < parseInt(min)) {
     			$(this).val(min);
 			}
+    		
+    		$(this).val(parseInt($(this).val()));
+    		
     		count.find('.totalTimes').html($(this).val());
     		me.calcMoney();
     	});
@@ -240,9 +247,16 @@ Lottery = {
 			me.initTab(LotteryClass[me.lt]);
 		}else{
 			Api.getOddsByLt({lottery:me.lt},function(d) {
-				me.odds[me.lt] = d.result[me.lt];
-				me.updateIssue();
-				me.initTab(LotteryClass[me.lt]);
+				console.log(JSON.stringify(d));
+				if(d.code == 1){
+					me.odds[me.lt] = d.result[me.lt];
+					me.updateIssue();
+					me.initTab(LotteryClass[me.lt]);
+				}else{
+					var tip = {content:d.msg};
+					Q.showDialog(tip);
+				}
+				
 			});
 		}
 	},
@@ -879,6 +893,8 @@ Lottery = {
     	el.html(li);
     	var height = me.cls == 'pk10' ? 325 : 170;
     	el.height(height);
+    	el.height(el.height());
+    	//alert(el.height());
     },
     
     updateTime : function(second){

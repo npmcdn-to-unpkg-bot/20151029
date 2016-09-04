@@ -56,11 +56,11 @@ mui.plusReady(function() {
 	
 	Search._init();
 	
-	mui.fire(Search.cw.parent(),'initEvent');
+	mui.fire(Search.cw.parent().parent(),'initEvent');
 	
 	window.addEventListener('getOrderList',function(data){
 		mui('#pullrefresh').pullRefresh().scrollTo(0,0,0);
-		Search.cw.setStyle({top:'40px'});
+		Search.cw.parent().setStyle({top:'40px'});
 		$.extend(Search.orderParam,data.detail);
 		if(Search.orderParam.status == 'all'){
 			Search.orderParam = {
@@ -74,8 +74,8 @@ mui.plusReady(function() {
 	});
 	
 	window.addEventListener('getTraceList',function(data){
-		mui('#pullrefresh').pullRefresh().scrollTo(0,0,0);
-		Search.cw.setStyle({top:'40px'});
+		mui('#pullrefresh').pullRefresh().scrollTo(0,0,0);		
+		Search.cw.parent().setStyle({top:'40px'});
 		$.extend(Search.traceParam,data.detail);
 		
 		if(Search.traceParam.status == 'all'){
