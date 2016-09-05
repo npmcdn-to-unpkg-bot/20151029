@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+</head>
+<body>
+<a id="copy" data-clipboard-text="这里是用于复制的内容，CodePlayer">copy</a>
+<p>注：要使用容器访问，如tomcat，使用文件协议 files://不成功</p>
+</body>
+
+<script src="jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="ZeroClipboard.min.js" ></script>
+<script type="text/javascript">
+// 将【复制】按钮充当复制数据的元素载体
+var clip = new ZeroClipboard( document.getElementById("copy") );
+
+// 当Flash SWF文件加载完成并准备就绪时触发ready事件
+clip.on("ready", function(){ alert("加载完成!"); });
+
+// 当触发copy事件时，设置用于复制的文本数据
+clip.on("aftercopy", function(e){
+    alert('复制成功：' + e.data["text/plain"])
+});
+
+</script>
+</html>
